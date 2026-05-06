@@ -1,0 +1,17 @@
+{
+  "metadata.name": "Survivor Wine Fox",
+  "metadata.tips": "A fox girl scavenging in the post-apocalyptic wasteland.",
+  "metadata.authors.0.name": "MeiJianMuRong",
+  "metadata.authors.0.role": "Model",
+  "metadata.authors.0.comment": "A model maker & YSM author with big dreams who loves to slack off.",
+  "properties.extra_animation.extra0": "Transform",
+  "properties.extra_animation.extra1": "Wave",
+  "properties.extra_animation.extra2": "Inspect",
+  "properties.extra_animation.extra3": "Yes",
+  "properties.extra_animation.extra4": "Put on Helmet",
+  "properties.extra_animation.extra5": "Put on Mask",
+  "properties.extra_animation.extra6": "Take off Helmet",
+  "properties.extra_animation.extra7": "Dance"
+}
+
+

@@ -1,0 +1,13 @@
+{
+  "custom": {
+    "category": "neutral",
+    "subtitle": "subtitle.yes_steve_model.custom",
+    "sounds": [
+      {
+        "name": "yes_steve_model:empty",
+        "preload": false,
+        "stream": true
+      }
+    ]
+  }
+}

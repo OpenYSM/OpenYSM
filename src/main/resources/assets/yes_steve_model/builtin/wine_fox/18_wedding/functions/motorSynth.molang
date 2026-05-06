@@ -1,0 +1,17 @@
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+//引擎声浪模拟by羊毛
+//本代码采用MIT-0协议开源 但建议保留此段注释
+
+//请保证此函数每秒被调用上百次以保证效果 建议放到ride动画并调整吸附到500 循环调用fn.motorSyhth();
+//sounds文件夹中的motor.ogg可替换为其他引擎声 类似即可
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+ 
+//前面加的这个200是怠速转速 也就是最低转速
+v.realrpm2 =200 + math.mod(ysm.second_order('rpmsystem', math.clamp(v.rpm + query.ground_speed*200, 0, 5000), 0.1, 1.1, 0), 700);//此处简单除余转速实现了换挡效果 速度套上二阶实现速度的缓慢上升
+v.realrpm = ysm.second_order('realrpmsystem',v.realrpm2 + 300 * math.floor(v.rpm + query.ground_speed * 200 / 700), 2, 1.2, 0);//此处做换挡平滑处理，让转速不会一下子降下来
+v.motortickleft = math.clamp(v.motortickleft - v.realrpm, 0, 5000);//触发音效倒计时
+v.motortickleft < 0.1 ? {
+    ysm.play_sound('motor', 'motor', 7,1,0.5 + v.realrpm / 1000);
+    v.motortickleft = 5000;//重置倒计时
+    return 0;
+};

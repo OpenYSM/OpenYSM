@@ -1,0 +1,64 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.parallel_2": {
+			"initial_state": "隐藏光环",
+			"states": {
+				"隐藏光环": {
+					"animations": ["光环隐藏"],
+					"transitions": [
+						{"开机": "!ctrl.sleep"}
+					]
+				},
+				"开机": {
+					"animations": ["光环开机"],
+					"transitions": [
+						{"常态": "q.all_animations_finished"}
+					]
+				},
+				"常态": {
+					"animations": ["光环常态"],
+					"transitions": [
+						{"关机": "ctrl.sleep"}
+					]
+				},
+				"关机": {
+					"animations": ["光环关机"],
+					"transitions": [
+						{"隐藏光环": "q.all_animations_finished"}
+					]
+				}
+			}
+		},
+		"player.parallel_3": {
+			"states": {
+				"default": {
+					"animations": [
+						{"empty": "v.roaming.emotion==0||ysm.rendering_in_inventory"},
+						{"表情_疑惑": "v.roaming.emotion==1"},
+						{"表情_干什么": "v.roaming.emotion==2"},
+						{"表情_害怕": "v.roaming.emotion==3"},
+						{"表情_委屈巴巴": "v.roaming.emotion==4"},
+						{"表情_苦呀西": "v.roaming.emotion==5"}
+					]
+				}
+			}
+		},
+		"player.parallel_5": {
+			"states": {
+				"default": {
+					"animations": ["empty"],
+					"transitions": [
+						{"雨刮": "v.show_car&&ysm.weather>=1&&ysm.is_open_air"}
+					]
+				},
+				"雨刮": {
+					"animations": ["雨刮器"],
+					"transitions": [
+						{"default": "!(v.show_car&&ysm.weather>=1&&ysm.is_open_air)&&q.all_animations_finished"}
+					]
+				}
+			}
+		}
+	}
+}

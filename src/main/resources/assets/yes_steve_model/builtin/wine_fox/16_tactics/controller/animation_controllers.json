@@ -1,0 +1,30 @@
+{
+  "format_version": "1.19.0",
+  "animation_controllers": {
+    "controller.animation.player.parallel_0": {
+      "initial_state": "no_backpack",
+      "states": {
+        "no_backpack": {
+          "animations": [],
+          "transitions": [
+            {
+              "has_backpack": "ctrl.armor('chest', '$sophisticatedbackpacks:backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:copper_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:iron_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:gold_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:diamond_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:netherite_backpack') || ysm.has_any_curios('back', 'sophisticatedbackpacks:backpack', 'sophisticatedbackpacks:copper_backpack', 'sophisticatedbackpacks:iron_backpack', 'sophisticatedbackpacks:gold_backpack', 'sophisticatedbackpacks:diamond_backpack', 'sophisticatedbackpacks:netherite_backpack')"
+            }
+          ],
+          "blend_transition": 0.2
+        },
+        "has_backpack": {
+          "animations": [
+            {"your_backpack_animation": "ctrl.walk || ctrl.idle"}
+          ],
+          "transitions": [
+            {
+              "no_backpack": "!ctrl.armor('chest', '$sophisticatedbackpacks:backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:copper_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:iron_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:gold_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:diamond_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:netherite_backpack') && !ysm.has_any_curios('back', 'sophisticatedbackpacks:backpack', 'sophisticatedbackpacks:copper_backpack', 'sophisticatedbackpacks:iron_backpack', 'sophisticatedbackpacks:gold_backpack', 'sophisticatedbackpacks:diamond_backpack', 'sophisticatedbackpacks:netherite_backpack')"
+            }
+          ],
+          "blend_transition": 0.2
+        }
+      }
+    }
+  }
+}

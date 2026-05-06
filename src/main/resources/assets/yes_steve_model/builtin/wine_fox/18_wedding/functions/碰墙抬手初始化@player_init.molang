@@ -1,0 +1,5 @@
+v.north = true;
+v.south = true;
+v.west = true;
+v.east = true;
+v.twoBlocks = true;

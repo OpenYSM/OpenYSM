@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "slashblade:slashblade",
+      "required": false
+    }, {
+      "id": "slashblade:slashblade_wood",
+      "required": false
+    }, {
+      "id": "slashblade:slashblade_bamboo",
+      "required": false
+    }, {
+      "id": "slashblade:slashblade_silverbamboo",
+      "required": false
+    }, {
+      "id": "slashblade:slashblade_white",
+      "required": false
+    }
+  ]
+}

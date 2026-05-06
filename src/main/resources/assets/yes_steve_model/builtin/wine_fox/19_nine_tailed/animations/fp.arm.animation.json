@@ -1,0 +1,22 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"parallel0": {
+			"loop": true,
+			"bones": {
+				"fox1": {
+					"scale": "v.roaming.a"
+				},
+				"main1": {
+					"scale": "!v.roaming.a"
+				},
+				"main2": {
+					"scale": "!v.roaming.a"
+				},
+				"fox2": {
+					"scale": "v.roaming.a"
+				}
+			}
+		}
+	}
+}

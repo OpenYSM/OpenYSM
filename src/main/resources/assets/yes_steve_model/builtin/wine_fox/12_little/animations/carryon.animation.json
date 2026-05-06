@@ -1,0 +1,217 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"carryon:block": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"rotation": [2, 0, 0]
+				},
+				"UpBody": {
+					"rotation": [-15, 0, 0]
+				},
+				"Head": {
+					"rotation": [25, 0, 0]
+				},
+				"LeftArm": {
+					"rotation": [-25, 5, 5],
+					"position": [0, -0.5, 0]
+				},
+				"LeftForeArm": {
+					"rotation": [-5, 0, 0]
+				},
+				"LeftHandLocator": {
+					"scale": 0
+				},
+				"RightArm": {
+					"rotation": [-25, -5, -5],
+					"position": [0, -0.5, 0]
+				},
+				"RightForeArm": {
+					"rotation": [-5, 0, 0]
+				},
+				"RightHandLocator": {
+					"scale": 0
+				},
+				"LeftHand": {
+					"rotation": [0, 0, 0]
+				},
+				"RightHand": {
+					"rotation": [0, 0, 0]
+				},
+				"clothe": {
+					"rotation": [12.5, 0, 0],
+					"position": [0, 0.21644, 0.9763]
+				}
+			}
+		},
+		"carryon:entity": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"rotation": [2, 0, 0]
+				},
+				"UpBody": {
+					"rotation": [-20, 0, 0]
+				},
+				"Head": {
+					"rotation": [30, 0, 0]
+				},
+				"LeftArm": {
+					"rotation": [-45, 5, -5],
+					"position": [0, -0.5, 0]
+				},
+				"LeftForeArm": {
+					"rotation": [-5, 0, 0]
+				},
+				"LeftHandLocator": {
+					"scale": 0
+				},
+				"RightArm": {
+					"rotation": [-45, -5, 5],
+					"position": [0, -0.5, 0]
+				},
+				"RightForeArm": {
+					"rotation": [-5, 0, 0]
+				},
+				"RightHandLocator": {
+					"scale": 0
+				},
+				"RightHand": {
+					"rotation": [0, 0, 0]
+				},
+				"LeftHand": {
+					"rotation": [0, 0, 0]
+				},
+				"clothe": {
+					"rotation": [15, 0, 0],
+					"position": [0, 0.25882, 0.96593]
+				}
+			}
+		},
+		"carryon:player": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"rotation": [2, 0, 0]
+				},
+				"UpBody": {
+					"rotation": [-10, 0, 0]
+				},
+				"Head": {
+					"rotation": [10, 0, 0]
+				},
+				"LeftArm": {
+					"rotation": [-25, 5, -5],
+					"position": [0, -0.5, 0]
+				},
+				"LeftForeArm": {
+					"rotation": [-103.01813, 74.20678, -108.67681]
+				},
+				"LeftHandLocator": {
+					"scale": 0
+				},
+				"RightArm": {
+					"rotation": [-25, -5, 5],
+					"position": [0, -0.5, 0]
+				},
+				"RightForeArm": {
+					"rotation": [-108.01813, -74.20678, 108.67681]
+				},
+				"RightHandLocator": {
+					"scale": 0
+				},
+				"RightHand": {
+					"rotation": [0, 0, 0]
+				},
+				"LeftHand": {
+					"rotation": [0, 0, 0]
+				},
+				"clothe": {
+					"rotation": [7.5, 0, 0],
+					"position": [0, 0.03263, 0.24786]
+				},
+				"Arm": {
+					"position": [0, -1, 0.5]
+				}
+			}
+		},
+		"carryon:princess": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"rotation": [0, 0, 0]
+				},
+				"AllBody": {
+					"rotation": [0, -90, -115],
+					"position": [-5, -11, 6]
+				},
+				"UpBody": {
+					"rotation": [50, 0, 0],
+					"position": [0, 1, 0.75]
+				},
+				"Head": {
+					"rotation": [27.5, 0, 0]
+				},
+				"LongHair": {
+					"rotation": [37.5, 0, 0]
+				},
+				"LeftArm": {
+					"rotation": [-16.77609, 44.19145, -7.81185],
+					"position": [0.79743, 0.17145, -0.11899]
+				},
+				"LeftForeArm": {
+					"rotation": [-45.28089, 35.39626, 29.83757]
+				},
+				"RightArm": {
+					"rotation": [-16.36648, -42.10287, -4.20805]
+				},
+				"RightForeArm": {
+					"rotation": [-52.69263, -6.40865, -39.56869]
+				},
+				"LeftLeg": {
+					"rotation": [-7.61435, 9.91358, -1.31845]
+				},
+				"LeftLowerLeg": {
+					"rotation": [65, 0, 0]
+				},
+				"LeftFoot": {
+					"rotation": [27.5, 0, 0]
+				},
+				"RightLeg": {
+					"rotation": [-2.17539, -10.01806, -1.21764]
+				},
+				"RightLowerLeg": {
+					"rotation": [65, 0, 0]
+				},
+				"RightFoot": {
+					"rotation": [7.5, 0, 0]
+				},
+				"RightHand": {
+					"rotation": [0, 0, 0]
+				},
+				"LeftHand": {
+					"rotation": [0, 0, 0]
+				},
+				"Tail": {
+					"rotation": [20, 0, 0],
+					"position": [0, 0, -3]
+				},
+				"clothe": {
+					"rotation": [-37.5, 0, 0],
+					"position": [0, 1.5219, -1.98338],
+					"scale": [1.065, 1, 1]
+				},
+				"bowL1": {
+					"rotation": [-42.5, 0, 0]
+				},
+				"bowR1": {
+					"rotation": [-35, 0, 0]
+				},
+				"MRoot": {
+					"position": [3, 3, 2]
+				}
+			}
+		}
+	}
+}

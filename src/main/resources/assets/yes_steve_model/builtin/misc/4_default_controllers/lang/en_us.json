@@ -1,0 +1,20 @@
+{
+  "metadata.name": "Default Controllers Model",
+  "metadata.tips": "Default Controllers Test Model",
+  "metadata.authors.0.name": "GODZILLA256",
+  "metadata.authors.0.role": "Model",
+  "metadata.authors.0.comment": "An MC model/YSM author with a lot of ideas and little time",
+  "metadata.authors.1.name": "lucia2048",
+  "metadata.authors.1.role": "Animation",
+  "metadata.authors.1.comment": "Wandering among the stars",
+  "properties.extra_animation.extra0": "Moriya Step",
+  "properties.extra_animation.extra1": "Wave",
+  "properties.extra_animation.extra2": "Clap",
+  "properties.extra_animation.extra3": "YES",
+  "properties.extra_animation.extra4": "NO",
+  "properties.extra_animation.extra5": "Yep",
+  "properties.extra_animation.extra6": "Swing",
+  "properties.extra_animation.extra7": "Dance",
+  "properties.extra_animation_buttons.extra_config.config_forms.0.title": "Size: ",
+  "properties.extra_animation_buttons.extra_config.config_forms.0.description": "Change the player size"
+}

@@ -1,0 +1,126 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "MoMo Wine Fox",
+    "tips": "欢迎来到狐狐的世界~",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "再来几斤小莫莫",
+        "role": "魔改动画/材质",
+        "comment": "如果你有所热爱的美好的愿望，就大胆去追求它",
+        "avatar": "avatar/zljjxmm.png",
+        "contact": {
+          "bilibili": "https://space.bilibili.com/3493267685509797"
+        }
+      },
+      {
+        "name": "Tex_offcial",
+        "role": "材质",
+        "contact": {
+          "blibli": "https://b23.tv/0angYgR"
+        },
+        "avatar": "avatar/tex.png"
+      }
+    ]
+  },
+  "properties": {
+    "extra_animation": {
+      "huhupeizhi": "#huhu_config",
+      "找不到狐找不到狐": "藏起来~",
+      "#H_d_c": "狐蹈~",
+      "招手": "招手"
+    },
+    "preview_animation": "gui",
+    "free": true,
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "render_layers_first": false,
+    "disable_preview_rotation": false,
+    "all_cutout": false,
+    "extra_animation_buttons": [
+      {
+        "id": "huhu_config",
+        "name": "狐狐敲级配件",
+        "config_forms": [
+          {
+            "type": "range",
+            "title": "狐狐大小变！",
+            "description": "就是狐狐大小变！",
+            "value": "v.player_size",
+            "step": 0.2,
+            "min": 0.2,
+            "max": 5
+          },
+          {
+            "type": "range",
+            "title": "狐狐大宝剑！",
+            "description": "就要狐狐大宝剑！",
+            "value": "v.hold",
+            "step": 1,
+            "min": 0,
+            "max": 10
+          },
+          {
+            "type": "checkbox",
+            "title": "背包渲染",
+            "description": "就是背包渲染！",
+            "value": "v.roaming.back"
+          },
+          {
+            "type": "checkbox",
+            "title": "小狐狸渲染开关",
+            "description": "难道不可爱嘛",
+            "value": "v.roaming.smallfox_size"
+          }
+        ]
+      }
+    ],
+    "extra_animation_classify": [
+      {
+        "id": "H_d_c",
+        "extra_animation": {
+          "狐狐摇（完整）": "狐狐摇",
+          "dooble": "dooble",
+          "卖萌": "卖萌",
+          "摇摇": "摇摇",
+          "三份麦霸": "三份麦霸~",
+          "extra:ciallo": "Ciallo～(∠・ω< )⌒★",
+          "伸懒腰": "伸懒腰~"
+        }
+      }
+    ],
+    "default_texture": "skin_pink",
+    "gui_no_lighting": false
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tlm": "animations/tlm.animation.json",
+        "arm": "animations/arm.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/skin_pink.png"
+        },
+        {
+          "uv": "textures/skin_green.png"
+        }
+      ],
+      "animation_controllers": [
+        "controller/parallel.animation_controllers.json",
+        "controller/armor.animation_controllers.json"
+      ]
+    }
+  }
+}

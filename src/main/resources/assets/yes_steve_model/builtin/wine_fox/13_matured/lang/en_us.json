@@ -1,0 +1,16 @@
+{
+	"metadata.name": "Matured Wine Fox",
+	"metadata.tips": "§7A fox girl who loves wine. Features some thoughtful details.",
+	"metadata.authors.0.role": "Modifier",
+	"metadata.authors.0.comment": "OwO",
+	"properties.extra_animation.extra0": "Transform / Umbrella",
+	"properties.extra_animation.extra1": "Wave",
+	"properties.extra_animation.extra2": "Clap",
+	"properties.extra_animation.extra3": "Get Down",
+	"properties.extra_animation.extra4": "Wild Dance",
+	"properties.extra_animation.extra5": "Cute Pose",
+	"properties.extra_animation.extra6": "Gohei Waving",
+	"properties.extra_animation.extra7": "Dance",
+	"properties.extra_animation_buttons.extra_config.config_forms.0.title": "Umbrella Setting",
+	"properties.extra_animation_buttons.extra_config.config_forms.0.description": "Used to hide/show the umbrella"
+}

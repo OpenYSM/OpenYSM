@@ -1,0 +1,289 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.pre_parallel_0": {
+			"states": {
+				"default": {
+					"animations": ["pre_parallel0", "pre_parallel1", "pre_parallel2", "pre_parallel3", "pre_parallel4", "pre_parallel5", "pre_parallel6", "pre_parallel7"]
+				}
+			}
+		},
+		"player.pre_parallel_1": {},
+		"player.pre_parallel_2": {},
+		"player.pre_parallel_3": {},
+		"player.pre_parallel_4": {},
+		"player.pre_parallel_5": {},
+		"player.pre_parallel_6": {},
+		"player.pre_parallel_7": {},
+		"player.parallel_0": {
+			"states": {
+				"default": {
+					"animations": ["parallel0", "parallel2", "parallel3", "parallel1", "parallel4", "parallel5", "parallel6", "parallel7"]
+				}
+			}
+		},
+		"player.parallel_4": {
+			"states": {
+				"default": {
+					"animations": ["state"],
+					"transitions": [
+						{"全进去了": "(v.z_d==1?1:0)&&v.z_cs"},
+						{"只露个头": "(v.z_d==2?1:0)&&v.z_cs"},
+						{"出来了": "(v.z_d==0?1:0)&&v.z_cs"}
+					]
+				},
+				"全进去了": {
+					"animations": ["（全进去了）狐狐钻地动画"],
+					"on_exit": ["v.z_cs=0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished"}
+					],
+					"blend_transition": 0.05
+				},
+				"只露个头": {
+					"animations": ["（只钻了个头）狐狐钻地动画"],
+					"on_exit": ["v.z_cs=0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished"}
+					],
+					"blend_transition": 0.05
+				},
+				"出来了": {
+					"animations": ["（出来了）狐狐钻地动画"],
+					"on_exit": ["v.z_cs=0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished"}
+					],
+					"blend_transition": 0.05
+				}
+			}
+		},
+		"player.parallel_5": {
+			"states": {
+				"default": {
+					"animations": ["state"],
+					"transitions": [
+						{"末地烛攻击动画": "v.swing_hand&&v.roaming.end_rod"}
+					]
+				},
+				"末地烛攻击动画": {
+					"animations": [" huhu_end_rod"],
+					"on_entry": ["v.swing_hand=0;"],
+					"sound_effects": [
+						{"effect": ""}
+					],
+					"transitions": [
+						{"default": "q.all_animations_finished"}
+					]
+				}
+			}
+		},
+		"player.parallel_6": {},
+		"player.parallel_7": {},
+		"player.parallel_2": {
+			"states": {
+				"default": {
+					"animations": ["state"],
+					"transitions": [
+						{"dooble动画循环1": "v.dooble"}
+					],
+					"blend_transition": 0.05
+				},
+				"dooble动画循环1": {
+					"animations": ["dooble_cycle"],
+					"transitions": [
+						{"dooble动画循环 2": "q.all_animations_finished"},
+						{"default": "1-v.dooble||query.is_swimming"},
+						{"dooble循环1-1": "v.dooble_switch"}
+					]
+				},
+				"dooble动画循环 2": {
+					"animations": ["dooble_cycle"],
+					"transitions": [
+						{"dooble动画循环1": "q.all_animations_finished"},
+						{"default": "1-v.dooble||query.is_swimming"},
+						{"dooble循环1-1": "v.dooble_switch"}
+					]
+				},
+				"dooble循环1-1": {
+					"animations": ["dooble_cycle_1"],
+					"transitions": [
+						{"dooble循环1-2": "q.all_animations_finished"},
+						{"default": "1-v.dooble||query.is_swimming"},
+						{"dooble动画循环1": "1-v.dooble_switch"}
+					]
+				},
+				"dooble循环1-2": {
+					"animations": ["dooble_cycle_1"],
+					"transitions": [
+						{"dooble循环1-1": "q.all_animations_finished"},
+						{"default": "1-v.dooble||query.is_swimming"},
+						{"dooble动画循环1": "1-v.dooble_switch"}
+					]
+				}
+			}
+		},
+		"player.parallel_3": {
+			"states": {
+				"三份卖霸2": {
+					"animations": ["ctrl:sanfenmaiba"],
+					"transitions": [
+						{"三份麦霸1": "q.all_animations_finished"},
+						{"default": "1-v.sf_m_b"}
+					]
+				},
+				"三份麦霸1": {
+					"animations": ["ctrl:sanfenmaiba"],
+					"transitions": [
+						{"三份卖霸2": "q.all_animations_finished"},
+						{"default": "1-v.sf_m_b"}
+					]
+				},
+				"default": {
+					"animations": ["state"],
+					"transitions": [
+						{"狐狐摇2-1": "(v.owo==5?1:0)&&(v.huhuyao==4?1:0)"},
+						{"三份麦霸1": "v.sf_m_b"},
+						{"狐狐单循环1-1": "(v.owo>0?1:0)&&(v.huhuyao==3?1:0)(v.huhuyao==3?1:0)"},
+						{"狐狐单循环2-1": "(v.owo>0?1:0)&&(v.huhuyao==2?1:0)"},
+						{"狐狐单循环3-1": "(v.owo>0?1:0)&&(v.huhuyao==1?1:0)"}
+					]
+				},
+				"狐狐摇2-1": {
+					"animations": ["狐狐摇2"],
+					"transitions": [
+						{"狐狐摇2-2": "q.all_animations_finished"},
+						{"狐狐摇1-1": "v.owo==21?1:0"},
+						{"狐狐摇3-1": "v.owo==23?1:0"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐摇2-2": {
+					"animations": ["狐狐摇2"],
+					"transitions": [
+						{"狐狐摇2-1": "q.all_animations_finished"},
+						{"狐狐摇1-1": "v.owo==21?1:0"},
+						{"狐狐摇3-1": "v.owo==23?1:0"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐摇1-1": {
+					"animations": ["狐狐摇1"],
+					"transitions": [
+						{"狐狐摇1-2": "q.all_animations_finished"},
+						{"狐狐摇2-1": "v.owo==12?1:0"},
+						{"狐狐摇3-1": "v.owo==13?1:0"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐摇1-2": {
+					"animations": ["狐狐摇1"],
+					"transitions": [
+						{"狐狐摇1-1": "q.all_animations_finished"},
+						{"狐狐摇2-1": "v.owo==12?1:0"},
+						{"狐狐摇3-1": "v.owo==13?1:0"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐摇3-1": {
+					"animations": ["狐狐摇3"],
+					"transitions": [
+						{"狐狐摇3-2": "q.all_animations_finished"},
+						{"狐狐摇1-1": "v.owo==31?1:0"},
+						{"狐狐摇2-1": "v.owo==32?1:0"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐摇3-2": {
+					"animations": ["狐狐摇3"],
+					"transitions": [
+						{"狐狐摇3-1": "q.all_animations_finished"},
+						{"狐狐摇1-1": "v.owo==31?1:0"},
+						{"狐狐摇2-1": "v.owo==32?1:0"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐单循环1-1": {
+					"animations": ["狐狐摇1"],
+					"transitions": [
+						{"狐狐单循环1-2": "q.all_animations_finished"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐单循环1-2": {
+					"animations": ["狐狐摇1"],
+					"transitions": [
+						{"狐狐单循环1-1": "q.all_animations_finished"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐单循环2-1": {
+					"animations": ["狐狐摇2"],
+					"transitions": [
+						{"狐狐单循环2-2": "q.all_animations_finished"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐单循环2-2": {
+					"animations": ["狐狐摇2"],
+					"transitions": [
+						{"狐狐单循环2-1": "q.all_animations_finished"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐单循环3-1": {
+					"animations": ["狐狐摇3"],
+					"transitions": [
+						{"狐狐单循环3-2": "q.all_animations_finished"},
+						{"default": "v.owo==0?1:0"}
+					]
+				},
+				"狐狐单循环3-2": {
+					"animations": ["狐狐摇3"],
+					"transitions": [
+						{"狐狐单循环3-1": "q.all_animations_finished"},
+						{"default": "v.owo==0?1:0"}
+					]
+				}
+			}
+		},
+		"player.parallel_1": {
+			"states": {
+				"default": {
+					"animations": ["state"],
+					"transitions": [
+						{"吃1": "q.is_eating"}
+					]
+				},
+				"吃1": {
+					"animations": [
+						{"use_mainhand:pre_eat": "v.main_eat"},
+						{"use_offhand:pre_eat": "1-v.main_eat"}
+					],
+					"on_entry": ["v.eat=ysm.food_level;"],
+					"transitions": [
+						{"吃2": "q.all_animations_finished"},
+						{"吃后": "!q.is_eating"}
+					]
+				},
+				"吃2": {
+					"animations": [
+						{"use_mainhand:pre_eat2": "v.main_eat"},
+						{"use_offhand:pre_eat2": "1-v.main_eat"}
+					],
+					"transitions": [
+						{"吃后": "!q.is_eating"}
+					]
+				},
+				"吃后": {
+					"animations": [
+						{"use:eat_after": "(ysm.food_level>=20&&(ysm.food_level-v.eat)>0)?1:0"}
+					],
+					"transitions": [
+						{"default": "q.all_animations_finished"}
+					]
+				}
+			}
+		}
+	}
+}

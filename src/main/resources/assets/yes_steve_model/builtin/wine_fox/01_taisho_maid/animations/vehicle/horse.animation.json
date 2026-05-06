@@ -1,0 +1,84 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"forward": {
+			"loop": true,
+			"animation_length": 6.6667,
+			"bones": {
+				"LeftFrontWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"LeftBackWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"RightBackWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"RightFrontWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"GtLeftFrontWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"GtLeftBackWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"GtRightFrontWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				},
+				"GtRightBackWheel": {
+					"rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+				}
+			},
+			"sound_effects": {
+				"0.0": {
+					"effect": "car_run"
+				}
+			}
+		},
+		"has_ride": {
+			"loop": true,
+			"animation_length": 2.9167,
+			"sound_effects": {
+				"0.0": {
+					"effect": "car_idle"
+				}
+			}
+		},
+		"parallel0": {
+			"loop": true,
+			"bones": {
+				"ysmGlowFrontHeadlights": {
+					"scale": 0
+				},
+				"RightFrontWheel": {
+					"scale": 0
+				},
+				"RightBackWheel": {
+					"scale": 0
+				},
+				"LeftBackWheel": {
+					"scale": 0
+				},
+				"LeftFrontWheel": {
+					"scale": 0
+				},
+				"XingLiJia": {
+					"scale": 0
+				}
+			}
+		},
+		"parallel1": {
+			"loop": true,
+			"bones": {
+				"PointerSpeed": {
+					"rotation": [0, 0, "math.clamp(-ysm.ground_speed2*3,-222.5,0)"]
+				},
+				"PointerFuel": {
+					"rotation": [0, 0, -157.5]
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

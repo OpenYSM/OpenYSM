@@ -1,0 +1,118 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.post_swing": {
+			"states": {
+				"default": {
+					"animations": ["attack_empty"],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{
+							"attack1": "v.swing_sword&&!ctrl.jump"
+						},
+						{
+							"attack_jump": "v.swing_sword&&ctrl.jump"
+						}
+					]
+				},
+				"attack1": {
+					"animations": [
+						{
+							"sword_attack_01": "!ctrl.idle"
+						},
+						{
+							"sword_idle_attack_01": "ctrl.idle"
+						}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{
+							"attack2": "v.swing_sword&&!ctrl.jump"
+						},
+						{
+							"default": "q.all_animations_finished"
+						},
+						{
+							"attack_jump": "v.swing_sword&&ctrl.jump"
+						}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				},
+				"attack2": {
+					"animations": [
+						{
+							"sword_attack_02": "!ctrl.idle"
+						},
+						{
+							"sword_idle_attack_02": "ctrl.idle"
+						}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{
+							"attack3": "v.swing_sword&&!ctrl.jump"
+						},
+						{
+							"default": "q.all_animations_finished"
+						},
+						{
+							"attack_jump": "v.swing_sword&&ctrl.jump"
+						}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				},
+				"attack3": {
+					"animations": [
+						{
+							"sword_attack_03": "!ctrl.idle"
+						},
+						{
+							"sword_idle_attack_03": "ctrl.idle"
+						}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{
+							"default": "q.all_animations_finished"
+						},
+						{
+							"attack1": "v.swing_sword&&!ctrl.jump"
+						},
+						{
+							"attack_jump": "v.swing_sword&&ctrl.jump"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0056": 0.96985,
+						"0.0111": 0.88302,
+						"0.0167": 0.75,
+						"0.0222": 0.58682,
+						"0.0278": 0.41318,
+						"0.0333": 0.25,
+						"0.0389": 0.11698,
+						"0.0445": 0.03015,
+						"0.05": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"attack_jump": {
+					"animations": ["sword_jump_attack"],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{
+							"default": "q.all_animations_finished"
+						},
+						{
+							"attack1": "v.swing_sword&&!ctrl.jump"
+						}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"metadata.name": "精灵酒狐",
+	"metadata.tips": "酒狐幻想系列——幻化为精灵的狐娘，身上散发着浓郁的自然灵气。",
+	"properties.extra_animation.extra0": "变身",
+	"properties.extra_animation.extra1": "打招呼",
+	"properties.extra_animation.extra2": "坐方块",
+	"properties.extra_animation.extra3": "蝴蝶显隐",
+	"properties.extra_animation.extra4": "乱舞",
+	"properties.extra_animation.extra5": "卖萌",
+	"properties.extra_animation.extra6": "御笔摇",
+	"properties.extra_animation.extra7": "舞蹈",
+	"metadata.authors.0.name": "星海境",
+	"metadata.authors.0.role": "设计/动画/模型",
+	"metadata.authors.0.comment": "繁星凝望着海洋，海洋拥抱着风帆。",
+	"metadata.authors.1.name": "缇可拉",
+	"metadata.authors.1.role": "模型/材质",
+	"metadata.authors.1.comment": "苯狐可啡缇可拉！",
+	"properties.extra_animation_buttons.蝴蝶显隐.config_forms.0.title": "蝴蝶显隐",
+	"properties.extra_animation_buttons.蝴蝶显隐.config_forms.0.description": "隐藏&显示"
+}

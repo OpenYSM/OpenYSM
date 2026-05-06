@@ -1,0 +1,21 @@
+{
+  "metadata.name": "New Year Hailuo",
+  "metadata.tips": "Red form infused with the power of New Year",
+  "metadata.authors.0.name": "Hailuo",
+  "metadata.authors.0.role": "Animation",
+  "metadata.authors.0.comment": "Wandering among the stars",
+  "metadata.authors.1.name": "Luoren",
+  "metadata.authors.1.role": "Model",
+  "metadata.authors.1.comment": "doro doro",
+  "metadata.authors.2.name": "Zhiban",
+  "metadata.authors.2.role": "Model",
+  "metadata.authors.2.comment": "...",
+  "metadata.authors.3.name": "Baifan Xiaomiao",
+  "metadata.authors.3.role": "Texture",
+  "metadata.authors.3.comment": "meow",
+  "properties.extra_animation.摇": "Shake",
+  "properties.extra_animation.转圈圈": "Spin Around",
+  "properties.extra_animation.席地而坐": "Sit on Ground",
+  "properties.extra_animation.新年快乐": "Happy New Year",
+  "files.player.texture.texture": "Default"
+}

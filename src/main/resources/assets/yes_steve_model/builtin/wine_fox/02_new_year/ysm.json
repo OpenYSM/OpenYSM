@@ -1,0 +1,71 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "New Year Wine Fox（新春酒狐）",
+    "tips": "A fox girl who loves to drink wine.\n一只爱喝葡萄酒的狐娘。",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "就叫纸板",
+        "role": "模型",
+        "avatar": "avatar/zb.avif",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/29208164"
+        },
+        "comment": "杂鱼~杂鱼~"
+      },
+      {
+        "name": "星屑海螺",
+        "role": "动画",
+        "avatar": "avatar/hl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/lucia2048",
+          "Bilibili": "https://space.bilibili.com/14975572"
+        },
+        "comment": "漂泊于群星之中"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "变身",
+      "extra1": "打招呼",
+      "extra2": "鼓掌",
+      "extra3": "是的",
+      "extra4": "不行",
+      "extra5": "卖萌",
+      "extra6": "御笔摇",
+      "extra7": "舞蹈"
+    },
+    "preview_animation": "gui",
+    "free": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json"
+      },
+      "texture": [
+        "textures/skin.png"
+      ]
+    },
+    "arrow": {
+      "model": "models/arrow.json",
+      "texture": "textures/arrow.png",
+      "animation": "animations/arrow.animation.json"
+    }
+  }
+}

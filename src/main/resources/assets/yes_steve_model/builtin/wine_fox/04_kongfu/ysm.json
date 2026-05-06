@@ -1,0 +1,65 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "功夫酒狐",
+    "tips": "打醉拳",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "哥斯拉（映素团队）",
+        "role": "模型",
+        "avatar": "avatar/gsl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "一个MC模型/YSM作者，想法很多，时间很少"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "preview_animation": "gui",
+    "free": true,
+    "disable_preview_rotation": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tac": "animations/tac.animation.json",
+        "tlm": "animations/tlm.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/default.png"
+        },
+        {
+          "uv": "textures/black.png"
+        },
+        {
+          "uv": "textures/yellow.png"
+        },
+        {
+          "uv": "textures/red.png"
+        },
+        {
+          "uv": "textures/default_red.png"
+        },
+        {
+          "uv": "textures/red_more.png"
+        }
+      ]
+    }
+  }
+}

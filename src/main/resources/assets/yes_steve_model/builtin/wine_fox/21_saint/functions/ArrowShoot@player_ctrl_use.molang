@@ -1,0 +1,6 @@
+(v.BowLastUse > ctrl.use('mainhand',':bow')) ? {
+    v.BowLastUse = 0;
+    ysm.play_sound('ArrowFx', 'magic01_shoot', 3);
+    return ctrl.state_continue;
+};
+v.BowLastUse = ctrl.use('mainhand',':bow');

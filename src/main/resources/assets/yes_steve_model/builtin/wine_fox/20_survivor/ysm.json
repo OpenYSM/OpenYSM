@@ -1,0 +1,69 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "幸存者酒狐",
+    "tips": "A fox girl who loves to drink wine.\n一只在末日拾荒的狐娘。",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "玫间霂绒",
+        "role": "模型",
+        "avatar": "avatar/mjmr.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "一只模型/YSM作者，理想很多但很爱摸鱼"
+      }
+    ]
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "变形",
+      "extra1": "打招呼",
+      "extra2": "检视",
+      "extra3": "是的",
+      "extra4": "戴头盔",
+      "extra5": "戴面罩",
+      "extra6": "摘头盔",
+      "extra7": "舞蹈"
+    },
+    "preview_animation": "gui",
+    "free": true,
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "render_layers_first": false,
+    "disable_preview_rotation": false,
+    "all_cutout": false,
+    "gui_no_lighting": false
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "arm": "animations/arm.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/mitao.png"
+        }
+      ]
+    },
+    "projectiles": {
+      "minecraft:trident": {
+        "model": "models/trident.json",
+        "texture": "textures/trident.png",
+        "animation": "animations/trident.animation.json"
+      }
+    }
+  }
+}

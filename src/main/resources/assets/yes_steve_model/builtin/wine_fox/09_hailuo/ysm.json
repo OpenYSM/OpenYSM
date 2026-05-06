@@ -1,0 +1,85 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "星屑海螺",
+    "tips": "沾染了新春之力的红色形态",
+    "license": {
+      "type": "All Rights Reserved"
+    },
+    "authors": [
+      {
+        "name": "星屑海螺",
+        "role": "动画",
+        "avatar": "avatar/星屑海螺.avif",
+        "contact": {
+          "qq": "741330261"
+        },
+        "comment": "漂泊于群星之中"
+      },
+      {
+        "name": "雒仁",
+        "role": "模型",
+        "avatar": "avatar/雒仁.avif",
+        "comment": "doro doro"
+      },
+      {
+        "name": "纸板",
+        "role": "模型",
+        "avatar": "avatar/zb.avif",
+        "contact": {
+          "qq": "1535492940"
+        },
+        "comment": "小牢大肘妈妈"
+      },
+      {
+        "name": "白帆小喵",
+        "role": "纹理",
+        "avatar": "avatar/白帆小喵.avif",
+        "comment": "meow"
+      }
+    ],
+    "link": {
+      "home": "https://space.bilibili.com/14975572",
+      "donate": "https://afdian.com/a/lucia2048"
+    }
+  },
+  "properties": {
+    "height_scale": 0.6,
+    "width_scale": 0.6,
+    "extra_animation": {
+      "摇": "摇",
+      "转圈圈": "转圈圈",
+      "席地而坐": "席地而坐",
+      "新年快乐": "新年快乐"
+    },
+    "preview_animation": "gui",
+    "default_texture": "texture",
+    "free": true,
+    "render_layers_first": false,
+    "disable_preview_rotation": true,
+    "all_cutout": false
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/texture.png"
+        }
+      ]
+    },
+    "arrow": {
+      "model": "models/arrow.json",
+      "texture": {
+        "uv": "textures/arrow.png"
+      }
+    }
+  }
+}

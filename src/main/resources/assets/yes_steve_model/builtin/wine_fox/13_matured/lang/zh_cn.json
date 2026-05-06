@@ -1,0 +1,16 @@
+{
+	"metadata.name": "大酒狐",
+	"metadata.tips": "§7喜欢喝葡萄酒的狐娘。加入了部分小巧思",
+	"metadata.authors.0.name": "受不了老师",
+	"metadata.authors.0.role": "修改",
+	"metadata.authors.0.comment": "OwO",
+	"properties.extra_animation.extra0": "变身 & 雨伞",
+	"properties.extra_animation.extra1": "打招呼",
+	"properties.extra_animation.extra2": "鼓掌",
+	"properties.extra_animation.extra4": "乱舞",
+	"properties.extra_animation.extra5": "卖萌",
+	"properties.extra_animation.extra6": "御币摇",
+	"properties.extra_animation.extra7": "舞蹈",
+	"properties.extra_animation_buttons.extra_config.config_forms.0.title": "雨伞",
+	"properties.extra_animation_buttons.extra_config.config_forms.0.description": "是否显示或隐藏雨伞"
+}

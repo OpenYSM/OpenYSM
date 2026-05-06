@@ -1,0 +1,19 @@
+{
+  "gui.yes_steve_model.close": "Fermer",
+  "gui.yes_steve_model.pre_page": "Page précédente",
+  "gui.yes_steve_model.next_page": "Page suivante",
+  "gui.yes_steve_model.all_models": "Tous les modèles",
+  "gui.yes_steve_model.download": "Ouvrir l'interface de téléchargement",
+  "gui.yes_steve_model.search": "Chercher un modèle...",
+  "gui.yes_steve_model.model.texture": "Ouvrir l'interface de prévisualisation",
+  "gui.yes_steve_model.model.return": "Retour",
+  "gui.yes_steve_model.model.reset": "Réinitialiser la vue",
+  "gui.yes_steve_model.model.stop": "Arrêter Animation",
+  "gui.yes_steve_model.config.disable_self_model": "Empêche le rendu du modèle du joueur",
+  "gui.yes_steve_model.config.disable_other_model": "Empêche le rendu du modèle d'un autre joueur",
+  "gui.yes_steve_model.config.print_animation_roulette_msg": "Afficher ou non le message de lecture de la roulette d'animation",
+  "gui.yes_steve_model.config.disable_self_hands": "Empêche le rendu des mains du joueur",
+  "gui.yes_steve_model.config.disable_player_render": "Désactiver le rendu supplémentaire du joueur",
+  "gui.yes_steve_model.disclaimer.read": "J'ai lu et j'accepte les conditions d'utilisation",
+  "gui.yes_steve_model.disclaimer.close": "Fermer"
+}

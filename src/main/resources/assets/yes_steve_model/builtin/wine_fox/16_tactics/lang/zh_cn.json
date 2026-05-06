@@ -1,0 +1,23 @@
+{
+	"metadata.name": "战术酒狐",
+	"metadata.tips": "战术型酒狐（Tactics Fox），亦或者叫干员酒狐\n来到了不再流行剑与魔法的现代，酒狐作为某组织下属快反部队的\n精英干员，其擅长在敌人据点内部进行突进作战……（编不动哩\n第一个ysm作品，上色比较粗糙，动画方面正在慢慢完善\n改模自新版材质酒狐2.6\n当前版本1.5",
+	"metadata.authors.0.name": "汽水弹珠Pixel",
+	"metadata.authors.0.role": "二创改模",
+	"metadata.authors.0.comment": "小剧场年更中ing",
+	"metadata.authors.1.name": "完美冻结",
+	"metadata.authors.1.role": "模型原作",
+	"metadata.authors.1.comment": "OwO",
+	"metadata.authors.2.name": "星屑海螺",
+	"metadata.authors.2.role": "动画原作",
+	"metadata.authors.2.comment": "漂泊于群星之中",
+	"properties.extra_animation.extra0": "遁地（",
+	"properties.extra_animation.extra1": "打招呼",
+	"properties.extra_animation.extra2": "单手叉腰",
+	"properties.extra_animation.extra3": "Get Down",
+	"properties.extra_animation.extra4": "乱舞",
+	"properties.extra_animation.extra5": "卖萌",
+	"properties.extra_animation.extra6": "御笔摇",
+	"properties.extra_animation.extra7": "舞蹈",
+	"properties.extra_animation_buttons.extra_config.config_forms.0.title": "枪（占位）",
+	"properties.extra_animation_buttons.extra_config.config_forms.1.title": "护目镜"
+}

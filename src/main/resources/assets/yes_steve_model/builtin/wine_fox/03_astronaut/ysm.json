@@ -1,0 +1,84 @@
+{
+	"spec": 2,
+	"metadata": {
+		"name": "宇航员酒狐",
+		"tips": "梦想是星辰大海",
+		"license": {
+			"type": "CC BY-NC-SA 4.0",
+			"desc:": ""
+		},
+		"authors": [
+			{
+				"name": "完全冻结",
+				"avatar": "avatars/af.avif",
+				"role": "模型"
+			},
+			{
+				"name": "星屑海螺",
+				"avatar": "avatars/hl.png",
+				"role": "动画"
+			},
+			{
+				"name": "哥斯拉（映素团队）",
+				"avatar": "avatars/gsl.png",
+				"role": "模型修改"
+			},
+			{
+				"name": "祸御神",
+				"avatar": "avatars/hys.png",
+				"role": "GUI 动画"
+			}
+		],
+		"link": {
+			"home": "https://afdian.com/a/ysmmod",
+			"donate": "https://afdian.com/a/ysmmod"
+		}
+	},
+	"files": {
+		"player": {
+			"model": {
+				"main": "models/main.json",
+				"arm": "models/arm.json"
+			},
+			"animation": {
+				"main": "animations/main.animation.json",
+				"extra": "animations/extra.animation.json",
+				"tac": "animations/tac.animation.json",
+				"carryon": "animations/carryon.animation.json",
+				"arm": "animations/arm.animation.json"
+			},
+			"texture": [
+				{
+					"uv": "textures/skin.png"
+				}
+			],
+			"animation_controllers": ["controller/controller.json"]
+		},
+		"arrow": {
+			"model": "models/arrow.json",
+			"texture": {
+				"uv": "textures/arrow.png"
+			}
+		}
+	},
+	"properties": {
+		"height_scale": 0.7,
+		"width_scale": 0.7,
+		"extra_animation": {
+			"extra0": "",
+			"extra1": "",
+			"extra2": "",
+			"extra3": "",
+			"extra4": "",
+			"extra5": "",
+			"extra6": "",
+			"extra7": ""
+		},
+		"preview_animation": "gui",
+		"free": false,
+		"render_layers_first": false,
+		"disable_preview_rotation": true,
+		"all_cutout": false,
+		"default_texture": "skin"
+	}
+}

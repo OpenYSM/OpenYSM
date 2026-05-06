@@ -1,0 +1,54 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "店员酒狐",
+    "tips": "店员着装",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "圣起司",
+        "role": "贴图&服装修改",
+        "avatar": "avatar/mr_cheese.avif",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/18095414"
+        },
+        "comment": "暂略"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "preview_animation": "gui",
+    "free": true,
+    "disable_preview_rotation": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tac": "animations/tac.animation.json",
+        "tlm": "animations/tlm.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/default.png",
+          "specular": "textures/pbr/texture_s.png"
+        },
+        {
+          "uv": "textures/blue.png",
+          "specular": "textures/pbr/texture_s.png"
+        }
+      ]
+    }
+  }
+}

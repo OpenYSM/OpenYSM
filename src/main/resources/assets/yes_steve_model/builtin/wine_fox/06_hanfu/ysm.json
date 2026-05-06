@@ -1,0 +1,50 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "汉服酒狐",
+    "tips": "汉服",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "就叫纸板",
+        "role": "作者",
+        "avatar": "avatar/zb.avif",
+        "contact": {
+          "donate": "https://afdian.com/a/lucia2048",
+          "Bilibili": "https://space.bilibili.com/29208164"
+        },
+        "comment": "杂鱼~杂鱼~"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "preview_animation": "gui",
+    "free": true,
+    "disable_preview_rotation": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tac": "animations/tac.animation.json",
+        "tlm": "animations/tlm.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/default.png"
+        }
+      ]
+    }
+  }
+}

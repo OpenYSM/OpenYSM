@@ -1,0 +1,58 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "Steve （史蒂夫）",
+    "tips": "原版史蒂夫模型（Minecraft Steve Model）",
+    "license": {
+      "type": "CC 0"
+    },
+    "authors": [
+      {
+        "name": "哥斯拉",
+        "role": "模型",
+        "avatar": "avatar/gsl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "一个MC模型/YSM作者，想法很多，时间很少"
+      },
+      {
+        "name": "端木一动不动",
+        "role": "动画",
+        "avatar": "avatar/dm.png",
+        "comment": "永远都在ing"
+      },
+      {
+        "name": "甜粽子",
+        "role": "动画",
+        "avatar": "avatar/tzz.png",
+        "comment": "(ᗜˬᗜ)"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "height_scale": 1,
+    "width_scale": 1,
+    "free": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "tac": "animations/tac.animation.json"
+      },
+      "texture": [
+        "textures/tartaric_acid.png"
+      ]
+    }
+  }
+}

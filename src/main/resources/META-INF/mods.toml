@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[46,)"
+license="All rights reserved"
+issueTrackerURL="https://github.com/YesSteveModel/YSM-Wiki-Issues/issues"
+
+[[mods]]
+modId="yes_steve_model"
+version="2.6.5-forge+mc1.20.1"
+displayName="Yes Steve Model"
+displayURL="https://ysm.cfpa.team/"
+# updateJSONURL="https://change.me.example.invalid/updates.json"
+logoFile="yesstevemodel.png"
+credits="bernie-g (GeckoLib), fadookie (mclib), TT432 & SQwatermark (helped me solve many difficult problems)"
+authors="YS Group, TartaricAcid, TomatoPuddin, AryochiL"
+description="A mod based on GeckoLib that modifies the player model"
+
+[[dependencies.yes_steve_model]]
+modId="forge"
+mandatory=true
+versionRange="[46,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.yes_steve_model]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20,1.20.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.yes_steve_model]]
+modId="tacz"
+mandatory=false
+versionRange="[1.0.2,)"
+ordering="NONE"
+side="BOTH"

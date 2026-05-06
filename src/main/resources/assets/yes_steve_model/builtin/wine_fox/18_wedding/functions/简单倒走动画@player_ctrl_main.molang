@@ -1,0 +1,13 @@
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+//倒走动画by羊毛
+//本代码采用MIT-0协议开源 连著名都不用（
+//总之添加一个叫walkBack的倒着走的动画就好nya
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+
+(ctrl.walk &&( ysm.input_vertical < 0.1)) ? {
+    ctrl.set_animation('walkBack');
+    ctrl.set_beginning_transition_length(0.2);
+    return ctrl.state_continue;
+};
+ctrl.set_beginning_transition_length(0.1);
+return ctrl.state_bypass;
