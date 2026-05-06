@@ -1,0 +1,23 @@
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+//更随机的眨眼动画by羊毛
+//本代码采用MIT-0协议开源
+
+//请保证此代码所占用的控制器为低并行动画，且为空白。如："更随机的眨眼@player_ctrl_pre_parallel_1.molang"
+//请在动画中添加名为BlinkEye的眨眼动画及名为BlinkTwo的眨两次眼的动画, 且删除pre_parallel_1自带的眨眼(但不删除动画本身)
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+
+v.blinkTickLeft > 0 ? {
+    v.blinkTickLeft = v.blinkTickLeft - 1;
+    return ctrl.state_continue;
+}:{
+    q.all_animations_finished ? {
+        v.blinkTickLeft = math.random_integer(1600,2000);
+        v.BlinkTwo = math.random_integer(0,2);
+    };
+    v.BlinkTwo ? {
+        ctrl.set_animation('BlinkTwo');
+        return ctrl.state_stop;
+    };
+    ctrl.set_animation('BlinkEye');
+    return ctrl.state_stop;
+};

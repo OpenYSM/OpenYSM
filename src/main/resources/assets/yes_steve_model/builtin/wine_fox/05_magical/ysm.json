@@ -1,0 +1,120 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "魔法酒狐",
+    "tips": "来自星海的狐之魔女，传说她居住在一个薰衣草盛开的地方。\n（装备头盔可佩戴魔女帽，弓箭与剑类武器替换为法杖，背后的法杖和弓箭蓄力法阵可通过轮盘动画隐藏。）",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "星海境",
+        "role": "模型/动画修改",
+        "avatar": "avatar/xinghai.avif",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/66634439"
+        },
+        "comment": "繁星凝望着海洋，海洋拥抱着风帆。"
+      },
+      {
+        "name": "伊蕾娜教代行教皇",
+        "role": "帽子模型",
+        "avatar": "avatar/yll.jpg",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/519088494"
+        },
+        "comment": "OwO"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "#staff",
+      "extra1": "#charge_circle",
+      "extra2": "",
+      "extra3": "",
+      "extra4": "",
+      "extra5": "",
+      "extra6": "",
+      "extra7": ""
+    },
+    "preview_animation": "gui",
+    "free": false,
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "render_layers_first": false,
+    "disable_preview_rotation": false,
+    "all_cutout": false,
+    "extra_animation_buttons": [
+      {
+        "id": "staff",
+        "name": "隐藏/显示法杖",
+        "config_forms": [
+          {
+            "type": "checkbox",
+            "title": "隐藏/显示法杖",
+            "description": "隐藏&显示",
+            "value": "v.roaming.B"
+          }
+        ]
+      },
+      {
+        "id": "charge_circle",
+        "name": "蓄力法阵特效开关",
+        "config_forms": [
+          {
+            "type": "checkbox",
+            "title": "关闭蓄力法阵特效",
+            "description": "关闭&开启",
+            "value": "v.roaming.C"
+          }
+        ]
+      }
+    ],
+    "gui_no_lighting": false
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "arm": "animations/arm.animation.json",
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tlm": "animations/tlm.animation.json",
+        "irons_spell_books": "animations/iss.animation.json"
+      },
+      "animation_controllers": [
+        "controller/wine_fox.animation_controllers.json"
+      ],
+      "texture": [
+        {
+          "uv": "textures/magic.png"
+        },
+        {
+          "uv": "textures/winefox.png"
+        },
+        {
+          "uv": "textures/ice.png"
+        },
+        {
+          "uv": "textures/flower.png"
+        },
+        {
+          "uv": "textures/blood.png"
+        },
+        {
+          "uv": "textures/water.png"
+        }
+      ]
+    }
+  }
+}

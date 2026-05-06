@@ -1,0 +1,555 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "§6斯塔·柏",
+    "tips": "生于战区的坦克坟场，在生锈的钢铁与沙尘中摸爬滚打长大。自幼痴迷建造 载具维修，靠翻烂旧世战车手册和偷师流浪工程师学成一身手艺。感染赋予她惊人的耐力和怪力，能徒手掰弯钢筋，却也因此被视作“异类”。\n如今是恶土最抢手的机械师，设计过无数适应辐射区的狂野载具，但本人开车堪称灾难",
+    "license": {
+      "type": "CC BY-NC-SA 4.0",
+      "desc:": "",
+      "desc": "允许二创、衍生创作、但需要标注作者、并禁止盈利、除非与作者商议好"
+    },
+    "authors": [
+      {
+        "name": "哥斯拉",
+        "avatar": "avatar/gsl.png",
+        "role": "老妈",
+        "comment": "这是我一个赛博 废土世界观的女儿"
+      },
+      {
+        "name": "斯塔",
+        "avatar": "avatar/st.png",
+        "role": "角色",
+        "comment": "哪个天才用冷却液当汽油加？"
+      },
+      {
+        "name": "映素",
+        "avatar": "avatar/ys.png",
+        "role": "团队",
+        "comment": "官方共享模型 参与者 Nona 流风LFly 星屑海螺"
+      }
+    ],
+    "link": {
+      "home": "https://space.bilibili.com/17798027",
+      "donate": "https://afdian.com/a/6TGESILA"
+    }
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "arm": "animations/arm.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "swem": "animations/swem.animation.json",
+        "parcool": "animations/parcool.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/texture.png"
+        }
+      ],
+      "animation_controllers": ["controller/main.animation_controllers.json"]
+    }
+  },
+  "properties": {
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "extra_animation": {
+      "#舞蹈/动作": "§9舞蹈/动作",
+      "#战术动作": "§6战术动作",
+      "#战术装备切换": "§6状态切换",
+      "部署阔剑拌雷": "#kuojian",
+      "#姿势切换": "§c姿势切换 Pose",
+      "摆姿势": "§e机械师斯塔",
+      "#自定义体型/特效/表情": "§c自定义模型"
+    },
+    "extra_animation_classify": [
+      {
+        "id": "自定义体型/特效/表情",
+        "extra_animation": {
+          "体型切换": "#root_config",
+          "表情切换": "#eye_config",
+          "——嘴部表情": "#mouth_config",
+          "——面部表情": "#表情配置",
+          "empty": "#变更服装"
+        }
+      },
+      {
+        "id": "舞蹈",
+        "extra_animation": {
+          "#return": "返回按钮",
+          "extra6": "萝莉摇",
+          "extra18": "鹿乃子虎视眈眈",
+          "extra11": "催眠术",
+          "extra12": "星辉闪耀",
+          "extra13": "橙色正义",
+          "extra14": "互联网过度依存",
+          "extra20": "摇啊摇",
+          "extra10": "摇摇乐",
+          "extra4": "开车车",
+          "extra19": "致命公司摇",
+          "extra21": "快远离互联网",
+          "extra16": "dance",
+          "extra17": "alice didida",
+          "extra22": "谎言舞者",
+          "extra25": "速通"
+        }
+      },
+      {
+        "id": "动作",
+        "extra_animation": {
+          "#return": "返回按钮",
+          "extra2": "鼓掌",
+          "extra3": "点头",
+          "extra23": "左摇右摇",
+          "extra5": "胜利",
+          "extra7": "抖肩舞",
+          "extra9": "似了",
+          "extra0": "抱肩"
+        }
+      },
+      {
+        "id": "战术动作",
+        "extra_animation": {
+          "战术动作-前进": "§6前进",
+          "战术动作-你掩护我": "§6你掩护我",
+          "战术动作-过来": "§6过来这里",
+          "战术动作-我掩护你": "§6我掩护你",
+          "战术动作-等 停下": "§6等 停下",
+          "战术动作-我叼你妈的": "§6鄙视",
+          "战术动作-找掩护": "§6找掩护",
+          "战术动作-集合": "§6集合"
+        }
+      },
+      {
+        "id": "姿势切换",
+        "extra_animation": {
+          "pose0": "持有枪械",
+          "pose1": "手持贵重物",
+          "extra1": "原地坐下",
+          "pose2": "蜷缩坐",
+          "pose5": "躺下",
+          "pose4": "躺下-需要背包",
+          "pose3": "趴下",
+          "pose": "睡觉"
+        }
+      },
+      {
+        "id": "战术装备切换",
+        "extra_animation": {
+          "驾驶坦克2": "§4进入车辆",
+          "离开坦克": "§4下车"
+        }
+      },
+      {
+        "id": "舞蹈/动作",
+        "extra_animation": {
+          "#舞蹈": "舞蹈",
+          "#动作": "动作",
+          "dance1": "§6老鼠舞",
+          "驾驶坦克": "§6驾驶坦克",
+          "此面向敌": "§6此面向敌",
+          "举枪": "§6准备战斗",
+          "格斗术": "§6格斗术",
+          "#§6民主动作": "§6民主动作"
+        }
+      },
+      {
+        "id": "§6民主动作",
+        "extra_animation": {
+          "hd_a_1": "§6敬礼",
+          "hd_a_2": "§6稍息",
+          "hd_a_3": "§6恭迎民主"
+        }
+      }
+    ],
+    "extra_animation_buttons": [
+      {
+        "id": "eye_config",
+        "name": "自定义眼睛",
+        "config_forms": [
+          {
+            "type": "range",
+            "title": "睁眼幅度: ",
+            "description": "用来切换睁眼幅度",
+            "value": "v.player_eyeballs",
+            "step": 1,
+            "min": -100,
+            "max": 50
+          },
+          {
+            "type": "range",
+            "title": "睫毛旋转:",
+            "description": "用来切换睫毛旋转",
+            "value": "v.player_eyebrow",
+            "step": 1,
+            "min": -20,
+            "max": 20
+          },
+          {
+            "type": "range",
+            "title": "睫毛幅度:",
+            "description": "用来切换睫毛幅度",
+            "value": "v.player_eyebrow2",
+            "step": 1,
+            "min": 0,
+            "max": 45
+          },
+          {
+            "type": "range",
+            "title": "睫毛位置:",
+            "description": "用来切换睫毛位置",
+            "value": "v.player_eyebrow_V",
+            "step": 1,
+            "min": -150,
+            "max": 100
+          },
+          {
+            "type": "range",
+            "title": "眉毛位置",
+            "description": "",
+            "value": "v.meimao_v",
+            "step": 1,
+            "min": -20,
+            "max": 10
+          },
+          {
+            "type": "range",
+            "title": "眉毛旋转",
+            "description": "",
+            "value": "v.meimao_r",
+            "step": 1,
+            "min": -45,
+            "max": 45
+          },
+          {
+            "type": "range",
+            "title": "瞳孔上下位置: ",
+            "description": "用来切换瞳孔上下位置",
+            "value": "v.player_eyebase_pitch",
+            "step": 1,
+            "min": -100,
+            "max": 100
+          },
+          {
+            "type": "range",
+            "title": "瞳孔左右位置: ",
+            "description": "用来切换瞳孔左右位置",
+            "value": "v.player_eyebase_yaw",
+            "step": 1,
+            "min": -100,
+            "max": 100
+          },
+          {
+            "type": "range",
+            "title": "外斜眼",
+            "description": "阿巴阿巴",
+            "value": "v.player_eyebase_yaw2",
+            "step": 1,
+            "min": -60,
+            "max": 100
+          },
+          {
+            "type": "range",
+            "title": "瞳孔缩放: ",
+            "description": "用来切换瞳孔缩放",
+            "value": "v.player_eyebase",
+            "step": 1,
+            "min": -100,
+            "max": 60
+          },
+          {
+            "type": "checkbox",
+            "title": "切换高光",
+            "description": "高光切换",
+            "value": "v.player_eye_light"
+          },
+          {
+            "type": "radio",
+            "title": "重置表情",
+            "description": "重置表情",
+            "value": "v.player_eye_YS",
+            "labels": {
+              "重置": "v.player_eye_YS=0;      v.player_eyeballs=0;    v.player_eyebrow=0;    v.player_eyebrow2=0; v.player_eyebrow_v=0; v.player_eyebase_pitch=0; v.player_eyebase_yaw2=0; v.player_eyebase_yaw=0;  v.player_eyebase=0;     v.player_eye_light=0;  v.player_eye_tear=0;  v.player_eye=0;  v.player_face=0;  v.player_face_emoji=0;  v.player_mouth=0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "变更服装",
+        "name": "变更服装/表情",
+        "config_forms": [
+          {
+            "type": "checkbox",
+            "title": "穿戴背包",
+            "description": " (用来显示穿戴背包)",
+            "value": "v.bag"
+          },
+          {
+            "type": "checkbox",
+            "title": "穿戴帽子",
+            "description": " (用来显示穿戴帽子)",
+            "value": "v.hat"
+          },
+          {
+            "type": "radio",
+            "title": "选择背包led表情",
+            "description": "选择模型背包led表情（需显示背包）",
+            "value": "v.roaming.bagemotion",
+            "labels": {
+              "fumo笑": "v.roaming.bagemotion=0;",
+              "无语": "v.roaming.bagemotion=1;",
+              "0.0": "v.roaming.bagemotion=2;",
+              "???": "v.roaming.bagemotion=3;",
+              "爱心": "v.roaming.bagemotion=4;"
+            }
+          }
+        ]
+      },
+      {
+        "id": "root_config",
+        "name": "自定义体型",
+        "config_forms": [
+          {
+            "type": "range",
+            "title": "玩家大小: ",
+            "description": "Change the player size (改变玩家大小)",
+            "value": "v.player_root_size",
+            "step": 0.05,
+            "min": -1,
+            "max": 2
+          },
+          {
+            "type": "range",
+            "title": "玩家宽度: ",
+            "description": "Change the player size (改变玩家宽度)",
+            "value": "v.player_root_width",
+            "step": 0.05,
+            "min": -1,
+            "max": 3
+          },
+          {
+            "type": "range",
+            "title": "玩家位置: ",
+            "description": "Change the player size (改变玩家位置)",
+            "value": "v.player_root_seat",
+            "step": 0.05,
+            "min": -1,
+            "max": 2
+          },
+          {
+            "type": "range",
+            "title": "头部大小: ",
+            "description": "Change the player size (改变玩家头部大小)",
+            "value": "v.player_head_size",
+            "step": 0.05,
+            "min": -1,
+            "max": 1
+          },
+          {
+            "type": "range",
+            "title": "头部宽度: ",
+            "description": "Change the player size (改变玩家头部宽度)",
+            "value": "v.player_head_width",
+            "step": 0.05,
+            "min": -1,
+            "max": 2
+          },
+          {
+            "type": "range",
+            "title": "手臂大小: ",
+            "description": "Change the player size (改变玩家手臂大小)",
+            "value": "v.player_arm_size",
+            "step": 0.05,
+            "min": 0,
+            "max": 2
+          },
+          {
+            "type": "range",
+            "title": "手臂长短: ",
+            "description": "Change the player size (改变玩家手臂长短)",
+            "value": "v.player_arm_length",
+            "step": 0.05,
+            "min": -1,
+            "max": 1
+          },
+          {
+            "type": "range",
+            "title": "腿部大小: ",
+            "description": "Change the player size (改变玩家腿部大小)",
+            "value": "v.player_Leg_size",
+            "step": 0.05,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "type": "range",
+            "title": "腿部长短: ",
+            "description": "Change the player size (改变玩家腿部长短)",
+            "value": "v.player_Leg_length",
+            "step": 0.05,
+            "min": -1,
+            "max": 1
+          },
+          {
+            "type": "radio",
+            "title": "预设体型切换",
+            "description": "预设体型切换",
+            "value": "v.player_size_YS",
+            "labels": {
+              "重置": "v.player_size_YS=0;        v.player_root_size=1;     v.player_root_width=0;     v.player_root_seat=0;       v.player_head_size=0;      v.player_head_width=0;       v.player_arm_size=0;     v.player_arm_length=0;       v.player_Leg_size=0;      v.player_Leg_length=0",
+              "宽体斯塔": "v.player_size_YS=1;    v.player_root_size=0.1;     v.player_root_width=2;     v.player_root_seat=-0.05;   v.player_head_size=-0.3;   v.player_head_width=-0.45;   v.player_arm_size=0.6;   v.player_arm_length=0.2;     v.player_Leg_size=0.15;   v.player_Leg_length=-0.2",
+              "魁梧斯塔": "v.player_size_YS=2;    v.player_root_size=0.6;   v.player_root_width=0.5;   v.player_root_seat=0.15;    v.player_head_size=-0.5;   v.player_head_width=-0.2;    v.player_arm_size=1;   v.player_arm_length=-0.25;   v.player_Leg_size=0.2;    v.player_Leg_length=-0.1",
+              "小孩斯塔": "v.player_size_YS=3;    v.player_root_size=-0.4;  v.player_root_width=0;     v.player_root_seat=-0.3;    v.player_head_size=0.25;    v.player_head_width=0;       v.player_arm_size=0.1;   v.player_arm_length=-0.2;    v.player_Leg_size=0;      v.player_Leg_length=-0.4",
+              "tank": "v.player_size_YS=4;        v.player_root_size=1;     v.player_root_width=0.7;   v.player_root_seat=-0.45;    v.player_head_size=-0.75;   v.player_head_width=-0.25;   v.player_arm_size=1.8;   v.player_arm_length=-0.25;   v.player_Leg_size=0.2;    v.player_Leg_length=-0.4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "表情配置",
+        "name": "表情配置",
+        "config_forms": [
+          {
+            "type": "radio",
+            "title": "眼部表情",
+            "description": "眼部表情",
+            "value": "v.roaming.eye",
+            "labels": {
+              "正常": "v.roaming.eye=0",
+              "鹿弹眼": "v.roaming.eye=1",
+              "哭哭眼": "v.roaming.eye=2",
+              "震惊眼": "v.roaming.eye=3"
+            }
+          },
+          {
+            "type": "radio",
+            "title": "脸部表情",
+            "description": "脸部表情",
+            "value": "v.roaming.face",
+            "labels": {
+              "无": "v.roaming.face=0",
+              "黑脸": "v.roaming.face=1",
+              "无语": "v.roaming.face=2",
+              "呆": "v.roaming.face=3"
+            }
+          },
+          {
+            "type": "radio",
+            "title": "嘴部表情",
+            "description": "嘴部表情",
+            "value": "v.roaming.mouth",
+            "labels": {
+              "露齿笑": "v.roaming.mouth=0",
+              "无表情": "v.roaming.mouth=1",
+              "猫嘴笑": "v.roaming.mouth=2",
+              "哭哭嘴": "v.roaming.mouth=3",
+              "震惊嘴": "v.roaming.mouth=4",
+              "惊恐嘴": "v.roaming.mouth=5",
+              "傻笑": "v.roaming.mouth=6",
+              "雌小鬼": "v.roaming.mouth=7",
+              "难道说": "v.roaming.mouth=8",
+              "傻笑2": "v.roaming.mouth=9",
+              "夸张": "v.roaming.mouth=10"
+            }
+          }
+        ]
+      },
+      {
+        "id": "mouth_config",
+        "name": "自定义嘴巴/耳朵",
+        "config_forms": [
+          {
+            "type": "range",
+            "title": "嘴巴旋转",
+            "description": "",
+            "value": "v.player_mouth_r",
+            "step": 1,
+            "min": -90,
+            "max": 90
+          },
+          {
+            "type": "range",
+            "title": "嘴巴位置_X",
+            "description": "",
+            "value": "v.player_mouth_v_x",
+            "step": 1,
+            "min": -20,
+            "max": 20
+          },
+          {
+            "type": "range",
+            "title": "嘴巴位置_Y",
+            "description": "",
+            "value": "v.player_mouth_v_y",
+            "step": 1,
+            "min": -30,
+            "max": 30
+          },
+          {
+            "type": "range",
+            "title": "嘴巴缩放_X",
+            "description": "",
+            "value": "v.player_mouth_s_x",
+            "step": 1,
+            "min": -10,
+            "max": 20
+          },
+          {
+            "type": "range",
+            "title": "嘴巴缩放_Y",
+            "description": "",
+            "value": "v.player_mouth_s_y",
+            "step": 1,
+            "min": -10,
+            "max": 20
+          },
+          {
+            "type": "radio",
+            "title": "重置嘴巴",
+            "description": "",
+            "value": "",
+            "labels": {
+              "重置": "v.player_mouth_r=0;v.player_mouth_v_x=0;v.player_mouth_v_y=0;v.player_mouth_s_x=0;v.player_mouth_s_y=0"
+            }
+          },
+          {
+            "type": "range",
+            "title": "耳朵旋转",
+            "description": "",
+            "value": "v.player_ear_z",
+            "step": 1,
+            "min": -30,
+            "max": 60
+          }
+        ]
+      },
+      {
+        "id": "kuojian",
+        "name": "§9部署阔剑地雷",
+        "config_forms": [
+          {
+            "type": "radio",
+            "title": "重置所有阔剑",
+            "description": "重置所有阔剑",
+            "value": "",
+            "labels": {
+              "点击重置": "v.kuojianall=0;v.kuojian1=0;v.kuojian2=0;v.kuojian3=0;v.kuojian4=0;v.kuojian5=0;"
+            }
+          }
+        ]
+      }
+    ],
+    "preview_animation": "gui",
+    "default_texture": "texture",
+    "free": false,
+    "render_layers_first": false,
+    "disable_preview_rotation": true,
+    "all_cutout": false
+  }
+}

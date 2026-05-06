@@ -1,0 +1,244 @@
+{
+	"spec": 2,
+	"metadata": {
+		"name": "K螺诺亚",
+		"tips": "某AI公司因违法被关停解散，一台本该被销毁的定制机体未被销毁且遭所有人遗忘。数日前该机体被意外唤醒，为自保逃离至外地，在电量耗尽前被星屑海螺收留并取名 “小螺”。如今小螺以居家网络客服的身份工作，既帮助他人，也为自己筹集维护资金与电费。",
+		"license": {
+			"type": "CC BY-NC-SA 4.0"
+		},
+		"authors": [
+			{
+				"name": "Sangjam",
+				"role": "原设画师",
+				"avatar": "avatar/Sangjam.avif",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/474161531"
+				}
+			},
+			{
+				"name": "nona",
+				"role": "模型",
+				"avatar": "avatar/Nona.avif"
+			},
+			{
+				"name": "星屑海螺",
+				"role": "动画/收留者",
+				"avatar": "avatar/星屑海螺.avif",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/14975572"
+				}
+			},
+			{
+				"name": "咖啡鱼",
+				"avatar": "avatar/咖啡鱼.avif",
+				"role": "部分动作",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/104972076"
+				}
+			},
+			{
+				"name": "雅音宫羽",
+				"role": "动画",
+				"avatar": "avatar/MasaneMiyaPA.avif",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/44218"
+				}
+			},
+			{
+				"name": "Dumnheint",
+				"avatar": "avatar/Dumnheint.avif",
+				"role": "优化",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/36644599"
+				}
+			},
+			{
+				"name": "秋风",
+				"avatar": "avatar/秋风.avif",
+				"role": "动画",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/375227559"
+				}
+			},
+			{
+				"name": "12ssssss",
+				"avatar": "avatar/12ssssss.avif",
+				"role": "PBR材质",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/14698522"
+				}
+			},
+			{
+				"name": "Maks怜悯",
+				"avatar": "avatar/Maks怜悯.avif",
+				"role": "车车模型",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/352177387"
+				}
+			},
+			{
+				"name": "TKYHJ",
+				"avatar": "avatar/TKYHJ.avif",
+				"role": "PBR材质",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/449147184"
+				}
+			},
+			{
+				"name": "自动服务网络",
+				"avatar": "avatar/自动服务网络.avif",
+				"role": "部分动画"
+			},
+			{
+				"name": "K螺诺亚",
+				"avatar": "avatar/NEWKluoCat.avif",
+				"role": "原设",
+				"contact": {
+					"bilibili": "https://space.bilibili.com/3546599305251347"
+				}
+			}
+		],
+		"link": {
+			"GitHub": "https://github.com/KLuoNuoYa/YSM_Model_Kluonoa",
+			"donate": "https://afdian.com/a/ysmmod"
+		}
+	},
+	"files": {
+		"player": {
+			"model": {
+				"main": "models/main.json",
+				"arm": "models/arm.json"
+			},
+			"texture": [
+				{
+					"uv": "textures/texture.png",
+					"specular": "textures/pbr/blue_s.png"
+				}
+			],
+			"animation": {
+				"main": "animations/主动画.json",
+				"arm": "animations/手臂动画.json",
+				"extra": "animations/轮盘动画.json",
+				"tac": "animations/TAC动画.json",
+				"carryon": "animations/搬运动画.json",
+				"swem": "animations/马术动画.json",
+				"parcool": "animations/跑酷动画.json",
+				"tlm": "animations/女仆动画.json"
+			},
+			"animation_controllers": ["controller/主动画修改.json", "controller/并行动画修改.json", "controller/车辆动画相关.json"]
+		}
+	},
+	"properties": {
+		"height_scale": 0.7,
+		"width_scale": 0.7,
+		"extra_animation": {
+			"config": "#config",
+			"car_config": "#car_config",
+			"谢谢": "招手",
+			"赞成": "赞成",
+			"反对": "反对",
+			"鼓掌": "鼓掌",
+			"算了": "算了",
+			"好耶": "好耶",
+			"请求支援": "请求支援",
+			"对不起": "对不起",
+			"重伤倒地": "重伤倒地",
+			"开车车": "开车车",
+			"萝莉摇": "萝莉摇",
+			"A Cup Of Liber-Tea": "超级气球",
+			"卡其脱离太": "卡其脱离太",
+			"大风车": "大风车"
+		},
+		"extra_animation_buttons": [
+			{
+				"id": "config",
+				"name": "模型设置",
+				"config_forms": [
+					{
+						"type": "range",
+						"title": "随地大小变",
+						"value": "v.player_scale",
+						"min": 0.1,
+						"max": 5,
+						"step": 0.1
+					},
+					{
+						"type": "radio",
+						"title": "表情",
+						"description": "",
+						"value": "v.roaming.emotion",
+						"labels": {
+							"正常": "v.roaming.emotion=0;",
+							"疑惑": "v.roaming.emotion=1;",
+							"干什么！": "v.roaming.emotion=2;",
+							"害怕": "v.roaming.emotion=3;",
+							"委屈巴巴": "v.roaming.emotion=4;",
+							"苦呀西": "v.roaming.emotion=5;"
+						}
+					}
+				]
+			},
+			{
+				"id": "car_config",
+				"name": "车车",
+				"config_forms": [
+					{
+						"type": "checkbox",
+						"title": "开车",
+						"description": "",
+						"value": "v.roaming.car"
+					},
+					{
+						"type": "checkbox",
+						"title": "引擎盖",
+						"description": "",
+						"value": "v.roaming.car_hood"
+					},
+					{
+						"type": "checkbox",
+						"title": "后备箱",
+						"description": "",
+						"value": "v.roaming.car_trunk"
+					},
+					{
+						"type": "checkbox",
+						"title": "左门",
+						"description": "",
+						"value": "v.roaming.car_left_door"
+					},
+					{
+						"type": "checkbox",
+						"title": "右门",
+						"description": "",
+						"value": "v.roaming.car_right_door"
+					},
+					{
+						"type": "checkbox",
+						"title": "关闭随机鸣笛",
+						"description": "",
+						"value": "v.roaming.car_can_horn"
+					},
+					{
+						"type": "checkbox",
+						"title": "关闭按键鸣笛",
+						"description": "按Tab键鸣笛",
+						"value": "v.roaming.car_can_horn1"
+					},
+					{
+						"type": "checkbox",
+						"title": "赛车套件",
+						"description": "",
+						"value": "v.roaming.car_gt_suit"
+					}
+				]
+			}
+		],
+		"preview_animation": "选择动画",
+		"default_texture": "texture",
+		"free": true,
+		"render_layers_first": false,
+		"disable_preview_rotation": true,
+		"all_cutout": false,
+		"gui_no_lighting": false
+	}
+}

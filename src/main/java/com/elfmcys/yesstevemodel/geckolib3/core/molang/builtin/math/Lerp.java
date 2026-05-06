@@ -1,0 +1,19 @@
+package com.elfmcys.yesstevemodel.geckolib3.core.molang.builtin.math;
+
+import com.elfmcys.yesstevemodel.geckolib3.util.Interpolations;
+import com.elfmcys.yesstevemodel.molang.runtime.ExecutionContext;
+import com.elfmcys.yesstevemodel.molang.runtime.Function;
+
+public class Lerp implements Function {
+    @Override
+    public Object evaluate(ExecutionContext<?> context, ArgumentCollection arguments) {
+        return Interpolations.lerp(arguments.getAsFloat(context, 0),
+                arguments.getAsFloat(context, 1),
+                arguments.getAsFloat(context, 2));
+    }
+
+    @Override
+    public boolean validateArgumentSize(int size) {
+        return size == 3;
+    }
+}

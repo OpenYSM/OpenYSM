@@ -1,0 +1,10 @@
+{
+  "name": "Misc Model",
+  "description": "Some miscellaneous models",
+  "lang": {
+    "zh_cn": {
+      "name": "杂项模型",
+      "description": "一些杂项模型"
+    }
+  }
+}

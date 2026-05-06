@@ -1,0 +1,41 @@
+//懒得写文档之简单BC控制器by羊毛
+//就是BC播放什么这个就播放什么 但限于下面的swing检测的范围内
+//由于不能String拼String 只限于通用使用的动画 比如挥剑的第三击和三叉戟是通用的动画
+//举例:   假设Molang值为one_handed_slash_horizontal_right 则调用名字为“ "one_handed_slash_horizontal_right" ”的动画
+//动画名要加双引号 是个小bug 以后可能会修
+//MIT-0
+
+//非标准BC控制器 整合了未安装BC时的连招逻辑
+
+ysm.mod_version('bettercombat') > 0 ? {
+    ctrl.swing('mainhand',':sword') ? {
+        ctrl.set_animation(ctrl.bcombat_attack_animation);
+        return ctrl.state_continue;
+    } : {
+        return ctrl.state_bypass;
+    };
+} : {
+    ctrl.swing('mainhand', '#minecraft:swords') ? {
+        ctrl.set_beginning_transition_length(0.05);
+        v.attackStage ==  2 ? {
+            ctrl.set_animation('Attackdown4');
+            ysm.play_sound('swingswordtwo', 'swingswordtwo', false);
+            return ctrl.state_continue;
+        };
+        v.attackStage ==  3 ? {
+            ctrl.set_animation('Attackdown5');
+            ysm.play_sound('swingswordspin', 'swingswordspin', false);
+            return ctrl.state_continue;
+        } : {
+            ctrl.set_animation('Attackdown3');
+            ysm.play_sound('swingsword', 'swingsword', false);
+            return ctrl.state_continue;
+        };
+    };
+    q.all_animations_finished ? {
+        ctrl.indicate_reload();
+    };
+
+}
+
+

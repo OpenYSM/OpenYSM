@@ -1,0 +1,21 @@
+{
+  "metadata.name": "功夫酒狐",
+  "metadata.tips": "打醉拳",
+  "metadata.authors.0.name": "哥斯拉",
+  "metadata.authors.0.role": "模型",
+  "metadata.authors.0.comment": "一个MC模型/YSM作者，想法很多，时间很少",
+  "properties.extra_animation.extra0": "诹访大舞",
+  "properties.extra_animation.extra1": "挥手",
+  "properties.extra_animation.extra2": "拍手",
+  "properties.extra_animation.extra3": "YES",
+  "properties.extra_animation.extra4": "NO",
+  "properties.extra_animation.extra5": "耶",
+  "properties.extra_animation.extra6": "摆手",
+  "properties.extra_animation.extra7": "跳舞",
+  "files.player.texture.default": "默认着装",
+  "files.player.texture.black": "黑色着装",
+  "files.player.texture.yellow": "黄色着装",
+  "files.player.texture.red": "红色着装",
+  "files.player.texture.default_red": "红脸默认着装",
+  "files.player.texture.red_more": "超红脸着装"
+}

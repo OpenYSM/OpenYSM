@@ -1,0 +1,52 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"parallel0": {
+			"loop": true,
+			"bones": {
+				"UpPl": {
+					"scale": [1, 1, 1.7]
+				},
+				"DownPl": {
+					"scale": [1, 1, 1.7]
+				},
+				"LeftPl": {
+					"scale": [1, 1, 1.7]
+				},
+				"RightPl": {
+					"scale": [1, 1, 1.7]
+				},
+				"Bowknot": {
+					"rotation": [-131.79505, 25.01686, 25.31665],
+					"position": [0, 0.46362, 0.00564]
+				},
+				"Bowknot2": {
+					"rotation": [10.24133, 29.93127, 11.5741],
+					"position": [-0.08644, -0.19346, 0.05861]
+				},
+				"Bowknot3": {
+					"rotation": [-57.5, 0, 0],
+					"position": [0, 0.08434, 0.05373]
+				},
+				"Bowknot4": {
+					"rotation": [-22.7224, 54.24384, -28.01589],
+					"position": [0.97955, -0.37257, 0.32731]
+				},
+				"Bowknot5": {
+					"rotation": [-5, 80, 0],
+					"position": [0.48151, -0.3, 0.13471]
+				},
+				"Board": {
+					"rotation": [-67.47638, 13.65142, 139.03747],
+					"position": [0, 0, 0]
+				},
+				"Board2": {
+					"rotation": [180, 0, 0]
+				},
+				"Brand": {
+					"rotation": [3.8413, 0.75188, -139.19595]
+				}
+			}
+		}
+	}
+}

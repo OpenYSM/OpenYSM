@@ -1,0 +1,153 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"#player.post_main2": {
+			"initial_state": "idle",
+			"states": {
+				"idle": {
+					"animations": [
+						{"new_idle_empty": "ctrl.walk"}
+					],
+					"transitions": [
+						{"walk_slow": "ysm.ground_speed2 > 0"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.01": 0.896,
+						"0.02": 0.648,
+						"0.03": 0.352,
+						"0.04": 0.104,
+						"0.05": 0
+					}
+				},
+				"walk_slow": {
+					"animations": [
+						{"walk_slow": "!ctrl.jump && !ctrl.fly && !ctrl.elytra_fly && !ctrl.sneak && !ctrl.swim"}
+					],
+					"transitions": [
+						{"walk": "ysm.ground_speed2 >= 3"},
+						{"idle": "ysm.ground_speed2 < 1"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.04": 0.896,
+						"0.08": 0.648,
+						"0.12": 0.352,
+						"0.16": 0.104,
+						"0.2": 0
+					}
+				},
+				"walk": {
+					"animations": [
+						{"walk#": "ctrl.walk"}
+					],
+					"transitions": [
+						{"walk_slow": "ysm.ground_speed2 < 3"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.04": 0.896,
+						"0.08": 0.648,
+						"0.12": 0.352,
+						"0.16": 0.104,
+						"0.2": 0
+					}
+				},
+				"run": {}
+			}
+		},
+		"player.post_main": {
+			"states": {
+				"default": {
+					"animations": ["new_idle_empty"],
+					"transitions": [
+						{"idle1": "v.next_idle == 1 && ctrl.idle && !ctrl.playing_extra_animation"},
+						{"idle2": "v.next_idle == 2 && ctrl.idle && !ctrl.playing_extra_animation"},
+						{"idle3": "v.next_idle == 3 && ctrl.idle && !ctrl.playing_extra_animation"},
+						{"idle4": "v.next_idle == 4 && ctrl.idle && !ctrl.playing_extra_animation"},
+						{"walk_slow": "ysm.ground_speed2 > 0"}
+					],
+					"blend_transition": 0.1
+				},
+				"idle1": {
+					"animations": ["new_idle_1"],
+					"on_exit": ["v.next_idle = 0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished || !ctrl.idle || ctrl.playing_extra_animation"}
+					],
+					"blend_transition": 0.2
+				},
+				"idle2": {
+					"animations": ["new_idle_2"],
+					"on_exit": ["v.next_idle = 0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished || !ctrl.idle || ctrl.playing_extra_animation"}
+					],
+					"blend_transition": 0.2
+				},
+				"idle3": {
+					"animations": ["new_idle_3"],
+					"on_exit": ["v.next_idle = 0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished || !ctrl.idle || ctrl.playing_extra_animation"}
+					],
+					"blend_transition": 0.2
+				},
+				"idle4": {
+					"animations": ["new_idle_4"],
+					"on_exit": ["v.next_idle = 0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished || !ctrl.idle || ctrl.playing_extra_animation"}
+					],
+					"blend_transition": 0.2
+				},
+				"walk_slow": {
+					"animations": [
+						{"walk_slow": "ctrl.walk"}
+					],
+					"transitions": [
+						{"walk": "ysm.ground_speed2 >= 3"},
+						{"default": "ysm.ground_speed2 == 0"}
+					],
+					"blend_transition": 0.15
+				},
+				"walk": {
+					"animations": [
+						{"walk#": "ctrl.walk"}
+					],
+					"transitions": [
+						{"walk_slow": "ysm.ground_speed2 < 3"},
+						{"run": "ysm.ground_speed2 >= 5"}
+					],
+					"blend_transition": 0.1
+				},
+				"run": {
+					"animations": [
+						{"run#": "ctrl.run||ctrl.walk"}
+					],
+					"transitions": [
+						{"walk": "ysm.ground_speed2 < 5"}
+					],
+					"blend_transition": 0.05
+				}
+			}
+		},
+		"player.parallel_5": {},
+		"player.parallel_6": {
+			"initial_state": "no_backpack",
+			"states": {
+				"no_backpack": {
+					"transitions": [
+						{"has_backpack": "ctrl.armor('chest', '$sophisticatedbackpacks:backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:copper_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:iron_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:gold_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:diamond_backpack') || ctrl.armor('chest', '$sophisticatedbackpacks:netherite_backpack') || ysm.has_any_curios('back', 'sophisticatedbackpacks:backpack', 'sophisticatedbackpacks:copper_backpack', 'sophisticatedbackpacks:iron_backpack', 'sophisticatedbackpacks:gold_backpack', 'sophisticatedbackpacks:diamond_backpack', 'sophisticatedbackpacks:netherite_backpack')"}
+					]
+				},
+				"has_backpack": {
+					"animations": ["gunhuan"],
+					"transitions": [
+						{"no_backpack": "!ctrl.armor('chest', '$sophisticatedbackpacks:backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:copper_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:iron_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:gold_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:diamond_backpack') && !ctrl.armor('chest', '$sophisticatedbackpacks:netherite_backpack') && !ysm.has_any_curios('back', 'sophisticatedbackpacks:backpack', 'sophisticatedbackpacks:copper_backpack', 'sophisticatedbackpacks:iron_backpack', 'sophisticatedbackpacks:gold_backpack', 'sophisticatedbackpacks:diamond_backpack', 'sophisticatedbackpacks:netherite_backpack')"}
+					]
+				}
+			}
+		}
+	}
+}

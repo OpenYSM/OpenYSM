@@ -1,0 +1,23 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.armor_head": {
+			"states": {
+				"default": {
+					"animations": ["state"],
+					"transitions": [
+						{"狐狐帽子": "ysm.has_helmet"}
+					]
+				},
+				"狐狐帽子": {
+					"animations": [
+						{"ctrl:small_huhu": "1-v.roaming.smallfox_size"}
+					],
+					"transitions": [
+						{"default": "!ysm.has_helmet"}
+					]
+				}
+			}
+		}
+	}
+}

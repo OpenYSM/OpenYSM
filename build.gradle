@@ -1,0 +1,209 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+version = '2.6.5-forge+mc1.20.1'
+group = 'com.elfmcys.yesstevemodel'
+
+java {
+    archivesBaseName = 'ysm'
+
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+
+    copyIdeResources = true
+
+    runs {
+        client {
+            jvmArgs = [
+                    "-XX:+IgnoreUnrecognizedVMOptions",
+                    "-XX:+AllowEnhancedClassRedefinition"
+            ]
+            workingDirectory project.file('run/client_a')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'yes_steve_model'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods {
+                yes_steve_model {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client2 {
+            parent minecraft.runs.client
+            workingDirectory project.file('run/client_b')
+            args '--username', 'tartaric_acid'
+            mods {
+                yes_steve_model {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run/server')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'yes_steve_model'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods {
+                yes_steve_model {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+jarJar.enable()
+
+mixin {
+    add sourceSets.main, 'yes_steve_model.refmap.json'
+    config 'yes_steve_model.mixins.json'
+}
+
+repositories {
+    flatDir {
+        dir 'libs'
+    }
+    maven { url = uri("https://jitpack.io") }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:1.20.1-47.4.0"
+
+    compileOnly fg.deobf('libs:elytraslot-forge:6.4.4+1.20.1')
+    compileOnly fg.deobf('libs:firstperson-forge:2.7.0-mc1.20.1')
+    compileOnly fg.deobf('libs:immersive_melodies:0.6.0+1.20.1-forge')
+    compileOnly fg.deobf('libs:player-animation-lib-forge:1.0.2-rc1+1.20')
+    compileOnly fg.deobf('libs:touhoulittlemaid:1.5.0-forge+mc1.20.1-release')
+    compileOnly fg.deobf("libs:tacz:1.20.1-1.1.7-hotfix2")
+    compileOnly fg.deobf("libs:carryon-forge:1.20.1-2.1.0.1")
+    compileOnly fg.deobf("libs:theoneprobe:1.20.1-10.0.3")
+    compileOnly fg.deobf("libs:curios-forge:5.7.0+1.20.1")
+    compileOnly fg.deobf("libs:sophisticatedcore:1.20.1-1.3.13.1588")
+    compileOnly fg.deobf("libs:sophisticatedbackpacks:1.20.1-3.24.31.1628")
+    compileOnly fg.deobf("libs:cosmeticarmorreworked:1.20.1-v1a")
+    compileOnly fg.deobf("libs:swem:1.20.1-1.6.5")
+    compileOnly fg.deobf("libs:simpleplanes:1.20.1-5.3.3")
+    compileOnly fg.deobf("libs:irons_spellbooks:1.20.1-3.15.5.1")
+    compileOnly fg.deobf("libs:ParCool:1.20.1-3.4.3.2")
+    compileOnly fg.deobf("libs:immersive_aircraft:1.4.0+1.20.1-forge")
+    compileOnly fg.deobf("libs:bettercombat-forge:1.9.0+1.20.1")
+    compileOnly fg.deobf("libs:Jade:1.20.1-Forge-11.13.2")
+    compileOnly fg.deobf("libs:superbwarfare:1.20.1-0.8.8-final-6a6b54795")
+    compileOnly fg.deobf("libs:realcamera:1.20.1-forge-0.6.11a-beta")
+    compileOnly fg.deobf("libs:SlashBladeResharped:1.20.1-0.1.4")
+    compileOnly fg.deobf("libs:SlashBlade:1.20.1-0.1.2")
+    compileOnly fg.deobf("libs:oculus:mc1.20.1-1.8.0")
+    implementation fg.deobf("libs:oculus_legacy:mc1.20.1-1.6.13")
+    compileOnly fg.deobf("libs:geckolib-forge:1.20.1-4.8.3")
+    compileOnly fg.deobf("libs:create:1.20.1-6.0.8")
+    compileOnly fg.deobf("libs:simplehats-forge:1.20.1-0.4.0a")
+    compileOnly fg.deobf("libs:accessories-neoforge:1.0.0-beta.48+1.20.1")
+
+    minecraftLibrary("com.github.OpenYSM:ImageStream:-SNAPSHOT")
+    jarJar("com.github.OpenYSM:ImageStream:-SNAPSHOT") {
+        jarJar.ranged(it, "[-SNAPSHOT,)")
+    }
+
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {
+        jarJar.ranged(it, "[0.3.6,)")
+    }
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+tasks.register('compileNative') {
+    if(true){ // TODO
+        return false
+    }
+    def osName = System.getProperty("os.name").toLowerCase(Locale.ROOT)
+    def isWindows = osName.contains("win")
+    def isLinux = osName.contains("linux")
+    def isMac = osName.contains("mac")
+    def isCI = System.getenv("GITHUB_ACTIONS") == "true"
+
+    def generatedBase = file("src/generated/resources/META-INF/native")
+    def cmake = isWindows ? "cmake.exe" : "cmake"
+    if (!isCI && isMac) cmake = "/opt/local/bin/cmake"
+
+    inputs.dir("src/main/native")
+    outputs.dir(generatedBase)
+
+    onlyIf {
+        try {
+            return [cmake, "--version"].execute().waitFor() == 0
+        } catch (ignored) {
+            println "CMake not found."
+            return false
+        }
+    }
+
+    doLast {
+        def configs
+        if (isWindows) configs = [[arch: "x64", folder: "windows-x64"], [arch: "Win32", folder: "windows-x86"]]
+        else if (isMac) configs = [[arch: "x86_64", folder: "macos-x64"], [arch: "arm64", folder: "macos-arm64"]]
+        else if (isLinux) configs = [[arch: "x64", folder: "linux-x64"]]
+        else configs = []
+
+        def libName = isWindows ? "ysm-core.dll" : (isMac ? "libysm-core.dylib" : "libysm-core.so")
+
+        configs.each { conf ->
+            def buildDir = file("${project.buildDir}/cmake-temp/${conf.folder}")
+            def targetDir = file("${generatedBase}/${conf.folder}")
+            buildDir.mkdirs()
+
+            def configArgs = [cmake, "-S", projectDir.absolutePath, "-B", buildDir.absolutePath, "-DCMAKE_BUILD_TYPE=Release"]
+            if (isWindows) {
+                if (isCI) configArgs += ["-G", "Visual Studio 17 2022"]
+                configArgs += ["-A", conf.arch]
+            } else if (isMac) {
+                configArgs += "-DCMAKE_OSX_ARCHITECTURES=${conf.arch}"
+            }
+            exec { commandLine configArgs }
+
+            exec { commandLine cmake, "--build", buildDir.absolutePath, "--config", "Release" }
+
+            def builtFile = isWindows ? file("${buildDir}/Release/${libName}") : file("${buildDir}/${libName}")
+            if (!builtFile.exists()) throw new GradleException("File not found: ${builtFile}")
+
+            targetDir.mkdirs()
+            copy {
+                from builtFile
+                into targetDir
+            }
+        }
+    }
+}
+
+processResources.dependsOn compileNative
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                "Implementation-Title"  : project.name,
+                "Implementation-Version": "${version}"
+        ])
+    }
+
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

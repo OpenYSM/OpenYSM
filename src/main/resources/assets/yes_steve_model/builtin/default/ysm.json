@@ -1,0 +1,174 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "Default",
+    "tips": "默认模型（Default Model）",
+    "license": {
+      "type": "CC 0"
+    },
+    "authors": [
+      {
+        "name": "哥斯拉",
+        "role": "模型",
+        "avatar": "avatar/gsl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "一个MC模型/YSM作者，想法很多，时间很少"
+      },
+      {
+        "name": "端木一动不动",
+        "role": "动画",
+        "avatar": "avatar/dm.png",
+        "comment": "永远都在ing"
+      },
+      {
+        "name": "甜粽子",
+        "role": "动画",
+        "avatar": "avatar/tzz.png",
+        "comment": "(ᗜˬᗜ)"
+      },
+      {
+        "name": "星屑海螺",
+        "role": "动画",
+        "avatar": "avatar/hl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/lucia2048",
+          "Bilibili": "https://space.bilibili.com/14975572"
+        },
+        "comment": "漂泊于群星之中"
+      },
+      {
+        "name": "蓝玫瑰",
+        "role": "材质/模型",
+        "avatar": "avatar/lmg.png",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/11814817"
+        },
+        "comment": "8月24号，传奇永不落幕"
+      },
+      {
+        "name": "艾雷克亚",
+        "role": "铁魔法动画",
+        "avatar": "avatar/arekya.jpg",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/480946180"
+        },
+        "comment": "发癫"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "extra_animation": {
+      "extra0": "#extra_config",
+      "extra1": "",
+      "extra2": "",
+      "extra3": "",
+      "extra4": "",
+      "extra5": "",
+      "extra6": "",
+      "extra7": ""
+    },
+    "extra_animation_buttons": [
+      {
+        "id": "extra_config",
+        "name": "0",
+        "config_forms": [
+          {
+            "type": "checkbox",
+            "title": "headdress/头饰",
+            "description": "Used to hide/show the red bow headdress (用来显示或开启玩家头饰)",
+            "value": "v.roaming.red_bow_headdress"
+          }
+        ]
+      }
+    ],
+    "extra_animation_classify": [],
+    "preview_animation": "gui",
+    "disable_preview_rotation": true,
+    "gui_no_lighting": false,
+    "gui_foreground": "textures/gui/foreground.png",
+    "gui_background": "textures/gui/background.png",
+    "default_texture": "default",
+    "render_layers_first": false,
+    "merge_multiline_expr": true,
+    "free": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "arm": "animations/arm.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "parcool": "animations/parcool.animation.json",
+        "swem": "animations/swem.animation.json",
+        "slashblade": "animations/slashblade.animation.json",
+        "tlm": "animations/tlm.animation.json",
+        "immersive_melodies": "animations/im.animation.json",
+        "irons_spell_books": "animations/iss.animation.json",
+        "fp_arm": "animations/fp.arm.animation.json"
+      },
+      "animation_controllers": [],
+      "texture": [
+        "textures/default.png",
+        "textures/blue.png"
+      ]
+    },
+    "projectiles": [
+      {
+        "match": ["minecraft:arrow"],
+        "model": "models/arrow.json",
+        "animation": "animations/arrow.animation.json",
+        "texture": "textures/arrow.png"
+      },
+      {
+        "match": ["minecraft:trident"],
+        "model": "models/trident.json",
+        "texture": "textures/trident.png"
+      },
+      {
+        "match": ["minecraft:fishing_bobber"],
+        "model": "models/fishing_bobber.json",
+        "texture": "textures/fishing_bobber.png"
+      },
+      {
+        "match": ["minecraft:firework_rocket"],
+        "model": "models/firework_rocket.json",
+        "texture": "textures/firework_rocket.png"
+      }
+    ],
+    "vehicles": [
+      {
+        "match": ["minecraft:boat"],
+        "model": "models/boat.json",
+        "animation": "animations/boat.animation.json",
+        "texture": "textures/boat.png"
+      },
+      {
+        "match": ["minecraft:chest_boat"],
+        "model": "models/chest_boat.json",
+        "animation": "animations/boat.animation.json",
+        "texture": "textures/boat.png"
+      },
+      {
+        "match": ["minecraft:minecart"],
+        "model": "models/minecart.json",
+        "texture": "textures/minecart.png"
+      }
+    ],
+    "sound_path": "sounds"
+  }
+}

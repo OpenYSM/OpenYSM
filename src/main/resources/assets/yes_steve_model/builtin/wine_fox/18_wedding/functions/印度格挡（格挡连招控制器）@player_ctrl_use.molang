@@ -1,0 +1,96 @@
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+//印度格挡(连续防御)控制器by羊毛
+//本代码采用MIT协议开源 请在模型作者列表中著名谢谢喵(虽然其实不著名咱也不会怎么样就是啦)
+//
+//请保证此代码所占用的控制器为使用动画，且为空白。如:"印度格挡@player_ctrl_use.molang"
+//
+/////————————————————————————————————————此代码相对复杂，请认真阅读使用方法—————————————————————————————————————————————————————————————————————————————/////
+//需要准备七个动画 对应四个格挡连招
+//  Def2~4为过渡动画
+//  PefectDef与PefectDef2~4为格挡成功时的动画
+//
+//动画流程为:
+//  use_offhand:shield ——格挡成功——→ PefectDef → Def2 ——格挡成功——→ PefectDef2 → Def3 ——格挡成功——→ PefectDef3 → Def4 ——格挡成功——→ PefectDef4 →复位
+//
+//PefectDef动画规范:
+//  在动画的第0.08s 或 0.13s添加v.isDef = 2~4  在 PefectDef4(连招的最后一段格挡成功) 中添加v.isDef = 0
+//  动画时长最好为0.25s
+//  建议以上一个Def动画的迎击姿势作为初始帧
+//
+//Def动画规范:
+//  动画时长任意，目的为衔接动画
+//  建议以前一个PefectDef动画的第0.13s帧为Def动画的初始帧，并在该动画0.21s时调整为接下来的迎击姿势
+//  在动画的最后添加 v.isDef = 0
+//
+//此外，可以准备两个音效，def1和def2
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————//
+
+ctrl.use('offhand',':shield') ? {
+    ysm.in_shield_block_cooldown ? {
+        //这里是一个计数器，计算格挡成功后的时间
+        v.deftime = v.deftime + 1;
+
+        //只有格挡成功后的第一帧播放音效
+        v.deftime == 1 ? {
+            //随机播放音效def1或def2
+            v.rand = math.random(1, 3);
+            v.rand > 2 ? {
+                ysm.play_sound('def1', 'def1', 3);
+            } : {
+                ysm.play_sound('def2', 'def2', 3);
+            };
+            ctrl.indicate_reload();
+        };
+
+        //动画播放逻辑，只有格挡成功后的第一帧设置动画
+        v.isDef == 3 && v.deftime == 1 ? {
+            ctrl.set_beginning_transition_length(0.1);//设置过渡时间
+            ctrl.set_animation('PefectDef3');//设置动画
+        };
+        v.isDef == 4 && v.deftime == 1 ? {
+            ctrl.set_beginning_transition_length(0.1);
+            ctrl.set_animation('PefectDef4');
+        };
+        v.isDef == 2 && v.deftime == 1 ? {
+            ctrl.set_beginning_transition_length(0.1);
+            ctrl.set_animation('PefectDef2');
+        } : {
+            v.deftime == 1 && v.isDef == 0 ? {
+                ctrl.set_beginning_transition_length(0.1);
+                ctrl.set_animation('PefectDef');
+            };
+        };
+        return ctrl.state_continue;
+    };
+
+    //过渡动画控制逻辑
+    v.isDef == 2 ? {
+        ctrl.set_beginning_transition_length(0.2);  //设置过渡时长
+        v.deftime = 0;                              //让格挡成功时间归零
+        ctrl.set_animation('Def2');                 //设置动画
+        return ctrl.state_continue;                 //继续播放
+    };
+    v.isDef == 3 ? {
+        ctrl.set_beginning_transition_length(0.2);
+        v.deftime = 0;
+        ctrl.set_animation('Def3');
+        return ctrl.state_continue;
+    };
+    v.isDef == 4 ? {
+        ctrl.set_beginning_transition_length(0.2);
+        v.deftime = 0;
+        ctrl.set_animation('Def4');
+        return ctrl.state_continue;
+    };
+    //这里过渡动画播放完毕后复位回内置控制器持盾动画
+    q.all_animations_finished ? {
+        ctrl.indicate_reload();
+        v.deftime = 0;
+        return ctrl.state_bypass;
+    };
+} : {
+    v.isDef = 0;    //没有使用盾就归零
+};
+
+v.deftime = 0;      //归零
+return ctrl.state_bypass;

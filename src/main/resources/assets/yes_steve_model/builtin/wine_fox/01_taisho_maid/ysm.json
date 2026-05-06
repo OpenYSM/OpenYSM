@@ -1,0 +1,184 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "Wine Fox（酒狐）",
+    "tips": "一只爱喝葡萄酒的狐娘。\nA fox girl who loves to drink wine.\n乱舞参考自 VRChat 的永雏塔菲动画。\n音乐为改编的 Zufolo Impazzito。",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "完美冻结",
+        "role": "模型原作",
+        "avatar": "avatar/wmdj.jpg",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "OwO"
+      },
+      {
+        "name": "星屑海螺",
+        "role": "动画原作",
+        "avatar": "avatar/hl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/lucia2048",
+          "Bilibili": "https://space.bilibili.com/14975572"
+        },
+        "comment": "漂泊于群星之中"
+      },
+      {
+        "name": "哥斯拉（映素团队）",
+        "role": "模型修改",
+        "avatar": "avatar/gsl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "一个MC模型/YSM作者，想法很多，时间很少"
+      },
+      {
+        "name": "白帆小喵",
+        "role": "新版材质",
+        "avatar": "avatar/bfxm.jpg",
+        "comment": "一只爱玩mc的小猫咪罢了qwq",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/492836494"
+        }
+      },
+      {
+        "name": "蓝玫瑰",
+        "role": "UI 材质/贴图",
+        "avatar": "avatar/lmg.png",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/11814817"
+        },
+        "comment": "8月24号，传奇永不落幕"
+      },
+      {
+        "name": "墨染逝羽",
+        "role": "面具模型",
+        "avatar": "avatar/mrsy.png",
+        "comment": "事到如今，先摸鱼吧",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/5718046"
+        }
+      },
+      {
+        "name": "Maks怜悯",
+        "role": "载具模型",
+        "avatar": "avatar/maks.jpg",
+        "comment": "ysm人偶制作中～",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/352177387"
+        }
+      },
+      {
+        "name": "浅陌菌",
+        "role": "模型修改",
+        "avatar": "avatar/nico.png",
+        "comment": "最美好的前途，可不要对我冷酷",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/14975572"
+        }
+      },
+      {
+        "name": "祸御神",
+        "role": "动画修改",
+        "avatar": "avatar/hys.png",
+        "comment": "五十代精神病人",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/164557734"
+        }
+      },
+      {
+        "name": "羊毛",
+        "role": "音效/动画修改",
+        "avatar": "avatar/wool.png",
+        "comment": "喵喵喵喵",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/85335217"
+        }
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "变身",
+      "extra1": "打招呼",
+      "extra2": "鼓掌",
+      "extra3": "Get Down",
+      "extra4": "乱舞",
+      "extra5": "卖萌",
+      "extra6": "御笔摇",
+      "extra7": "舞蹈"
+    },
+    "preview_animation": "gui",
+    "disable_preview_rotation": true,
+    "free": true
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tlm": "animations/tlm.animation.json",
+        "fp_arm": "animations/fp.arm.animation.json"
+      },
+      "animation_controllers": [
+        "controller/wine_fox.animation_controllers.json"
+      ],
+      "texture": [
+        "textures/skin.png",
+        "textures/skin_white.png"
+      ]
+    },
+    "projectiles": {
+      "minecraft:arrow": {
+        "model": "models/arrow.json",
+        "animation": "animations/arrow.animation.json",
+        "texture": "textures/arrow.png"
+      },
+      "minecraft:trident": {
+        "model": "models/trident.json",
+        "texture": "textures/trident.png"
+      }
+    },
+    "vehicles": {
+      "minecraft:horse": {
+        "model": "models/foxcar.json",
+        "texture": {
+          "uv": "textures/foxcar.png",
+          "specular": "textures/foxcar_s.png"
+        },
+        "animation": "animations/vehicle/horse.animation.json"
+      },
+      "minecraft:mule": {
+        "model": "models/foxcar.json",
+        "texture": {
+          "uv": "textures/foxcar.png",
+          "specular": "textures/foxcar_s.png"
+        },
+        "animation": "animations/vehicle/mule.animation.json"
+      },
+      "minecraft:minecart": {
+        "model": "models/minecart.json",
+        "texture": "textures/minecart.png"
+      },
+      "minecraft:boat": {
+        "model": "models/boat.json",
+        "texture": "textures/boat.png"
+      }
+    }
+  }
+}

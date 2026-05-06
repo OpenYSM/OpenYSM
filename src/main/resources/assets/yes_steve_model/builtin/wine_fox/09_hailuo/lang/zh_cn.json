@@ -1,0 +1,20 @@
+{
+  "metadata.name": "新春海螺螺",
+  "metadata.tips": "沾染了新春之力的红色形态",
+  "metadata.authors.0.name": "星屑海螺",
+  "metadata.authors.0.role": "动画",
+  "metadata.authors.0.comment": "漂泊于群星之中",
+  "metadata.authors.1.name": "雒仁",
+  "metadata.authors.1.role": "模型",
+  "metadata.authors.1.comment": "doro doro",
+  "metadata.authors.2.name": "纸板",
+  "metadata.authors.2.role": "模型",
+  "metadata.authors.2.comment": "小科比肘妈妈",
+  "metadata.authors.3.name": "白帆小喵",
+  "metadata.authors.3.role": "纹理",
+  "metadata.authors.3.comment": "meow",
+  "properties.extra_animation.摇": "摇",
+  "properties.extra_animation.转圈圈": "转圈圈",
+  "properties.extra_animation.席地而坐": "席地而坐",
+  "properties.extra_animation.新年快乐": "新年快乐"
+}

@@ -1,0 +1,583 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.pre_parallel_0": {
+			"states": {
+				"default": {
+					"animations": ["Hair_Physics", "pre_parallel1", "pre_parallel2", "pre_parallel3", "pre_parallel4", "pre_parallel5", "pre_parallel6", "pre_parallel7"]
+				}
+			}
+		},
+		"player.parallel_0": {
+			"states": {
+				"default": {
+					"animations": ["parallel0", "parallel1", "parallel2", "parallel3", "parallel4", "parallel5", "parallel6", "parallel7"]
+				}
+			}
+		},
+		"player.hold_offhand": {
+			"states": {
+				"default": {
+					"animations": ["hold_offhand:empty"],
+					"transitions": [
+						{"sword": "ctrl.hold('offhand', ':sword')"},
+						{"bow": "ctrl.hold('offhand', ':bow')"},
+						{"shield": "ctrl.hold('offhand', ':shield')"},
+						{"spear": "ctrl.hold('offhand', ':spear')"},
+						{"pickaxe": "ctrl.hold('offhand', ':pickaxe')||ctrl.hold('offhand', ':shovel')||ctrl.hold('offhand', ':hoe')"},
+						{"axe": "ctrl.hold('offhand', ':axe')"},
+						{"mace": "ctrl.hold('offhand', '$minecraft:mace')"},
+						{"crossbow": "ysm.offhand_charged_crossbow"},
+						{"potion": "ctrl.hold('offhand', ':throwable_potion')"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"sword": {
+					"animations": ["hold_offhand:sword"],
+					"transitions": [
+						{"sword_idle": "q.all_animations_finished"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"sword_idle": {
+					"animations": ["hold_offhand:sword_idle"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':sword')"},
+						{"sword_not_idle": "!ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"sword_not_idle": {
+					"animations": ["hold_offhand:sword_not_idle"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':sword')"},
+						{"sword_idle": "ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"bow": {
+					"animations": ["hold_offhand:bow"],
+					"transitions": [
+						{"bow_idle": "q.all_animations_finished"},
+						{"default": "!ctrl.hold('offhand', ':bow')"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"bow_idle": {
+					"animations": ["attack_empty"],
+					"transitions": [
+						{"bow_use": "ctrl.use('offhand', ':bow')"},
+						{"default": "!ctrl.hold('offhand', ':bow')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"bow_use": {
+					"animations": ["use_offhand:bow"],
+					"transitions": [
+						{"bow_shoot": "!ctrl.use('offhand', ':bow')&&ctrl.hold('offhand', ':bow')"},
+						{"default": "!ctrl.hold('offhand', ':bow')"}
+					]
+				},
+				"bow_shoot": {
+					"animations": ["hold_offhand:bow_shoot"],
+					"transitions": [
+						{"bow_idle": "q.all_animations_finished"},
+						{"bow_use": "ctrl.use('offhand', ':bow')"},
+						{"default": "!ctrl.hold('offhand', ':bow')"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0056": 0.96571,
+						"0.0111": 0.8738,
+						"0.0167": 0.74074,
+						"0.0222": 0.58299,
+						"0.0278": 0.41701,
+						"0.0333": 0.25926,
+						"0.0389": 0.1262,
+						"0.0444": 0.03429,
+						"0.05": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"crossbow": {
+					"animations": ["hold_offhand:charged_crossbow"],
+					"transitions": [
+						{"crossbow_shoot": "!ysm.offhand_charged_crossbow&&ctrl.hold('offhand', ':crossbow')"},
+						{"default": "!ctrl.hold('offhand', ':crossbow')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"crossbow_shoot": {
+					"animations": ["hold_offhand:crossbow_shoot"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':crossbow')||q.all_animations_finished"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"shield": {
+					"animations": ["hold_offhand:shield"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':shield')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"spear": {
+					"animations": ["hold_offhand:spear"],
+					"transitions": [
+						{"spear_not_idle": "q.all_animations_finished&&!ctrl.idle"},
+						{"spear_idle": "q.all_animations_finished&&ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"spear_idle": {
+					"animations": ["hold_offhand:spear_idle"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':spear')"},
+						{"spear_not_idle": "!ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					}
+				},
+				"spear_not_idle": {
+					"animations": ["hold_offhand:spear_not_idle"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':spear')"},
+						{"spear_idle": "ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"pickaxe": {
+					"animations": ["hold_offhand:pickaxe"],
+					"transitions": [
+						{"default": "!(ctrl.hold('offhand', ':pickaxe')||ctrl.hold('offhand', ':shovel')||ctrl.hold('offhand', ':hoe'))"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"axe": {
+					"animations": ["hold_offhand:axe"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':axe')"}
+					]
+				},
+				"mace": {
+					"animations": ["hold_offhand$minecraft:mace"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', '$minecraft:mace')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"potion": {
+					"animations": ["hold_offhand:throwable_potion"],
+					"transitions": [
+						{"default": "!ctrl.hold('offhand', ':throwable_potion')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				}
+			}
+		},
+		"player.post_swing": {
+			"states": {
+				"default": {
+					"animations": ["attack_empty"],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"attack1": "v.swing_sword&&!v.jump&&!(q.vertical_speed>0)"},
+						{"attack_jump": "v.swing_sword&&v.jump"},
+						{"attack_jump_up": "v.swing_sword&&!v.jump&&(q.vertical_speed>0)"},
+						{"fishing": "ysm.is_fishing"}
+					]
+				},
+				"attack1": {
+					"animations": [
+						{"sword_attack_01": "!ctrl.idle"},
+						{"sword_idle_attack_01": "ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"attack2": "v.swing_sword&&!v.jump&&!(q.vertical_speed>0)"},
+						{"default": "q.all_animations_finished"},
+						{"attack_jump": "v.swing_sword&&v.jump"},
+						{"attack_jump_up": "v.swing_sword&&!v.jump&&(q.vertical_speed>0)"}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				},
+				"attack2": {
+					"animations": [
+						{"sword_attack_02": "!ctrl.idle"},
+						{"sword_idle_attack_02": "ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"attack3": "v.swing_sword&&!v.jump&&!(q.vertical_speed>0)"},
+						{"default": "q.all_animations_finished"},
+						{"attack_jump": "v.swing_sword&&v.jump"},
+						{"attack_jump_up": "v.swing_sword&&!v.jump&&(q.vertical_speed>0)"}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				},
+				"attack3": {
+					"animations": [
+						{"sword_attack_03": "!ctrl.idle"},
+						{"sword_idle_attack_03": "ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"attack1": "v.swing_sword&&!v.jump&&!(q.vertical_speed>0)"},
+						{"attack_jump": "v.swing_sword&&v.jump"},
+						{"attack_jump_up": "v.swing_sword&&!v.jump&&(q.vertical_speed>0)"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0056": 0.96985,
+						"0.0111": 0.88302,
+						"0.0167": 0.75,
+						"0.0222": 0.58682,
+						"0.0278": 0.41318,
+						"0.0333": 0.25,
+						"0.0389": 0.11698,
+						"0.0445": 0.03015,
+						"0.05": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"attack_jump": {
+					"animations": [
+						"sword_jump_attack_upbody",
+						{"sword_jump_attack_downbody": "!q.is_on_ground"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"attack1": "v.swing_sword&&!v.jump&&!(q.vertical_speed>0)"},
+						{"attack_jump_up": "v.swing_sword&&!v.jump&&(q.vertical_speed>0)"}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				},
+				"attack_jump_up": {
+					"animations": [
+						"sword_jumpup_attack_upbody",
+						{"sword_jumpup_attack_downbody": "!q.is_on_ground"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"attack1": "v.swing_sword&&!v.jump&&!(q.vertical_speed>0)"},
+						{"attack_jump": "v.swing_sword&&v.jump"}
+					],
+					"blend_transition": 0.05,
+					"blend_via_shortest_path": true
+				},
+				"fishing": {
+					"animations": ["swing:fishing_rod"],
+					"transitions": [
+						{"not_fishing": "!ysm.is_fishing"}
+					]
+				},
+				"not_fishing": {
+					"animations": ["swing:fishing_rod2"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"fishing": "ysm.is_fishing"}
+					]
+				}
+			}
+		},
+		"player.post_hold": {
+			"states": {
+				"default": {
+					"animations": ["hold_mainhand:empty"],
+					"transitions": [
+						{"sword": "ctrl.hold('mainhand', ':sword')"},
+						{"bow": "ctrl.hold('mainhand', ':bow')"},
+						{"shield": "ctrl.hold('mainhand', ':shield')"},
+						{"spear": "ctrl.hold('mainhand', ':spear')"},
+						{"pickaxe": "ctrl.hold('mainhand', ':pickaxe')||ctrl.hold('mainhand', ':shovel')||ctrl.hold('mainhand', ':hoe')"},
+						{"axe": "ctrl.hold('mainhand', ':axe')"},
+						{"mace": "ctrl.hold('mainhand', '$minecraft:mace')"},
+						{"crossbow": "ysm.mainhand_charged_crossbow"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"sword": {
+					"animations": ["hold_mainhand:sword"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', ':sword')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"bow": {
+					"animations": ["hold_mainhand:bow"],
+					"transitions": [
+						{"bow_idle": "q.all_animations_finished"},
+						{"default": "!ctrl.hold('mainhand', ':bow')"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"bow_idle": {
+					"animations": ["attack_empty"],
+					"transitions": [
+						{"bow_use": "ctrl.use('mainhand', ':bow')"},
+						{"default": "!ctrl.hold('mainhand', ':bow')"}
+					]
+				},
+				"bow_use": {
+					"animations": ["attack_empty"],
+					"transitions": [
+						{"bow_shoot": "!ctrl.use('mainhand', ':bow')&&ctrl.hold('mainhand', ':bow')"},
+						{"default": "!ctrl.hold('mainhand', ':bow')"}
+					]
+				},
+				"bow_shoot": {
+					"animations": ["hold_mainhand:bow_shoot"],
+					"transitions": [
+						{"bow_idle": "q.all_animations_finished"},
+						{"bow_use": "ctrl.use('mainhand', ':bow')"},
+						{"default": "!ctrl.hold('mainhand', ':bow')"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0056": 0.96571,
+						"0.0111": 0.8738,
+						"0.0167": 0.74074,
+						"0.0222": 0.58299,
+						"0.0278": 0.41701,
+						"0.0333": 0.25926,
+						"0.0389": 0.1262,
+						"0.0445": 0.03429,
+						"0.05": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"crossbow": {
+					"animations": ["hold_mainhand:charged_crossbow"],
+					"transitions": [
+						{"crossbow_shoot": "!ysm.mainhand_charged_crossbow&&ctrl.hold('mainhand', ':crossbow')"},
+						{"default": "!ctrl.hold('mainhand', ':crossbow')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"crossbow_shoot": {
+					"animations": ["hold_mainhand:crossbow_shoot"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', ':crossbow')||q.all_animations_finished"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"shield": {
+					"animations": ["hold_mainhand:shield"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', ':shield')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"spear": {
+					"animations": ["hold_mainhand:spear"],
+					"transitions": [
+						{"spear_not_idle": "q.all_animations_finished&&!ctrl.idle"},
+						{"spear_idle": "q.all_animations_finished&&ctrl.idle"},
+						{"default": "!ctrl.hold('mainhand', ':spear')"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"spear_idle": {
+					"animations": ["hold_mainhand:spear_idle"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', ':spear')"},
+						{"spear_not_idle": "!ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"spear_not_idle": {
+					"animations": ["hold_mainhand:spear_not_idle"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', ':spear')"},
+						{"spear_idle": "ctrl.idle"}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.0167": 0.96571,
+						"0.0333": 0.8738,
+						"0.05": 0.74074,
+						"0.0667": 0.58299,
+						"0.0833": 0.41701,
+						"0.1": 0.25926,
+						"0.1167": 0.1262,
+						"0.1333": 0.03429,
+						"0.15": 0
+					},
+					"blend_via_shortest_path": true
+				},
+				"pickaxe": {
+					"animations": ["hold_mainhand:pickaxe"],
+					"transitions": [
+						{"default": "!(ctrl.hold('mainhand', ':pickaxe')||ctrl.hold('mainhand', ':shovel')||ctrl.hold('mainhand', ':hoe'))"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"axe": {
+					"animations": ["hold_mainhand:axe"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', ':axe')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				},
+				"mace": {
+					"animations": ["hold_mainhand$minecraft:mace"],
+					"transitions": [
+						{"default": "!ctrl.hold('mainhand', '$minecraft:mace')"}
+					],
+					"blend_transition": 0.15,
+					"blend_via_shortest_path": true
+				}
+			}
+		}
+	}
+}

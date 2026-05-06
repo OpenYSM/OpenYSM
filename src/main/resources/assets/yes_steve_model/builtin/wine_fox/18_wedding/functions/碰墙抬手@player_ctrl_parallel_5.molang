@@ -1,0 +1,60 @@
+//————————————————————————————————————————————————————————————————————————————————//
+//碰墙抬手动画V1.1 by羊毛
+//本代码采用MIT-0协议开源
+
+//请保证此代码所占用的控制器为高并行动画，且为空白。如："@player_ctrl_parallel_5.molang"
+//请在动画中添加名为defWall的抬手状态动画
+//————————————————————————————————————————————————————————————————————————————————//
+
+ctrl.set_beginning_transition_length(0.2);
+//北
+query.relative_block_has_any_tag(0, 1.5, -1,'minecraft:replaceable') ? {
+    v.north = true;
+} : {
+    v.north = false;
+    v.twoBlocks = false;
+};
+
+//西
+query.relative_block_has_any_tag(-1, 1.5, 0,'minecraft:replaceable') ? {
+    v.west = true;
+} : {
+    v.west = false;
+    v.twoBlocks = false;
+};
+
+//南
+query.relative_block_has_any_tag(0, 1.5, 1,'minecraft:replaceable') ? {
+    v.south = true;
+} : {
+    v.south = false;
+    v.twoBlocks = false;
+};
+
+//东
+query.relative_block_has_any_tag(1, 1.5, 0,'minecraft:replaceable') ? {
+    v.east = true;
+} : {
+    v.east = false;
+    v.twoBlocks = false;
+};
+
+ctrl.run || ctrl.walk  ? {
+    ((v.east == false) && (query.cardinal_facing_2d == 5)) ? {
+        ctrl.set_animation('defWall');
+        return ctrl.state_continue;
+    };
+    (v.west == false) && (query.cardinal_facing_2d == 4) ? {
+        ctrl.set_animation('defWall');
+        return ctrl.state_continue;
+    };
+    (v.north == false) && (query.cardinal_facing_2d == 2) ? {
+        ctrl.set_animation('defWall');
+        return ctrl.state_continue;
+    };
+    (v.south == false) && (query.cardinal_facing_2d == 3) ? {
+        ctrl.set_animation('defWall');
+        return ctrl.state_continue;
+    };
+};
+return ctrl.state_stop;

@@ -1,0 +1,124 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "圣女酒狐",
+    "tips": "为你而生的圣女，对邪祟降下神罚，为众生献上祝福",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "星海境",
+        "avatar": "avatar/xinghai.png",
+        "role": "设计/动画",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/66634439"
+        },
+        "comment": "繁星凝望着海洋，海洋拥抱着风帆。"
+      },
+      {
+        "name": "缇可拉",
+        "role": "翅膀模型",
+        "contact": {
+          "Bilibilil": "https://space.bilibili.com/17798027"
+        },
+        "comment": "苯狐可啡缇可拉！",
+        "avatar": "avatar/bh.webp"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "#hairDerss",
+      "extra1": "打招呼",
+      "extra2": "冥想",
+      "extra3": "Get Down",
+      "extra4": "乱舞",
+      "extra5": "卖萌",
+      "extra6": "御笔摇",
+      "extra7": "舞蹈"
+    },
+    "preview_animation": "gui",
+    "free": false,
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "render_layers_first": false,
+    "gui_no_lighting": true,
+    "disable_preview_rotation": false,
+    "all_cutout": false,
+    "extra_animation_buttons": [
+      {
+        "id": "hairDerss",
+        "name": "设置",
+        "config_forms": [
+          {
+            "type": "checkbox",
+            "title": "切换头巾",
+            "description": "头巾",
+            "value": "v.roaming.hairDerss"
+          },
+          {
+            "type": "checkbox",
+            "title": "切换翅膀",
+            "description": "翅膀",
+            "value": "v.roaming.Wings"
+          }
+        ]
+      }
+    ],
+    "gui_background": "textures/gui/背景.png",
+    "gui_foreground": "textures/gui/前景.png"
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tlm": "animations/tlm.animation.json",
+        "arm": "animations/arm.animation.json",
+        "irons_spell_books": "animations/iss.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/skin.png",
+          "specular": "textures/pbr/skin_mer.png",
+          "normal": "textures/pbr/skin_height.png"
+        },
+        {
+          "uv": "textures/skinBlack.png",
+          "normal": "textures/pbr/skin_height.png",
+          "specular": "textures/pbr/skin_mer.png"
+        }
+      ],
+      "animation_controllers": ["controller/wine_fox.animation_controllers.json", "controller/attack_controllers.json"]
+    },
+    "projectiles": [
+      {
+        "model": "models/arrow.json",
+        "texture": {
+          "uv": "textures/arrow.png",
+          "specular": "textures/pbr/arrow_mer.png"
+        },
+        "animation": "animations/arrow.animation.json",
+        "match": ["minecraft:arrow"]
+      },
+      {
+        "match": ["minecraft:trident"],
+        "model": "models/trident.json",
+        "texture": {
+          "uv": "textures/trident.png"
+        }
+      }
+    ]
+  }
+}

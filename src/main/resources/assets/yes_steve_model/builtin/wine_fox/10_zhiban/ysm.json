@@ -1,0 +1,86 @@
+{
+	"spec": 2,
+	"metadata": {
+		"name": "纸板",
+		"tips": "无敌纸板大王",
+		"license": {
+			"type": "All Rights Reserved"
+		},
+		"authors": [
+			{
+				"name": "就叫纸板",
+				"role": "模型作者",
+				"avatar": "avatar/zb.avif",
+				"contact": {
+					"donate": "https://afdian.com/a/lucia2048",
+					"Bilibili": "https://space.bilibili.com/29208164"
+				},
+				"comment": "杂鱼~杂鱼~"
+			},
+			{
+				"name": "狱际星芒",
+				"role": "模型修理",
+				"avatar": "avatar/狱际星芒.avif",
+				"contact": {
+					"Afdian": "https://afdian.com/a/3256286845xingmang",
+					"Bilibili": "https://space.bilibili.com/349150095"
+				},
+				"comment": "常态摸鱼，不定更新"
+			}
+		],
+		"link": {
+			"home": "https://space.bilibili.com/29208164",
+			"donate": "https://afdian.com/a/15354qq"
+		}
+	},
+	"properties": {
+		"height_scale": 0.7,
+		"width_scale": 0.7,
+		"extra_animation": {
+			"切换兽耳": "切换兽耳",
+			"放飞孔明灯": "放飞孔明灯",
+			"切换尾巴": "切换尾巴",
+			"笑": "笑",
+			"招手": "招手",
+			"鼓掌": "鼓掌",
+			"点头": "点头",
+			"摇头": "摇头",
+			"投降": "投降",
+			"惊讶": "惊讶",
+			"躺": "躺",
+			"躺2": "躺2",
+			"坐": "坐",
+			"不满": "不满",
+			"动态pose": "动态pose"
+		},
+		"preview_animation": "gui",
+		"default_texture": "default",
+		"free": true,
+		"render_layers_first": false,
+		"disable_preview_rotation": true,
+		"all_cutout": false
+	},
+	"files": {
+		"player": {
+			"model": {
+				"main": "models/main.json",
+				"arm": "models/arm.json"
+			},
+			"animation": {
+				"main": "animations/main.animation.json",
+				"extra": "animations/extra.animation.json"
+			},
+			"texture": [
+				{
+					"uv": "textures/default.png"
+				}
+			]
+		},
+		"arrow": {
+			"model": "models/arrow.json",
+			"texture": {
+				"uv": "textures/arrow.png"
+			}
+		}
+	}
+}

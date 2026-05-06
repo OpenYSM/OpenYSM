@@ -1,0 +1,56 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.post_swing": {
+			"states": {
+				"default": {
+					"animations": ["attack_empty"],
+					"on_exit": ["v.swing_sword=0;v.attack=math.mod(v.attack+1,3);"],
+					"transitions": [
+						{"剑1": "v.swing_sword&&v.attack==0"},
+						{"剑2": "v.swing_sword&&v.attack==1"},
+						{"剑3": "v.swing_sword&&v.attack==2"}
+					],
+					"blend_transition": 0.2,
+					"blend_via_shortest_path": true
+				},
+				"剑1": {
+					"animations": [
+						{"sword_idle_attack1": "ctrl.idle"},
+						{"sword_walk_attack1": "!ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;v.attack=math.mod(v.attack+1,3);"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"剑2": "v.swing_sword&&v.attack==1"}
+					],
+					"blend_transition": 0.03
+				},
+				"剑2": {
+					"animations": [
+						{"sword_idle_attack2": "ctrl.idle"},
+						{"sword_walk_attack2": "!ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;v.attack=math.mod(v.attack+1,3);"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"剑3": "v.swing_sword&&v.attack==2"}
+					],
+					"blend_transition": 0.02
+				},
+				"剑3": {
+					"animations": [
+						{"sword_idle_attack3": "ctrl.idle"},
+						{"sword_walk_attack3": "!ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;v.attack=math.mod(v.attack+1,3);"],
+					"transitions": [
+						{"default": "q.all_animations_finished"},
+						{"剑1": "v.swing_sword&&v.attack==0"}
+					],
+					"blend_transition": 0.02
+				}
+			}
+		}
+	}
+}

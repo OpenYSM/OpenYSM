@@ -1,0 +1,22 @@
+// 设置内圈光环指示饱食度
+t.halo_no=args[0];
+
+t.halo_no==4 ? {
+    return ysm.food_level>10;
+} : t.halo_no==3 ? {
+    return ysm.food_level>8;
+} : t.halo_no==2 ? {
+    return ysm.food_level>6;
+} : t.halo_no==1 ? {
+    ysm.food_level <= 6 ? {
+        ysm.food_level>2 ? {
+            return math.mod(q.life_time,1) < 0.5;
+        } : {
+            return math.mod(q.life_time,0.5) < 0.25;
+        };
+    } : {
+        return 1;
+    };
+} : {
+    return 0;
+};

@@ -1,0 +1,111 @@
+{
+	"format_version": "1.19.0",
+	"animation_controllers": {
+		"player.post_swing": {
+			"states": {
+				"default": {
+					"animations": ["empty"],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"挥剑1": "v.swing_sword"}
+					]
+				},
+				"挥剑1": {
+					"animations": [
+						"fight1_upbody",
+						{"fight1_downbody": "ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"挥剑2": "v.swing_sword"},
+						{"default": "q.all_animations_finished"}
+					]
+				},
+				"挥剑2": {
+					"animations": [
+						"fight2_upbody",
+						{"fight2_downbody": "ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"挥剑3": "v.swing_sword"},
+						{"default": "q.all_animations_finished"}
+					]
+				},
+				"挥剑3": {
+					"animations": [
+						"fight3_upbody",
+						{"fight3_downbody": "ctrl.idle"}
+					],
+					"on_exit": ["v.swing_sword=0;"],
+					"transitions": [
+						{"挥剑1": "v.swing_sword"},
+						{"default": "q.all_animations_finished"}
+					]
+				}
+			}
+		},
+		"player.parallel_7": {
+			"initial_state": "自选",
+			"states": {
+				"自选": {
+					"animations": [
+						{"鹿弹眼": "v.roaming.eye==1"},
+						{"哭哭眼": "v.roaming.eye==2"},
+						{"震惊眼": "v.roaming.eye==3"},
+						{"黑脸": "v.roaming.face==1"},
+						{"无语": "v.roaming.face==2"},
+						{"露齿笑": "v.roaming.mouth==0"},
+						{"无表情": "v.roaming.mouth==1"},
+						{"猫嘴笑": "v.roaming.mouth==2"},
+						{"哭哭嘴": "v.roaming.mouth==3"},
+						{"震惊嘴": "v.roaming.mouth==4"},
+						{"惊恐嘴": "v.roaming.mouth==5"},
+						{"傻笑": "v.roaming.mouth==6"},
+						{"雌小鬼": "v.roaming.mouth==7"},
+						{"哦？": "v.roaming.mouth==8"},
+						{"傻笑2": "v.roaming.mouth==9"},
+						{"夸张": "v.roaming.mouth==10"},
+						{"呆": "v.roaming.face==3"}
+					],
+					"transitions": [
+						{"missing_state": "v.roaming.yushe"}
+					]
+				},
+				"预设": {
+					"transitions": [
+						{"自选": "!v.roaming.yushe"}
+					]
+				}
+			}
+		},
+		"player.post_hold": {
+			"initial_state": "默认",
+			"states": {
+				"默认": {
+					"animations": ["empty"],
+					"transitions": [
+						{"hold_sword_start": "ctrl.hold('mainhand',':sword')"}
+					]
+				},
+				"hold_sword_start": {
+					"animations": ["idle to fight"],
+					"transitions": [
+						{"默认": "!ctrl.hold('mainhand',':sword')"},
+						{"hold_sword_idle": "q.all_animations_finished"}
+					]
+				},
+				"hold_sword_idle": {
+					"animations": [
+						"idle_fight_upbody",
+						{"idle_fight_downbody": "ctrl.idle"},
+						{"no_idle_fight": "!ctrl.idle"}
+					],
+					"transitions": [
+						{"默认": "!ctrl.hold('mainhand',':sword')"}
+					]
+				}
+			}
+		}
+	}
+}

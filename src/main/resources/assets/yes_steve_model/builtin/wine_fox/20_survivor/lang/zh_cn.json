@@ -1,0 +1,15 @@
+{
+	"metadata.name": "幸存者酒狐",
+	"metadata.tips": "一只在末日拾荒的狐娘。",
+	"metadata.authors.0.name": "玫间霂绒",
+	"metadata.authors.0.role": "模型",
+	"metadata.authors.0.comment": "一只模型/YSM作者，理想很多但很爱摸鱼",
+	"properties.extra_animation.extra0": "变形",
+	"properties.extra_animation.extra1": "打招呼",
+	"properties.extra_animation.extra2": "检视",
+	"properties.extra_animation.extra3": "是的",
+	"properties.extra_animation.extra4": "戴头盔",
+	"properties.extra_animation.extra5": "戴面罩",
+	"properties.extra_animation.extra6": "摘头盔",
+	"properties.extra_animation.extra7": "舞蹈"
+}

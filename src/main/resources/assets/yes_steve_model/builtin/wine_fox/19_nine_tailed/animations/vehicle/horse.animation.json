@@ -1,0 +1,38 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "forward": {
+      "loop": true,
+      "animation_length": 6.6667,
+      "bones": {
+        "LeftFrontWheel": {
+          "rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+        },
+        "LeftBackWheel": {
+          "rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+        },
+        "RightBackWheel": {
+          "rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+        },
+        "RightFrontWheel": {
+          "rotation": ["(q.anim_time / 0.4) * 180", 0, 0]
+        }
+      },
+      "sound_effects": {
+        "0.0": {
+          "effect": "car_run"
+        }
+      }
+    },
+    "has_ride": {
+      "loop": true,
+      "animation_length": 2.9167,
+      "sound_effects": {
+        "0.0": {
+          "effect": "car_idle"
+        }
+      }
+    }
+  },
+  "geckolib_format_version": 2
+}

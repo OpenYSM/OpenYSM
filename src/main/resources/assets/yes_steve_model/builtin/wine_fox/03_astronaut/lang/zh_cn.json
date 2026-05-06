@@ -1,0 +1,22 @@
+{
+  "metadata.name": "宇航员酒狐",
+  "metadata.tips": "梦想是星辰大海",
+  "properties.extra_animation.extra0": "打招呼",
+  "properties.extra_animation.extra1": "鼓掌",
+  "properties.extra_animation.extra2": "YES",
+  "properties.extra_animation.extra3": "NO",
+  "properties.extra_animation.extra4": "御币摇",
+  "properties.extra_animation.extra5": "变身",
+  "properties.extra_animation.extra6": "摘下头盔",
+  "properties.extra_animation.extra7": "戴上头盔",
+  "metadata.authors.0.name": "完全冻结",
+  "metadata.authors.0.role": "模型",
+  "metadata.authors.0.comment": "OwO",
+  "metadata.authors.1.name": "星屑海螺",
+  "metadata.authors.1.role": "动画",
+  "metadata.authors.1.comment": "漂泊于群星之中",
+  "metadata.authors.2.name": "哥斯拉",
+  "metadata.authors.2.role": "模型",
+  "metadata.authors.3.name": "祸御神",
+  "metadata.authors.3.role": "GUI 动画"
+}

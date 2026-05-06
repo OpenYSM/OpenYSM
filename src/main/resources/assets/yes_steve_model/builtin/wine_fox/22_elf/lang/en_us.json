@@ -1,0 +1,20 @@
+{
+	"metadata.name": "Elf Wine Fox",
+	"metadata.tips": "Wine Fox Fantasy Series — A fox girl transformed into an elf, radiating a rich natural aura.",
+	"properties.extra_animation.extra0": "Transform",
+	"properties.extra_animation.extra1": "Wave",
+	"properties.extra_animation.extra2": "Sit on Block",
+	"properties.extra_animation.extra3": "Butterfly Toggle",
+	"properties.extra_animation.extra4": "Wild Dance",
+	"properties.extra_animation.extra5": "Cute Pose",
+	"properties.extra_animation.extra6": "Gohei Waving",
+	"properties.extra_animation.extra7": "Dance",
+	"metadata.authors.0.name": "Xinghai Jing",
+	"metadata.authors.0.role": "Design/Animation/Model",
+	"metadata.authors.0.comment": "Stars gaze upon the ocean, the ocean embraces the sails.",
+	"metadata.authors.1.name": "TiKeLa",
+	"metadata.authors.1.role": "Model/Texture",
+	"metadata.authors.1.comment": "Coffee-loving silly fox, TiKeLa!",
+	"properties.extra_animation_buttons.蝴蝶显隐.config_forms.0.title": "Butterfly Toggle",
+	"properties.extra_animation_buttons.蝴蝶显隐.config_forms.0.description": "Hide & Show"
+}

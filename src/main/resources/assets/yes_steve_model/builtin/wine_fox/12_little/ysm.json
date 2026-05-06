@@ -1,0 +1,95 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "Little Wine Fox",
+    "tips": "一只爱吃葡萄的小狐娘",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "柔_荑",
+        "role": "模型",
+        "avatar": "avatar/ry.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/rouyi",
+          "Bilibili": "https://space.bilibili.com/2070073208"
+        },
+        "comment": "纯兴趣，随缘断更"
+      },
+      {
+        "name": "完美冻结",
+        "role": "模型原作",
+        "avatar": "avatar/wmdj.jpg",
+        "contact": {
+          "Afdian": "https://afdian.com/a/6TGESILA",
+          "Bilibili": "https://space.bilibili.com/17798027"
+        },
+        "comment": "OwO"
+      },
+      {
+        "name": "星屑海螺",
+        "role": "动画原作",
+        "avatar": "avatar/hl.png",
+        "contact": {
+          "Afdian": "https://afdian.com/a/lucia2048",
+          "Bilibili": "https://space.bilibili.com/14975572"
+        },
+        "comment": "xxx"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "变身",
+      "extra1": "打招呼",
+      "extra2": "鼓掌",
+      "extra3": "Get Down",
+      "extra4": "乱舞",
+      "extra5": "摇尾卖萌",
+      "extra6": "御笔摇",
+      "extra7": "哭哭"
+    },
+    "preview_animation": "gui",
+    "free": true,
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "render_layers_first": false,
+    "disable_preview_rotation": false,
+    "all_cutout": false,
+    "gui_no_lighting": false
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tlm": "animations/tlm.animation.json"
+      },
+      "texture": [
+        {
+          "uv": "textures/skin.png"
+        }
+      ]
+    },
+    "projectiles": {
+      "minecraft:arrow": {
+        "model": "models/arrow.json",
+        "texture": {
+          "uv": "textures/arrow.png"
+        },
+        "animation": "animations/arrow.animation.json"
+      }
+    }
+  }
+}

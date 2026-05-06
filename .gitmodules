@@ -1,0 +1,3 @@
+[submodule "YSMParser"]
+	path = YSMParser
+	url = https://github.com/OpenYSM/YSMParser.git

@@ -1,0 +1,104 @@
+{
+  "spec": 2,
+  "metadata": {
+    "name": "精灵酒狐",
+    "tips": "酒狐幻想系列——幻化为精灵的狐娘，身上散发着浓郁的自然灵气。",
+    "license": {
+      "type": "CC BY-NC-SA 4.0"
+    },
+    "authors": [
+      {
+        "name": "星海境",
+        "avatar": "avatar/xinghai.png",
+        "role": "设计/动画/模型",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/66634439"
+        },
+        "comment": "繁星凝望着海洋，海洋拥抱着风帆。"
+      },
+      {
+        "name": "缇可拉",
+        "avatar": "avatar/bh.webp",
+        "role": "模型/材质",
+        "contact": {
+          "Bilibili": "https://space.bilibili.com/326133289"
+        },
+        "comment": "苯狐可啡缇可拉！"
+      }
+    ],
+    "link": {
+      "home": "https://modrinth.com/mod/yes-steve-model",
+      "donate": "https://afdian.com/a/ysmmod"
+    }
+  },
+  "properties": {
+    "extra_animation": {
+      "extra0": "变身",
+      "extra1": "打招呼",
+      "extra2": "坐方块",
+      "extra4": "乱舞",
+      "extra5": "卖萌",
+      "extra6": "御笔摇",
+      "extra7": "舞蹈",
+      "extra3": "#蝴蝶显隐"
+    },
+    "preview_animation": "gui",
+    "disable_preview_rotation": true,
+    "free": true,
+    "height_scale": 0.7,
+    "width_scale": 0.7,
+    "render_layers_first": false,
+    "all_cutout": false,
+    "gui_no_lighting": false,
+    "gui_background": "textures/gui/background.png",
+    "gui_foreground": "textures/gui/foreground.png",
+    "extra_animation_buttons": [
+      {
+        "id": "蝴蝶显隐",
+        "name": "蝴蝶显隐",
+        "config_forms": [
+          {
+            "type": "checkbox",
+            "title": "蝴蝶显隐",
+            "description": "隐藏&显示",
+            "value": "v.roaming.f"
+          }
+        ]
+      }
+    ]
+  },
+  "files": {
+    "player": {
+      "model": {
+        "main": "models/main.json",
+        "arm": "models/arm.json"
+      },
+      "animation": {
+        "main": "animations/main.animation.json",
+        "extra": "animations/extra.animation.json",
+        "tac": "animations/tac.animation.json",
+        "carryon": "animations/carryon.animation.json",
+        "tlm": "animations/tlm.animation.json",
+        "fp_arm": "animations/fp.arm.animation.json",
+        "irons_spell_books": "animations/iss.animation.json",
+        "arm": "animations/arm.animation.json"
+      },
+      "animation_controllers": ["controller/wine_fox.animation_controllers.json"],
+      "texture": [
+        {
+          "uv": "textures/skin.png"
+        }
+      ]
+    },
+    "projectiles": [
+      {
+        "model": "models/arrow.json",
+        "animation": "animations/arrow.animation.json",
+        "texture": {
+          "uv": "textures/arrow.png"
+        },
+        "match": ["minecraft:arrow"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"forward": {
+			"loop": true
+		},
+		"has_ride": {
+			"loop": true,
+			"bones": {
+				"fangxp": {
+					"rotation": [-57.5, 0, 0]
+				}
+			}
+		},
+		"parallel0": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"scale": 0.7
+				},
+				"jiyi": {
+					"rotation": [0, 0, "v.jiyi_rot=math.round(v.jiyi_rot+ysm.ground_speed2*5);"]
+				},
+				"PassengerLocator": {
+					"scale": "1/0.7"
+				},
+				"three": {
+					"rotation": ["q.is_on_ground?(v.three_rot=math.round(v.three_rot+ysm.ground_speed2*5)):v.three_rot;", 0, 0]
+				},
+				"one": {
+					"rotation": ["q.is_on_ground?(v.one_rot=math.round(v.one_rot+ysm.ground_speed2*5)):v.one_rot;", 0, 0]
+				},
+				"tow": {
+					"rotation": ["q.is_on_ground?(v.tow_rot=math.round(v.tow_rot+ysm.ground_speed2*5)):v.tow_rot;", 0, 0]
+				}
+			}
+		}
+	}
+}
