@@ -30,8 +30,8 @@ public class TouhouMaidModelScreen extends PlayerModelScreen {
     }
 
     @Override
-    public ModelButton createModelButton(int i, int i2, boolean z, PlayerPreviewEntity previewEntity, ModelAssembly modelAssembly) {
-        return new TouhouMaidModelButton(i, i2, z, previewEntity, modelAssembly, this.maid);
+    public ModelButton createModelButton(int x, int y, boolean isAuthLocked, PlayerPreviewEntity previewEntity, ModelAssembly modelAssembly) {
+        return new TouhouMaidModelButton(x, y, isAuthLocked, previewEntity, modelAssembly, this.maid);
     }
 
     @Override
@@ -49,10 +49,10 @@ public class TouhouMaidModelScreen extends PlayerModelScreen {
     }
 
     @Override
-    public void renderModelPreview(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderModelPreview(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         double guiScale = Minecraft.getInstance().getWindow().getGuiScale();
         RenderSystem.enableScissor((int) ((this.guiLeft + 5) * guiScale), (int) (Minecraft.getInstance().getWindow().getHeight() - ((this.guiTop + 200) * guiScale)), (int) (125.0d * guiScale), (int) (171.0d * guiScale));
-        InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, this.guiLeft + 67, this.guiTop + 190, 70, (this.guiLeft + 67) - i, ((this.guiTop + 180) - 95) - i2, this.maid);
+        InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, this.guiLeft + 67, this.guiTop + 190, 70, (this.guiLeft + 67) - mouseX, ((this.guiTop + 180) - 95) - mouseY, this.maid);
         RenderSystem.disableScissor();
         this.maid.getCapability(MaidCapabilityProvider.MAID_CAP).ifPresent(cap -> {
             List<FormattedCharSequence> listSplit = this.font.split(FormattedText.of(ClientModelManager.getModelContext(cap.getModelId()).map(it -> {
@@ -64,10 +64,10 @@ public class TouhouMaidModelScreen extends PlayerModelScreen {
             }).filter(charSequence -> {
                 return StringUtils.isNoneBlank(charSequence);
             }).orElse(FileTypeUtil.getNameWithoutArchiveExtension(cap.getModelId()))), 125);
-            int i3 = this.guiTop + 205;
+            int lineY = this.guiTop + 205;
             for (FormattedCharSequence formattedCharSequence : listSplit) {
-                guiGraphics.drawString(this.font, formattedCharSequence, this.guiLeft + ((135 - this.font.width(formattedCharSequence)) / 2), i3, 15986656);
-                i3 += 10;
+                guiGraphics.drawString(this.font, formattedCharSequence, this.guiLeft + ((135 - this.font.width(formattedCharSequence)) / 2), lineY, 15986656);
+                lineY += 10;
             }
         });
     }

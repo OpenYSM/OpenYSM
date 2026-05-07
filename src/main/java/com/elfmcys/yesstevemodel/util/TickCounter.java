@@ -10,10 +10,10 @@ public class TickCounter {
 
     private long windowMs;
 
-    public TickCounter(int i, float f) {
-        this.timestamps = new LongArrayList(i);
-        this.maxCount = Math.round(1000.0f / f);
-        for (int i2 = 0; i2 < i; i2++) {
+    public TickCounter(int initialCapacity, float ticksPerSecond) {
+        this.timestamps = new LongArrayList(initialCapacity);
+        this.maxCount = Math.round(1000.0f / ticksPerSecond);
+        for (int i = 0; i < initialCapacity; i++) {
             this.timestamps.add(0L);
         }
     }

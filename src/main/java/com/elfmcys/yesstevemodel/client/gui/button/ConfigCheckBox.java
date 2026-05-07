@@ -21,23 +21,23 @@ public class ConfigCheckBox extends StateSwitchingButton implements ISpecialWidg
 
     private final Component component2;
 
-    public ConfigCheckBox(int i, int i2, int i3, Component component, Consumer<Boolean> consumer) {
-        super(i, i2, i3, 12, false);
+    public ConfigCheckBox(int x, int y, int width, Component component, Consumer<Boolean> consumer) {
+        super(x, y, width, 12, false);
         this.component2 = component;
         this.consumer2 = consumer;
         initTextureValues(0, 0, 128, 12, location);
     }
 
-    public ConfigCheckBox(int i, int i2, Component component, Consumer<Boolean> consumer) {
-        this(i, i2, 115, component, consumer);
+    public ConfigCheckBox(int x, int y, Component component, Consumer<Boolean> consumer) {
+        this(x, y, 115, component, consumer);
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
-        super.renderWidget(guiGraphics, i, i2, f);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.drawString(Minecraft.getInstance().font, this.component2, getX() + 14, getY() + 2, -1, false);
     }
 
-    public void onClick(double d, double d2) {
+    public void onClick(double mouseX, double mouseY) {
         this.isStateTriggered = !this.isStateTriggered;
         this.consumer2.accept(Boolean.valueOf(this.isStateTriggered));
     }

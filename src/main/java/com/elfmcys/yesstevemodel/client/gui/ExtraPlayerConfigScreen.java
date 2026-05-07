@@ -23,31 +23,31 @@ public class ExtraPlayerConfigScreen extends Screen {
     }
 
     public void init() {
-        int i = (this.width - 420) / 2;
-        int i2 = (this.height - 265) / 2;
-        addRenderableWidget(new FlatColorButton(i + 5, i2 + 2, 80, 18, Component.translatable("gui.yes_steve_model.model.return"), button -> {
+        int guiLeft = (this.width - 420) / 2;
+        int guiTop = (this.height - 265) / 2;
+        addRenderableWidget(new FlatColorButton(guiLeft + 5, guiTop + 2, 80, 18, Component.translatable("gui.yes_steve_model.model.return"), button -> {
             getMinecraft().setScreen(this.parentScreen);
         }));
-        addRenderableWidget(new ForgeSlider(i + 5, i2 + 24, 320, 18, Component.translatable("gui.yes_steve_model.config.sound_volume"), Component.literal("%"), 0.0d, 100.0d, GeneralConfig.SOUND_VOLUME.get().doubleValue(), true) {
+        addRenderableWidget(new ForgeSlider(guiLeft + 5, guiTop + 24, 320, 18, Component.translatable("gui.yes_steve_model.config.sound_volume"), Component.literal("%"), 0.0d, 100.0d, GeneralConfig.SOUND_VOLUME.get().doubleValue(), true) {
             public void applyValue() {
                 GeneralConfig.SOUND_VOLUME.set(Double.valueOf(getValue()));
             }
         });
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 45, "disable_self_model", GeneralConfig.DISABLE_SELF_MODEL));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 67, "disable_other_model", GeneralConfig.DISABLE_OTHER_MODEL));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 89, "print_animation_roulette_msg", GeneralConfig.PRINT_ANIMATION_ROULETTE_MSG));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 111, "disable_self_hands", GeneralConfig.DISABLE_SELF_HANDS));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 133, "disable_player_render", ExtraPlayerRenderConfig.DISABLE_PLAYER_RENDER));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 155, "disable_projectile_model", GeneralConfig.DISABLE_PROJECTILE_MODEL));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 177, "disable_vehicle_model", GeneralConfig.DISABLE_VEHICLE_MODEL));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 199, "disable_external_first_person_anim", GeneralConfig.DISABLE_EXTERNAL_FP_ANIM));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 221, "disable_loading_state_screen", LoadingStateConfig.DISABLE_LOADING_STATE_SCREEN));
-        addRenderableWidget(new ConfigCheckBoxForge(i + 5, i2 + 243, "use_compatibility_renderer", GeneralConfig.USE_COMPATIBILITY_RENDERER));
-        addRenderableWidget(new LoadingStateButton(i + 5, i2 + 264));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 45, "disable_self_model", GeneralConfig.DISABLE_SELF_MODEL));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 67, "disable_other_model", GeneralConfig.DISABLE_OTHER_MODEL));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 89, "print_animation_roulette_msg", GeneralConfig.PRINT_ANIMATION_ROULETTE_MSG));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 111, "disable_self_hands", GeneralConfig.DISABLE_SELF_HANDS));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 133, "disable_player_render", ExtraPlayerRenderConfig.DISABLE_PLAYER_RENDER));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 155, "disable_projectile_model", GeneralConfig.DISABLE_PROJECTILE_MODEL));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 177, "disable_vehicle_model", GeneralConfig.DISABLE_VEHICLE_MODEL));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 199, "disable_external_first_person_anim", GeneralConfig.DISABLE_EXTERNAL_FP_ANIM));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 221, "disable_loading_state_screen", LoadingStateConfig.DISABLE_LOADING_STATE_SCREEN));
+        addRenderableWidget(new ConfigCheckBoxForge(guiLeft + 5, guiTop + 243, "use_compatibility_renderer", GeneralConfig.USE_COMPATIBILITY_RENDERER));
+        addRenderableWidget(new LoadingStateButton(guiLeft + 5, guiTop + 264));
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics);
-        super.render(guiGraphics, i, i2, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 }

@@ -89,14 +89,14 @@ public class CustomFishingHookRenderer {
     }
 
     @Unique
-    private static void stringVertex(float x, float y, float z, VertexConsumer vertexConsumer, PoseStack.Pose pose, float f4, float f5, float f6, float f7, float f8) {
-        float f9 = x * f4;
-        float f10 = (y * ((f4 * f4) + f4) * 0.5f) + 0.25f;
-        float f11 = z * f4;
-        float f12 = (x * f5) - f9;
-        float f13 = (((y * ((f5 * f5) + f5)) * 0.5f) + 0.25f) - f10;
-        float f14 = (z * f5) - f11;
-        float fSqrt = Mth.sqrt((f12 * f12) + (f13 * f13) + (f14 * f14));
-        vertexConsumer.vertex(pose.pose(), f9, f10, f11).color(f6, f7, f8, 1.0f).normal(pose.normal(), f12 / fSqrt, f13 / fSqrt, f14 / fSqrt).endVertex();
+    private static void stringVertex(float x, float y, float z, VertexConsumer vertexConsumer, PoseStack.Pose pose, float startFrac, float endFrac, float red, float green, float blue) {
+        float vx = x * startFrac;
+        float vy = (y * ((startFrac * startFrac) + startFrac) * 0.5f) + 0.25f;
+        float vz = z * startFrac;
+        float dx = (x * endFrac) - vx;
+        float dy = (((y * ((endFrac * endFrac) + endFrac)) * 0.5f) + 0.25f) - vy;
+        float dz = (z * endFrac) - vz;
+        float length = Mth.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+        vertexConsumer.vertex(pose.pose(), vx, vy, vz).color(red, green, blue, 1.0f).normal(pose.normal(), dx / length, dy / length, dz / length).endVertex();
     }
 }

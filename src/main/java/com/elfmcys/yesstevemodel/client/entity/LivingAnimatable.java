@@ -48,8 +48,8 @@ public abstract class LivingAnimatable<T extends LivingEntity> extends GeoEntity
 
     private boolean extraRenderFlag;
 
-    public LivingAnimatable(T t, boolean z) {
-        super(t, z);
+    public LivingAnimatable(T t, boolean isActive) {
+        super(t, isActive);
         this.armorBoneOffset = new Vector2f();
         this.needsInit = false;
         this.playerUpdateIValue = null;
@@ -60,11 +60,11 @@ public abstract class LivingAnimatable<T extends LivingEntity> extends GeoEntity
     }
 
     @Override
-    public void applyHeadTracking(AnimationEvent<? extends AnimatableEntity<T>> event, boolean z) {
+    public void applyHeadTracking(AnimationEvent<? extends AnimatableEntity<T>> event, boolean wasAnimEvaluated) {
         AnimatedGeoModel model = getCurrentModel();
         if (model != null && !model.headBones().isEmpty()) {
             IBone bone = model.headBones().get(model.headBones().size() - 1);
-            if (z) {
+            if (wasAnimEvaluated) {
                 this.armorBoneOffset.set(bone.getRotationX(), bone.getRotationY());
             }
             EntityModelData data = event.getModelData();
@@ -105,8 +105,8 @@ public abstract class LivingAnimatable<T extends LivingEntity> extends GeoEntity
         updateCurrentTexture();
     }
 
-    public void setForceDisabled(boolean z) {
-        this.forceDisabled = z;
+    public void setForceDisabled(boolean forceDisabled) {
+        this.forceDisabled = forceDisabled;
     }
 
     public boolean isForceDisabled() {
@@ -155,8 +155,8 @@ public abstract class LivingAnimatable<T extends LivingEntity> extends GeoEntity
     }
 
     @Override
-    public void setupAnim(float seekTime, boolean z) {
-        super.setupAnim(seekTime, z);
+    public void setupAnim(float seekTime, boolean isFirstPerson) {
+        super.setupAnim(seekTime, isFirstPerson);
         if (this.needsInit) {
             this.needsInit = false;
             List<IValue> values = getAnimationExpressions(MolangEventDispatcher.PLAYER_INIT);
@@ -165,7 +165,7 @@ public abstract class LivingAnimatable<T extends LivingEntity> extends GeoEntity
             }
         }
         if (this.playerUpdateIValue != null) {
-            this.updateExpressionArgs.set(0, z);
+            this.updateExpressionArgs.set(0, isFirstPerson);
             executeExpression(this.playerUpdateIValue, true, true, null);
         }
     }
@@ -242,8 +242,8 @@ public abstract class LivingAnimatable<T extends LivingEntity> extends GeoEntity
         return this.extraRenderFlag;
     }
 
-    public void setExtraRenderFlag(boolean z) {
-        this.extraRenderFlag = z;
+    public void setExtraRenderFlag(boolean extraRenderFlag) {
+        this.extraRenderFlag = extraRenderFlag;
     }
 
     public class TexturedModelWrapper extends ModelWrapper {

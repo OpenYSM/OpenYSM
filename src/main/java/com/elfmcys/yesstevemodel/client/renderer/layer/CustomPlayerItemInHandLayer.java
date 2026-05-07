@@ -69,7 +69,7 @@ public class CustomPlayerItemInHandLayer extends GeoLayerRenderer<CustomPlayerEn
 
     public void renderItem(AnimatedGeoModel model, LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
         if (!itemStack.isEmpty()) {
-            boolean z = humanoidArm == HumanoidArm.LEFT;
+            boolean isLeftHand = humanoidArm == HumanoidArm.LEFT;
             poseStack.pushPose();
             if (!applyItemBoneTransform(humanoidArm, poseStack, model)) {
                 poseStack.translate(0.0d, -0.0625d, -0.1d);
@@ -78,10 +78,10 @@ public class CustomPlayerItemInHandLayer extends GeoLayerRenderer<CustomPlayerEn
                     poseStack.translate(0.1d, 0.0d, 0.0d);
                     poseStack.scale(1.25f, 1.25f, 1.25f);
                 }
-                this.itemRenderer.renderItem(livingEntity, itemStack, itemDisplayContext, z, poseStack, multiBufferSource, i);
+                this.itemRenderer.renderItem(livingEntity, itemStack, itemDisplayContext, isLeftHand, poseStack, multiBufferSource, i);
             }
             poseStack.popPose();
-            (z ? model.rightHandChain() : model.leftHandChains()).forEach(list -> {
+            (isLeftHand ? model.rightHandChain() : model.leftHandChains()).forEach(list -> {
                 poseStack.pushPose();
                 if (!RenderUtils.prepMatrixForLocator(poseStack, list)) {
                     poseStack.translate(0.0d, -0.0625d, -0.1d);
@@ -89,7 +89,7 @@ public class CustomPlayerItemInHandLayer extends GeoLayerRenderer<CustomPlayerEn
                     if (SWarfareCompat.isGunItem(itemStack)) {
                         poseStack.scale(1.25f, 1.25f, 1.25f);
                     }
-                    this.itemRenderer.renderItem(livingEntity, itemStack, itemDisplayContext, z, poseStack, multiBufferSource, i);
+                    this.itemRenderer.renderItem(livingEntity, itemStack, itemDisplayContext, isLeftHand, poseStack, multiBufferSource, i);
                 }
                 poseStack.popPose();
             });

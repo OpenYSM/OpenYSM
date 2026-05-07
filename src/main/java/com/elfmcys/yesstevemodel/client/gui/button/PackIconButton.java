@@ -26,12 +26,12 @@ public class PackIconButton extends Button {
 
     private final ModelPackData packData;
 
-    public PackIconButton(int i, int i2, int i3, int i4, ModelPackData packData, Button.OnPress onPress) {
-        super(i, i2, i3, i4, Component.literal(ModelMetadataPresenter.getLocalizedString(packData, "name", packData.getName())), onPress, DEFAULT_NARRATION);
+    public PackIconButton(int x, int y, int width, int height, ModelPackData packData, Button.OnPress onPress) {
+        super(x, y, width, height, Component.literal(ModelMetadataPresenter.getLocalizedString(packData, "name", packData.getName())), onPress, DEFAULT_NARRATION);
         this.packData = packData;
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Minecraft minecraft = Minecraft.getInstance();
         Font font = minecraft.font;
         guiGraphics.fillGradient(getX(), getY(), getX() + this.width, getY() + this.height, -6598176, -6598176);
@@ -60,7 +60,7 @@ public class PackIconButton extends Button {
         }
     }
 
-    public void renderDescription(GuiGraphics guiGraphics, Screen screen, int i, int i2) {
+    public void renderDescription(GuiGraphics guiGraphics, Screen screen, int mouseX, int mouseY) {
         String str = ModelMetadataPresenter.getLocalizedString(this.packData, "description", this.packData.getDescription());
         if (StringUtils.isBlank(str)) {
             return;
@@ -69,16 +69,16 @@ public class PackIconButton extends Button {
         if (isHovered()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(0.0f, 0.0f, 4000.0f);
-            guiGraphics.renderComponentTooltip(screen.getMinecraft().font, listSingletonList, i, i2);
+            guiGraphics.renderComponentTooltip(screen.getMinecraft().font, listSingletonList, mouseX, mouseY);
             guiGraphics.pose().popPose();
         }
     }
 
-    private static void drawCenteredString(GuiGraphics guiGraphics, Font font, Component component, int i, int i2, int i3) {
-        guiGraphics.drawString(font, component, i - (font.width(component) / 2), i2, i3, false);
+    private static void drawCenteredString(GuiGraphics guiGraphics, Font font, Component component, int centerX, int y, int color) {
+        guiGraphics.drawString(font, component, centerX - (font.width(component) / 2), y, color, false);
     }
 
-    private static void drawCenteredString(GuiGraphics guiGraphics, Font font, FormattedCharSequence formattedCharSequence, int i, int i2, int i3) {
-        guiGraphics.drawString(font, formattedCharSequence, i - (font.width(formattedCharSequence) / 2), i2, i3, false);
+    private static void drawCenteredString(GuiGraphics guiGraphics, Font font, FormattedCharSequence formattedCharSequence, int centerX, int y, int color) {
+        guiGraphics.drawString(font, formattedCharSequence, centerX - (font.width(formattedCharSequence) / 2), y, color, false);
     }
 }

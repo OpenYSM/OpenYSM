@@ -80,20 +80,20 @@ public class ModelInfoScreen extends Screen {
         if (authorInfos.size() <= this.selectedTextureIndex) {
             this.selectedTextureIndex = 0;
         }
-        int i = 0;
-        while (i < 5) {
-            int i2 = this.selectedTextureIndex + i;
-            if (i2 >= authorInfos.size()) {
-                while (i < 5) {
-                    addRenderableWidget(AuthorButton.createAuthorButton(this.guiLeft + 25 + (75 * i), this.guiTop + 15, this));
-                    i++;
+        int slot = 0;
+        while (slot < 5) {
+            int authorIndex = this.selectedTextureIndex + slot;
+            if (authorIndex >= authorInfos.size()) {
+                while (slot < 5) {
+                    addRenderableWidget(AuthorButton.createAuthorButton(this.guiLeft + 25 + (75 * slot), this.guiTop + 15, this));
+                    slot++;
                 }
             } else {
-                AuthorInfo authorInfo = authorInfos.get(i2);
-                IResourceLocatable resourceLocatable = this.textureList.get(i2);
-                addRenderableWidget(new AuthorButton(this.guiLeft + 25 + (75 * i), this.guiTop + 15, authorInfo, this.renderContext, resourceLocatable != null ? resourceLocatable.getResourceLocation().get() : DEFAULT_AVATAR, i2, this));
+                AuthorInfo authorInfo = authorInfos.get(authorIndex);
+                IResourceLocatable resourceLocatable = this.textureList.get(authorIndex);
+                addRenderableWidget(new AuthorButton(this.guiLeft + 25 + (75 * slot), this.guiTop + 15, authorInfo, this.renderContext, resourceLocatable != null ? resourceLocatable.getResourceLocation().get() : DEFAULT_AVATAR, authorIndex, this));
             }
-            i++;
+            slot++;
         }
         addRenderableWidget(new FlatColorButton(this.guiLeft + 2, this.guiTop + 25, 18, 100, Component.literal("<"), button -> {
             this.selectedTextureIndex = Math.max(0, this.selectedTextureIndex - 5);
@@ -103,28 +103,28 @@ public class ModelInfoScreen extends Screen {
             this.selectedTextureIndex += 5;
             init();
         }).setTooltipText("gui.yes_steve_model.next_page"));
-        int i3 = this.guiTop + 150;
-        for (int i4 = 0; i4 < Math.min(metadata.getLink().size(), 2); i4++) {
-            String str = metadata.getLink().getKeyAt(i4);
-            String str2 = metadata.getLink().getValueAt(i4);
+        int linkY = this.guiTop + 150;
+        for (int linkIndex = 0; linkIndex < Math.min(metadata.getLink().size(), 2); linkIndex++) {
+            String str = metadata.getLink().getKeyAt(linkIndex);
+            String str2 = metadata.getLink().getValueAt(linkIndex);
             Component component = URL_LABELS.get(str);
             if (component == null) {
                 component = Component.literal(str);
             }
-            addRenderableWidget(new FlatColorButton(this.guiLeft + 310, i3, 85, 20, component, button3 -> {
+            addRenderableWidget(new FlatColorButton(this.guiLeft + 310, linkY, 85, 20, component, button3 -> {
                 openUrl(str2);
             }));
-            i3 += 25;
+            linkY += 25;
         }
-        addRenderableWidget(new FlatColorButton(this.guiLeft + 310, i3, 85, 20, Component.translatable("gui.yes_steve_model.model.return"), button4 -> {
+        addRenderableWidget(new FlatColorButton(this.guiLeft + 310, linkY, 85, 20, Component.translatable("gui.yes_steve_model.model.return"), button4 -> {
             getMinecraft().setScreen(this.parentScreen);
         }));
     }
 
     private void openUrl(@Nullable String str) {
         if (str != null && StringUtils.isNoneBlank(str)) {
-            getMinecraft().setScreen(new ConfirmLinkScreen(z -> {
-                if (z) {
+            getMinecraft().setScreen(new ConfirmLinkScreen(confirmed -> {
+                if (confirmed) {
                     Util.getPlatform().openUri(str);
                 }
                 getMinecraft().setScreen(this);
@@ -132,28 +132,28 @@ public class ModelInfoScreen extends Screen {
         }
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics);
         guiGraphics.fillGradient(this.guiLeft + 25, this.guiTop + 150, this.guiLeft + 305, this.guiTop + 220, -1889838245, -1889838245);
         Metadata metadata2 = this.modelData.getExtraInfo();
         if (metadata2 != null) {
-            int i3 = 0;
+            int lineOffset = 0;
             Iterator it = this.font.split(Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, "metadata.tips", metadata2.getTips())), 270).iterator();
             while (it.hasNext()) {
-                guiGraphics.drawString(this.font, (FormattedCharSequence) it.next(), this.guiLeft + 30, this.guiTop + 154 + i3, -1);
+                guiGraphics.drawString(this.font, (FormattedCharSequence) it.next(), this.guiLeft + 30, this.guiTop + 154 + lineOffset, -1);
                 Objects.requireNonNull(this.font);
-                i3 += 9;
+                lineOffset += 9;
                 Objects.requireNonNull(this.font);
-                if (i3 > 9 * 7) {
+                if (lineOffset > 9 * 7) {
                     break;
                 }
             }
         }
-        super.render(guiGraphics, i, i2, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderables.stream().filter(renderable -> {
             return renderable instanceof AuthorButton;
         }).forEach(renderable2 -> {
-            ((AuthorButton) renderable2).refreshContactComponents(guiGraphics, this, i, i2);
+            ((AuthorButton) renderable2).refreshContactComponents(guiGraphics, this, mouseX, mouseY);
         });
     }
 

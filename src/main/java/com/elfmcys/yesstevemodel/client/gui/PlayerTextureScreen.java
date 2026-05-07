@@ -118,13 +118,13 @@ public class PlayerTextureScreen extends Screen {
         });
     }
 
-    public TextureButton createTextureButton(int i, int i2, PlayerPreviewEntity previewEntity, int i3) {
-        return new TextureButton(i, i2, previewEntity, this.renderContext);
+    public TextureButton createTextureButton(int x, int y, PlayerPreviewEntity previewEntity, int textureIndex) {
+        return new TextureButton(x, y, previewEntity, this.renderContext);
     }
 
     public void init() {
-        int i;
-        int i2;
+        int texIndex;
+        int animIndex;
         MutableComponent mutableComponentLiteral;
         clearWidgets();
         this.guiLeft = (this.width - 420) / 2;
@@ -177,9 +177,9 @@ public class PlayerTextureScreen extends Screen {
                 init();
             }
         }));
-        for (int i3 = 0; i3 < 11 && (i2 = i3 + (this.animationCurrentPage * 11)) < this.animationKeys.size(); i3++) {
-            String str = this.animationKeys.get(i2);
-            int i4 = this.guiTop + 27 + (17 * i3);
+        for (int animSlot = 0; animSlot < 11 && (animIndex = animSlot + (this.animationCurrentPage * 11)) < this.animationKeys.size(); animSlot++) {
+            String str = this.animationKeys.get(animIndex);
+            int animButtonY = this.guiTop + 27 + (17 * animSlot);
             String str2 = String.format("gui.yes_steve_model.texture.button.%s", str.replaceAll("\\:", "."));
             String str3 = String.format("gui.yes_steve_model.texture.button.%s.desc", str.replaceAll("\\:", "."));
             if (I18n.exists(str2)) {
@@ -187,7 +187,7 @@ public class PlayerTextureScreen extends Screen {
             } else {
                 mutableComponentLiteral = Component.literal(str);
             }
-            FlatColorButton colorButton = new FlatColorButton(this.guiLeft + 5, i4, 80, 16, mutableComponentLiteral, button9 -> {
+            FlatColorButton colorButton = new FlatColorButton(this.guiLeft + 5, animButtonY, 80, 16, mutableComponentLiteral, button9 -> {
                 this.currentAnimation = str;
             });
             if (I18n.exists(str3)) {
@@ -195,16 +195,16 @@ public class PlayerTextureScreen extends Screen {
             }
             addRenderableWidget(colorButton);
         }
-        for (int i5 = 0; i5 < 4 && (i = i5 + (this.textureCurrentPage * 4)) < this.textureMap.size(); i5++) {
-            int i6 = this.guiLeft + 306 + (56 * (i5 % 2));
-            int i7 = this.guiTop + 5 + (104 * (i5 / 2));
-            PlayerPreviewEntity previewEntity = texturePreviewHolders[i5];
-            previewEntity.initModelWithTexture(this.modelId, this.textureMap.getKeyAt(i));
-            addRenderableWidget(createTextureButton(i6, i7, previewEntity, i));
+        for (int texSlot = 0; texSlot < 4 && (texIndex = texSlot + (this.textureCurrentPage * 4)) < this.textureMap.size(); texSlot++) {
+            int texButtonX = this.guiLeft + 306 + (56 * (texSlot % 2));
+            int texButtonY = this.guiTop + 5 + (104 * (texSlot / 2));
+            PlayerPreviewEntity previewEntity = texturePreviewHolders[texSlot];
+            previewEntity.initModelWithTexture(this.modelId, this.textureMap.getKeyAt(texIndex));
+            addRenderableWidget(createTextureButton(texButtonX, texButtonY, previewEntity, texIndex));
         }
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (getMinecraft().player == null) {
             return;
         }
@@ -213,81 +213,81 @@ public class PlayerTextureScreen extends Screen {
         guiGraphics.fillGradient(this.guiLeft + 93, this.guiTop, this.guiLeft + 299, this.guiTop + 235, -14540254, -14540254);
         guiGraphics.fillGradient(this.guiLeft + 302, this.guiTop, this.guiLeft + 420, this.guiTop + 235, -14540254, -14540254);
         double guiScale = Minecraft.getInstance().getWindow().getGuiScale();
-        int i3 = (int) ((this.guiLeft + 93) * guiScale);
+        int scissorX = (int) ((this.guiLeft + 93) * guiScale);
         int height = (int) (Minecraft.getInstance().getWindow().getHeight() - ((this.guiTop + 235) * guiScale));
-        int i4 = (int) (206.0d * guiScale);
-        int i5 = (int) (235.0d * guiScale);
+        int scissorWidth = (int) (206.0d * guiScale);
+        int scissorHeight = (int) (235.0d * guiScale);
         if (!this.modelHolder.getAnimationStateMachine().isCurrentAnimation(this.currentAnimation)) {
             this.modelHolder.getAnimationStateMachine().setCurrentAnimation(this.currentAnimation);
         }
-        renderTexturePreview(guiGraphics, i3, height, i4, i5, this.minecraft.getFrameTime());
+        renderTexturePreview(guiGraphics, scissorX, height, scissorWidth, scissorHeight, this.minecraft.getFrameTime());
         String str = String.format("%d/%d", this.textureCurrentPage + 1, this.textureMaxPage + 1);
         Font font = this.font;
         int iWidth = this.guiLeft + 302 + ((118 - this.font.width(str)) / 2);
-        int i6 = this.guiTop + 223;
+        int pageY = this.guiTop + 223;
         Objects.requireNonNull(this.font);
-        guiGraphics.drawString(font, str, iWidth, i6 - (9 / 2), 15986656);
+        guiGraphics.drawString(font, str, iWidth, pageY - (9 / 2), 15986656);
         String str2 = String.format("%d/%d", this.animationCurrentPage + 1, this.animationMaxPage + 1);
         guiGraphics.drawString(this.font, str2, this.guiLeft + 5 + ((80 - this.font.width(str2)) / 2), this.guiTop + 218, 15986656);
-        super.render(guiGraphics, i, i2, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderables.stream().filter(renderable -> {
             return renderable instanceof FlatColorButton;
         }).forEach(renderable2 -> {
-            ((FlatColorButton) renderable2).renderTooltip(guiGraphics, this, i, i2);
+            ((FlatColorButton) renderable2).renderTooltip(guiGraphics, this, mouseX, mouseY);
         });
     }
 
-    public void renderTexturePreview(GuiGraphics guiGraphics, int i, int i2, int i3, int i4, float f) {
-        RenderSystem.enableScissor(i, i2, i3, i4);
+    public void renderTexturePreview(GuiGraphics guiGraphics, int scissorX, int scissorY, int scissorWidth, int scissorHeight, float partialTick) {
+        RenderSystem.enableScissor(scissorX, scissorY, scissorWidth, scissorHeight);
         this.minecraft.player.getCapability(PlayerCapabilityProvider.PLAYER_CAP).ifPresent(cap -> {
             this.modelHolder.initModelWithTexture(this.modelId, cap.getCurrentTextureName());
-            ModelPreviewRenderer.renderEntityPreview(this.guiLeft + 149.5f + 40.0f + this.offsetX, this.guiTop + 117.5f + 80.0f + this.offsetY, this.zoom, this.pitch, this.yaw, f, this.modelHolder, RendererManager.getPlayerRenderer(), this.showGround);
+            ModelPreviewRenderer.renderEntityPreview(this.guiLeft + 149.5f + 40.0f + this.offsetX, this.guiTop + 117.5f + 80.0f + this.offsetY, this.zoom, this.pitch, this.yaw, partialTick, this.modelHolder, RendererManager.getPlayerRenderer(), this.showGround);
         });
         RenderSystem.disableScissor();
     }
 
-    public boolean mouseDragged(double d, double d2, int i, double d3, double d4) {
-        if (this.minecraft == null || !isInPreviewArea(d, d2)) {
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        if (this.minecraft == null || !isInPreviewArea(mouseX, mouseY)) {
             return false;
         }
-        if (i == 0) {
-            this.yaw = (float) (this.yaw + (1.5d * d3));
-            adjustPitch((float) d4);
+        if (button == 0) {
+            this.yaw = (float) (this.yaw + (1.5d * dragX));
+            adjustPitch((float) dragY);
         }
-        if (i == 1) {
-            this.offsetX = (float) (this.offsetX + d3);
-            this.offsetY = (float) (this.offsetY + d4);
+        if (button == 1) {
+            this.offsetX = (float) (this.offsetX + dragX);
+            this.offsetY = (float) (this.offsetY + dragY);
             return true;
         }
         return true;
     }
 
-    public boolean mouseScrolled(double d, double d2, double d3) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (this.minecraft == null) {
             return false;
         }
-        if (d3 != 0.0d) {
-            if (isInPreviewArea(d, d2)) {
-                adjustZoom(((float) d3) * 0.07f);
+        if (delta != 0.0d) {
+            if (isInPreviewArea(mouseX, mouseY)) {
+                adjustZoom(((float) delta) * 0.07f);
                 return true;
             }
-            if (isInAnimationArea(d, d2)) {
-                return scrollAnimationPage(d3);
+            if (isInAnimationArea(mouseX, mouseY)) {
+                return scrollAnimationPage(delta);
             }
-            if (isInTextureArea(d, d2)) {
-                return scrollTexturePage(d3);
+            if (isInTextureArea(mouseX, mouseY)) {
+                return scrollTexturePage(delta);
             }
         }
-        return super.mouseScrolled(d, d2, d3);
+        return super.mouseScrolled(mouseX, mouseY, delta);
     }
 
-    private boolean scrollTexturePage(double d) {
-        if (d > 0.0d && this.textureCurrentPage > 0) {
+    private boolean scrollTexturePage(double delta) {
+        if (delta > 0.0d && this.textureCurrentPage > 0) {
             this.textureCurrentPage--;
             getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             init();
         }
-        if (d < 0.0d && this.textureCurrentPage < this.textureMaxPage) {
+        if (delta < 0.0d && this.textureCurrentPage < this.textureMaxPage) {
             this.textureCurrentPage++;
             getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             init();
@@ -296,13 +296,13 @@ public class PlayerTextureScreen extends Screen {
         return true;
     }
 
-    private boolean scrollAnimationPage(double d) {
-        if (d > 0.0d && this.animationCurrentPage > 0) {
+    private boolean scrollAnimationPage(double delta) {
+        if (delta > 0.0d && this.animationCurrentPage > 0) {
             this.animationCurrentPage--;
             getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             init();
         }
-        if (d < 0.0d && this.animationCurrentPage < this.animationMaxPage) {
+        if (delta < 0.0d && this.animationCurrentPage < this.animationMaxPage) {
             this.animationCurrentPage++;
             getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             init();
@@ -311,30 +311,30 @@ public class PlayerTextureScreen extends Screen {
         return true;
     }
 
-    private boolean isInPreviewArea(double d, double d2) {
-        return ((((double) (this.guiLeft + 93)) > d ? 1 : (((double) (this.guiLeft + 93)) == d ? 0 : -1)) < 0 && (d > ((double) (this.guiLeft + 299)) ? 1 : (d == ((double) (this.guiLeft + 299)) ? 0 : -1)) < 0) && ((((double) this.guiTop) > d2 ? 1 : (((double) this.guiTop) == d2 ? 0 : -1)) < 0 && (d2 > ((double) (this.guiTop + 235)) ? 1 : (d2 == ((double) (this.guiTop + 235)) ? 0 : -1)) < 0);
+    private boolean isInPreviewArea(double mouseX, double mouseY) {
+        return ((((double) (this.guiLeft + 93)) > mouseX ? 1 : (((double) (this.guiLeft + 93)) == mouseX ? 0 : -1)) < 0 && (mouseX > ((double) (this.guiLeft + 299)) ? 1 : (mouseX == ((double) (this.guiLeft + 299)) ? 0 : -1)) < 0) && ((((double) this.guiTop) > mouseY ? 1 : (((double) this.guiTop) == mouseY ? 0 : -1)) < 0 && (mouseY > ((double) (this.guiTop + 235)) ? 1 : (mouseY == ((double) (this.guiTop + 235)) ? 0 : -1)) < 0);
     }
 
-    private boolean isInAnimationArea(double d, double d2) {
-        return ((((double) this.guiLeft) > d ? 1 : (((double) this.guiLeft) == d ? 0 : -1)) < 0 && (d > ((double) (this.guiLeft + 90)) ? 1 : (d == ((double) (this.guiLeft + 90)) ? 0 : -1)) < 0) && ((((double) (this.guiTop + 22)) > d2 ? 1 : (((double) (this.guiTop + 22)) == d2 ? 0 : -1)) < 0 && (d2 > ((double) (this.guiTop + 235)) ? 1 : (d2 == ((double) (this.guiTop + 235)) ? 0 : -1)) < 0);
+    private boolean isInAnimationArea(double mouseX, double mouseY) {
+        return ((((double) this.guiLeft) > mouseX ? 1 : (((double) this.guiLeft) == mouseX ? 0 : -1)) < 0 && (mouseX > ((double) (this.guiLeft + 90)) ? 1 : (mouseX == ((double) (this.guiLeft + 90)) ? 0 : -1)) < 0) && ((((double) (this.guiTop + 22)) > mouseY ? 1 : (((double) (this.guiTop + 22)) == mouseY ? 0 : -1)) < 0 && (mouseY > ((double) (this.guiTop + 235)) ? 1 : (mouseY == ((double) (this.guiTop + 235)) ? 0 : -1)) < 0);
     }
 
-    private boolean isInTextureArea(double d, double d2) {
-        return ((((double) (this.guiLeft + 302)) > d ? 1 : (((double) (this.guiLeft + 302)) == d ? 0 : -1)) < 0 && (d > ((double) (this.guiLeft + 420)) ? 1 : (d == ((double) (this.guiLeft + 420)) ? 0 : -1)) < 0) && ((((double) this.guiTop) > d2 ? 1 : (((double) this.guiTop) == d2 ? 0 : -1)) < 0 && (d2 > ((double) (this.guiTop + 235)) ? 1 : (d2 == ((double) (this.guiTop + 235)) ? 0 : -1)) < 0);
+    private boolean isInTextureArea(double mouseX, double mouseY) {
+        return ((((double) (this.guiLeft + 302)) > mouseX ? 1 : (((double) (this.guiLeft + 302)) == mouseX ? 0 : -1)) < 0 && (mouseX > ((double) (this.guiLeft + 420)) ? 1 : (mouseX == ((double) (this.guiLeft + 420)) ? 0 : -1)) < 0) && ((((double) this.guiTop) > mouseY ? 1 : (((double) this.guiTop) == mouseY ? 0 : -1)) < 0 && (mouseY > ((double) (this.guiTop + 235)) ? 1 : (mouseY == ((double) (this.guiTop + 235)) ? 0 : -1)) < 0);
     }
 
-    private void adjustPitch(float f) {
-        if (this.pitch - f > MAX_PITCH) {
+    private void adjustPitch(float deltaY) {
+        if (this.pitch - deltaY > MAX_PITCH) {
             this.pitch = MAX_PITCH;
-        } else if (this.pitch - f < MIN_PITCH) {
+        } else if (this.pitch - deltaY < MIN_PITCH) {
             this.pitch = MIN_PITCH;
         } else {
-            this.pitch -= f;
+            this.pitch -= deltaY;
         }
     }
 
-    private void adjustZoom(float f) {
-        this.zoom = Mth.clamp(this.zoom + (f * this.zoom), MIN_ZOOM, MAX_ZOOM);
+    private void adjustZoom(float zoomDelta) {
+        this.zoom = Mth.clamp(this.zoom + (zoomDelta * this.zoom), MIN_ZOOM, MAX_ZOOM);
     }
 
     public boolean isPauseScreen() {

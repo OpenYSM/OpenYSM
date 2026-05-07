@@ -27,13 +27,13 @@ public class YSMNativeHelper {
         return ((MutableComponent) obj).append((Component) obj2);
     }
 
-    public static int[] parseTextureIndices(String[] var0) {
-        HashMap<String, Integer> var1 = new HashMap<>();
-        for(int i = 0; i < var0.length; ++i) {
-            var1.put(var0[i] + ".png", i);
+    public static int[] parseTextureIndices(String[] textureNames) {
+        HashMap<String, Integer> indexMap = new HashMap<>();
+        for(int i = 0; i < textureNames.length; ++i) {
+            indexMap.put(textureNames[i] + ".png", i);
         }
 
-        return var1.keySet().stream().mapToInt(var1::get).toArray();
+        return indexMap.keySet().stream().mapToInt(indexMap::get).toArray();
     }
 
     @OnlyIn(Dist.CLIENT)

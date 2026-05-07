@@ -16,8 +16,8 @@ public class FlatColorButton extends Button {
 
     private List<Component> tooltip;
 
-    public FlatColorButton(int i, int i2, int i3, int i4, Component component, Button.OnPress onPress) {
-        super(i, i2, i3, i4, component, onPress, DEFAULT_NARRATION);
+    public FlatColorButton(int x, int y, int width, int height, Component component, Button.OnPress onPress) {
+        super(x, y, width, height, component, onPress, DEFAULT_NARRATION);
         this.selected = false;
     }
 
@@ -31,13 +31,13 @@ public class FlatColorButton extends Button {
         return this;
     }
 
-    public void renderTooltip(GuiGraphics guiGraphics, Screen screen, int i, int i2) {
+    public void renderTooltip(GuiGraphics guiGraphics, Screen screen, int mouseX, int mouseY) {
         if (this.isHovered && this.tooltip != null) {
-            guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.tooltip, i, i2);
+            guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.tooltip, mouseX, mouseY);
         }
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Font font = Minecraft.getInstance().font;
         if (this.selected) {
             guiGraphics.fillGradient(getX(), getY(), getX() + this.width, getY() + this.height, -14774017, -14774017);
@@ -53,7 +53,7 @@ public class FlatColorButton extends Button {
         renderScrollingString(guiGraphics, font, 2, 15986656);
     }
 
-    public void setSelected(boolean z) {
-        this.selected = z;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

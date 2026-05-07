@@ -24,9 +24,9 @@ public class EffectLevel extends ContextFunction<Entity> {
         int effects = 0;
 
         for (int i = 0; i < arguments.size(); i++) {
-            ResourceLocation var5 = arguments.getResourceLocation(context, i);
-            if (var5 != null) {
-                MobEffect mobEffect = ForgeRegistries.MOB_EFFECTS.getValue(var5);
+            ResourceLocation effectId = arguments.getResourceLocation(context, i);
+            if (effectId != null) {
+                MobEffect mobEffect = ForgeRegistries.MOB_EFFECTS.getValue(effectId);
                 if (mobEffect != null) {
                     if (context.entity().geoInstance() instanceof PlayerCapability cap
                             && !cap.isLocalPlayerModel()) {

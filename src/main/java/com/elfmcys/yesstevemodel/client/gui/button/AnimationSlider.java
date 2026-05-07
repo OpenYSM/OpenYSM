@@ -27,10 +27,10 @@ public class AnimationSlider extends ForgeSlider implements ISpecialWidget {
 
     private final String controllerName;
 
-    public AnimationSlider(int i, int i2, Component component, double d, AnimatableEntity<?> animatableEntity, String str, double d2, double d3, double d4) {
-        super(i, i2, 115, 15, component, Component.empty(), d3, d4, d, d2, 0, true);
+    public AnimationSlider(int x, int y, Component component, double currentValue, AnimatableEntity<?> animatableEntity, String controllerName, double stepSize, double minValue, double maxValue) {
+        super(x, y, 115, 15, component, Component.empty(), minValue, maxValue, currentValue, stepSize, 0, true);
         this.model = animatableEntity;
-        this.controllerName = str;
+        this.controllerName = controllerName;
     }
 
     public void applyValue() {
@@ -49,7 +49,7 @@ public class AnimationSlider extends ForgeSlider implements ISpecialWidget {
         return DECIMAL_FORMAT.format(getValue());
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Minecraft minecraft = Minecraft.getInstance();
         guiGraphics.blitWithBorder(ROULETTE_TEXTURE, getX(), getY(), 0, getTextureY() + 24, this.width, this.height, 200, 15, 2, 3, 2, 2);
         guiGraphics.blitWithBorder(ROULETTE_TEXTURE, getX() + ((int) (this.value * (this.width - 8))), getY(), 0, getHandleTextureY() + 24, 8, this.height, 200, 15, 2, 3, 2, 2);

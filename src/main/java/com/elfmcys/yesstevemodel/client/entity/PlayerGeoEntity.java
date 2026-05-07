@@ -44,7 +44,7 @@ public class PlayerGeoEntity extends GeoEntity<LocalPlayer> {
 
     @Override
     @Nullable
-    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z) {
+    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isDefault) {
         return this.playerCapability.getRenderShape();
     }
 
@@ -85,7 +85,7 @@ public class PlayerGeoEntity extends GeoEntity<LocalPlayer> {
     }
 
     @Override
-    public void setupAnim(float seekTime, boolean z) {
+    public void setupAnim(float seekTime, boolean isFirstPerson) {
         getEvaluationContext().setRoamingProperties(this.playerCapability.getServerVarContainer());
     }
 }

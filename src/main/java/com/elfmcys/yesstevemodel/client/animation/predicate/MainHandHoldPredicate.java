@@ -43,9 +43,9 @@ public class MainHandHoldPredicate implements IAnimationPredicate<LivingAnimatab
         if (mainHandItem.is(Items.CROSSBOW) && CrossbowItem.isCharged(mainHandItem)) {
             return IAnimationPredicate.playAnimationWithValid(event, "hold_mainhand:charged_crossbow", ILoopType.EDefaultLoopTypes.LOOP, i);
         }
-        boolean z = (entity instanceof Player) && ((Player) entity).fishing != null;
+        boolean isFishing = (entity instanceof Player) && ((Player) entity).fishing != null;
         boolean flag = TouhouLittleMaidCompat.isMaidSitting(entity);
-        if (z || flag) {
+        if (isFishing || flag) {
             return IAnimationPredicate.playAnimationWithValid(event, "hold_mainhand:fishing", ILoopType.EDefaultLoopTypes.LOOP, i);
         }
         LivingEntityFrameState<?> c0675x43c72e02Mo1215x3cfc56ba = ((LivingAnimatable) event.getAnimatable()).getPositionTracker();

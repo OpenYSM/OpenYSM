@@ -14,15 +14,15 @@ public class IconButton extends FlatColorButton {
 
     private final int iconV;
 
-    public IconButton(int i, int i2, int i3, int i4, int i5, int i6, Button.OnPress onPress) {
-        super(i, i2, i3, i4, Component.empty(), onPress);
-        this.iconU = i5;
-        this.iconV = i6;
+    public IconButton(int x, int y, int width, int height, int iconU, int iconV, Button.OnPress onPress) {
+        super(x, y, width, height, Component.empty(), onPress);
+        this.iconU = iconU;
+        this.iconV = iconV;
     }
 
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
-        super.renderWidget(guiGraphics, i, i2, f);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.blit(ICON_TEXTURE, getX() + ((this.width - 16) / 2), getY() + ((this.height - 16) / 2), 16, 16, this.iconU, this.iconV, 16, 16, 256, 256);
     }
 }

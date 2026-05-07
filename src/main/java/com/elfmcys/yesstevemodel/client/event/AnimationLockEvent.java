@@ -46,8 +46,8 @@ public class AnimationLockEvent {
         return input != null && (isSignificantImpulse(input.leftImpulse) || isSignificantImpulse(input.forwardImpulse) || input.jumping || input.shiftKeyDown);
     }
 
-    private static boolean isSignificantImpulse(float f) {
-        return Math.abs(f) > 1.0E-5f;
+    private static boolean isSignificantImpulse(float impulse) {
+        return Math.abs(impulse) > 1.0E-5f;
     }
 
     public static void toggleLock() {

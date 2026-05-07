@@ -17,14 +17,14 @@ public class SoundFunction {
             if (!context.entity().isClientSide()) {
                 return false;
             }
-            Object arg0 = arguments.getValue(context, 0);
-            if (arg0 instanceof Number) {
-                id = -((Number) arg0).intValue();
+            Object idValue = arguments.getValue(context, 0);
+            if (idValue instanceof Number) {
+                id = -((Number) idValue).intValue();
                 if (id > 0) {
                     return false;
                 }
             } else {
-                id = ValueConversions.asStringId(arg0);
+                id = ValueConversions.asStringId(idValue);
             }
             AudioPlayerManager audioPlayerManager = context.entity().getAudioPlayerManager(arguments.size() == 2 && arguments.getAsBoolean(context, 1));
             if (audioPlayerManager != null) {
@@ -70,14 +70,14 @@ public class SoundFunction {
             if (!context.entity().isClientSide()) {
                 return false;
             }
-            Object arg0 = arguments.getValue(context, 0);
-            if (arg0 instanceof Number) {
-                id = -((Number) arg0).intValue();
+            Object idValue = arguments.getValue(context, 0);
+            if (idValue instanceof Number) {
+                id = -((Number) idValue).intValue();
                 if (id > 0) {
                     return false;
                 }
             } else {
-                id = ValueConversions.asStringId(arg0);
+                id = ValueConversions.asStringId(idValue);
             }
             String soundName = arguments.getAsString(context, 1);
             if (!StringUtils.isBlank(soundName) && context.entity().entity() != null) {

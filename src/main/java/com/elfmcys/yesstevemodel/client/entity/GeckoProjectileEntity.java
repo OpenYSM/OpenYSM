@@ -30,9 +30,9 @@ public class GeckoProjectileEntity extends GeoEntity<Projectile> {
 
     @Override
     @Nullable
-    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z) {
+    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isDefault) {
         ProjectileModelBundle modelBundle;
-        if (!z && (modelBundle = modelAssembly.getProjectileModels().get(this.entity.getType().builtInRegistryHolder().key().location())) != null) {
+        if (!isDefault && (modelBundle = modelAssembly.getProjectileModels().get(this.entity.getType().builtInRegistryHolder().key().location())) != null) {
             return new ProjectileModelWrapper(modelAssembly, false, modelBundle);
         }
         return null;
@@ -91,8 +91,8 @@ public class GeckoProjectileEntity extends GeoEntity<Projectile> {
 
         private final IResourceLocatable textureLocatable;
 
-        public ProjectileModelWrapper(ModelAssembly modelAssembly, boolean z, ProjectileModelBundle modelBundle) {
-            super(modelAssembly, z);
+        public ProjectileModelWrapper(ModelAssembly modelAssembly, boolean isDefault, ProjectileModelBundle modelBundle) {
+            super(modelAssembly, isDefault);
             this.textureLocatable = UploadManager.getOrCreateLocatable(modelBundle.getTexture(), true);
         }
 

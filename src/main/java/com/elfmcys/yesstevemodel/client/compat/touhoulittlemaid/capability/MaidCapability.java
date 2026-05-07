@@ -22,8 +22,8 @@ public class MaidCapability extends LivingAnimatable<EntityMaid> implements IGeo
 
     private MaidModelInfo maidModelInfo;
 
-    public MaidCapability(EntityMaid entityMaid, boolean z) {
-        super(entityMaid, z);
+    public MaidCapability(EntityMaid entityMaid, boolean isActive) {
+        super(entityMaid, isActive);
         this.maidModelInfo = new MaidModelInfo();
     }
 
@@ -34,8 +34,8 @@ public class MaidCapability extends LivingAnimatable<EntityMaid> implements IGeo
 
     @Override
     @NotNull
-    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z) {
-        return new TexturedModelWrapper(modelAssembly, z, true, true, 600);
+    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isActive) {
+        return new TexturedModelWrapper(modelAssembly, isActive, true, true, 600);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class MaidCapability extends LivingAnimatable<EntityMaid> implements IGeo
     }
 
     @Override
-    public void setupAnim(float seekTime, boolean z) {
-        super.setupAnim(seekTime, z);
+    public void setupAnim(float seekTime, boolean isFirstPerson) {
+        super.setupAnim(seekTime, isFirstPerson);
         getEvaluationContext().setRoamingProperties(getPropertyContainer());
     }
 

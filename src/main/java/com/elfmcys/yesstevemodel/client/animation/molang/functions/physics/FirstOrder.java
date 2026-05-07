@@ -19,9 +19,9 @@ public class FirstOrder implements IPhysics {
     }
 
     @Override
-    public void setArgs(float arg0, float arg1, float arg2, float arg3) {
-        this.input = arg0;
-        this.response = arg1;
+    public void setArgs(float input, float response, float arg2, float arg3) {
+        this.input = input;
+        this.response = response;
     }
 
     @Override

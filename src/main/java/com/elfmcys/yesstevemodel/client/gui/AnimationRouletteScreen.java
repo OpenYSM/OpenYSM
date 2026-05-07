@@ -285,26 +285,26 @@ public class AnimationRouletteScreen extends Screen {
         FlatIconButton iconButton = new FlatIconButton(this.centerX + 125, this.centerY + iArr[0], size, mutableComponentLiteral);
         iconButton.setTooltip(tooltipCreate);
         addRenderableOnly(iconButton);
-        int i2 = iArr[0] + 14;
-        int i3 = 0;
-        while (i3 < orderedStringMap.size()) {
-            MutableComponent mutableComponentLiteral2 = Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, CONFIG_LABEL_FORMAT.formatted(this.currentConfigGroup.getId(), Integer.valueOf(iArr2[0]), Integer.valueOf(i3)), orderedStringMap.getKeyAt(i3)));
-            String str4 = orderedStringMap.getValueAt(i3);
-            boolean z = iRound == i3;
+        int rowY = iArr[0] + 14;
+        int idx = 0;
+        while (idx < orderedStringMap.size()) {
+            MutableComponent mutableComponentLiteral2 = Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, CONFIG_LABEL_FORMAT.formatted(this.currentConfigGroup.getId(), Integer.valueOf(iArr2[0]), Integer.valueOf(idx)), orderedStringMap.getKeyAt(idx)));
+            String str4 = orderedStringMap.getValueAt(idx);
+            boolean isSelected = iRound == idx;
             int iRound2 = Math.round(110.0f / iMax2);
-            ConfigCheckBox configCheckBox = new ConfigCheckBox(this.centerX + 127 + (iRound2 * (i3 % iMax2)), this.centerY + i2, iRound2, mutableComponentLiteral2, bool -> {
+            ConfigCheckBox configCheckBox = new ConfigCheckBox(this.centerX + 127 + (iRound2 * (idx % iMax2)), this.centerY + rowY, iRound2, mutableComponentLiteral2, bool -> {
                 executeExpression(str4, null);
                 if (!GeckoLibCache.isRoamingVariableAssignment(str4) && NetworkHandler.isClientConnected() && !ServerConfig.LOW_BANDWIDTH_USAGE.get().booleanValue()) {
                     NetworkHandler.sendToServer(new C2SRequestExecuteMolangPacket(str4, this.animatableModel.getEntity().getId()));
                 }
                 init();
             });
-            configCheckBox.setStateTriggered(z);
+            configCheckBox.setStateTriggered(isSelected);
             addRenderableWidget(configCheckBox);
-            if (i3 % iMax2 == iMax2 - 1) {
-                i2 += 14;
+            if (idx % iMax2 == iMax2 - 1) {
+                rowY += 14;
             }
-            i3++;
+            idx++;
         }
         iArr[0] = iArr[0] + size + 3;
         iArr2[0] = iArr2[0] + 1;
@@ -328,7 +328,7 @@ public class AnimationRouletteScreen extends Screen {
         String str4 = ModelMetadataPresenter.getLocalizedModelString(this.renderContext, CONFIG_DESC_FORMAT.formatted(this.currentConfigGroup.getId(), Integer.valueOf(iArr2[0])), checkboxConfig.getDescription());
         MutableComponent mutableComponentLiteral = Component.literal(str3);
         Tooltip tooltipCreate = Tooltip.create(Component.literal(str4));
-        float f2 = parseFloatValue(str);
+        float parsedValue = parseFloatValue(str);
         ConfigCheckBox configCheckBox = new ConfigCheckBox(this.centerX + 125, this.centerY + iArr[0], mutableComponentLiteral, bool -> {
             String str2 = checkboxConfig.getValue() + "=" + (bool.booleanValue() ? "1" : "0");
             executeExpression(str2, null);
@@ -337,66 +337,66 @@ public class AnimationRouletteScreen extends Screen {
             }
         }) {
             @Override
-            public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+            public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
                 guiGraphics.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), -280804798);
-                super.renderWidget(guiGraphics, i, i2, f);
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
             }
         };
-        configCheckBox.setStateTriggered(f2 > 0.0f);
+        configCheckBox.setStateTriggered(parsedValue > 0.0f);
         configCheckBox.setTooltip(tooltipCreate);
         return configCheckBox;
     }
 
     private float parseFloatValue(String str) throws NumberFormatException {
-        float f;
+        float value;
         if ("null".equals(str)) {
-            f = 0.0f;
+            value = 0.0f;
         } else if (NumberUtils.isParsable(str)) {
-            f = Float.parseFloat(str);
+            value = Float.parseFloat(str);
         } else if (BooleanUtils.toBooleanObject(str) != null) {
-            f = BooleanUtils.toBoolean(str) ? 1.0f : 0.0f;
+            value = BooleanUtils.toBoolean(str) ? 1.0f : 0.0f;
         } else {
-            f = 0.0f;
+            value = 0.0f;
         }
-        return f;
+        return value;
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
-        int i3;
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        int scrolledMouseY;
         guiGraphics.drawCenteredString(this.font, Component.translatable("gui.yes_steve_model.roulette.path", StringUtils.joinWith(" > ", navigationStack.stream().map((v0) -> {
             return v0.getLeft();
         }).toArray())), this.centerX + 195, this.centerY - 100, 16777215);
-        renderRadialBackground(guiGraphics.pose(), i, i2);
+        renderRadialBackground(guiGraphics.pose(), mouseX, mouseY);
         renderRadialButtons(guiGraphics);
         renderPageInfo(guiGraphics);
         for (Renderable renderable : this.renderables) {
             if (!(renderable instanceof ISpecialWidget)) {
-                renderable.render(guiGraphics, i, i2, f);
+                renderable.render(guiGraphics, mouseX, mouseY, partialTick);
             }
         }
         guiGraphics.enableScissor(0, this.centerY - 46, this.width, this.centerY + 110);
-        if (i2 < this.centerY - 46 || this.centerY + 110 < i2) {
-            i3 = -1000;
+        if (mouseY < this.centerY - 46 || this.centerY + 110 < mouseY) {
+            scrolledMouseY = -1000;
         } else {
-            i3 = i2 + this.configScrollOffset;
+            scrolledMouseY = mouseY + this.configScrollOffset;
         }
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0.0f, -this.configScrollOffset, 0.0f);
         for (Renderable renderable2 : this.renderables) {
             if (renderable2 instanceof ISpecialWidget) {
-                renderable2.render(guiGraphics, i, i3, f);
+                renderable2.render(guiGraphics, mouseX, scrolledMouseY, partialTick);
             }
         }
         guiGraphics.pose().popPose();
         guiGraphics.disableScissor();
-        renderHoverTooltip(guiGraphics, i, i3);
+        renderHoverTooltip(guiGraphics, mouseX, scrolledMouseY);
     }
 
-    private void renderHoverTooltip(GuiGraphics guiGraphics, int i, int i2) {
+    private void renderHoverTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (-1 < this.hoveredIndex && this.hoveredIndex < this.currentProperties.size()) {
             String str = ModelMetadataPresenter.getLocalizedModelString(this.renderContext, "properties.extra_animation.%s.desc".formatted(this.currentProperties.getKeyAt(this.hoveredIndex)), StringPool.EMPTY);
             if (StringUtils.isNotBlank(str)) {
-                guiGraphics.renderTooltip(this.font, this.font.split(Component.literal(str), 240), i, i2);
+                guiGraphics.renderTooltip(this.font, this.font.split(Component.literal(str), 240), mouseX, mouseY);
             }
         }
     }
@@ -414,19 +414,19 @@ public class AnimationRouletteScreen extends Screen {
         guiGraphics.drawCenteredString(this.font, String.format("%d/%d", Integer.valueOf(this.currentNavEntry.getRight().intValue() + 1), Integer.valueOf(((this.currentProperties.size() - 1) / 8) + 1)), this.centerX + 197, this.centerY - 83, ChatFormatting.AQUA.getColor().intValue());
     }
 
-    public boolean mouseScrolled(double d, double d2, double d3) {
-        if (d3 < 0.0d) {
-            if (d < this.centerX + 110) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (delta < 0.0d) {
+            if (mouseX < this.centerX + 110) {
                 nextPage();
                 return true;
             }
             scrollConfigDown(20);
             return true;
         }
-        if (d3 <= 0.0d) {
+        if (delta <= 0.0d) {
             return false;
         }
-        if (d < this.centerX + 110) {
+        if (mouseX < this.centerX + 110) {
             previousPage();
             return true;
         }
@@ -452,7 +452,7 @@ public class AnimationRouletteScreen extends Screen {
         this.configScrollOffset = Math.min(this.maxConfigScroll, this.configScrollOffset + i);
     }
 
-    public boolean mouseClicked(double d, double d2, int i) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (-1 < this.hoveredIndex && this.hoveredIndex < this.currentProperties.size()) {
             getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             String str = this.currentProperties.getKeyAt(this.hoveredIndex);
@@ -474,13 +474,13 @@ public class AnimationRouletteScreen extends Screen {
             }
         }
         for (GuiEventListener guiEventListener : children()) {
-            double d3 = d2;
+            double scrolledMouseY = mouseY;
             if (guiEventListener instanceof ISpecialWidget) {
-                d3 = d2 + this.configScrollOffset;
+                scrolledMouseY = mouseY + this.configScrollOffset;
             }
-            if (guiEventListener.mouseClicked(d, d3, i)) {
+            if (guiEventListener.mouseClicked(mouseX, scrolledMouseY, button)) {
                 setFocused(guiEventListener);
-                if (i == 0) {
+                if (button == 0) {
                     setDragging(true);
                     return true;
                 }
@@ -490,12 +490,12 @@ public class AnimationRouletteScreen extends Screen {
         return false;
     }
 
-    public boolean keyPressed(int i, int i2, int i3) {
-        if (AnimationRouletteKey.KEY_ROULETTE.matches(i, i2) && AnimationRouletteKey.KEY_ROULETTE.getKeyModifier().isActive(null)) {
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (AnimationRouletteKey.KEY_ROULETTE.matches(keyCode, scanCode) && AnimationRouletteKey.KEY_ROULETTE.getKeyModifier().isActive(null)) {
             onClose();
             return true;
         }
-        return super.keyPressed(i, i2, i3);
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     private void showConfigGroup(String str) {
@@ -566,68 +566,68 @@ public class AnimationRouletteScreen extends Screen {
     }
 
     private void renderRadialButtons(GuiGraphics guiGraphics) {
-        float f = 0.3926991f;
+        float angle = 0.3926991f;
         int size = this.currentProperties.size() - (this.currentNavEntry.getRight().intValue() * 8);
         for (int i = 0; i < Math.min(8, size); i++) {
             int iIntValue = i + (this.currentNavEntry.getRight().intValue() * 8);
-            int iCos = (int) (this.centerX + (65 * Mth.cos(f)));
-            float fSin = this.centerY + (65 * Mth.sin(f));
+            int iCos = (int) (this.centerX + (65 * Mth.cos(angle)));
+            float fSin = this.centerY + (65 * Mth.sin(angle));
             Objects.requireNonNull(this.font);
-            int i2 = (int) (fSin - (9.0f / 2.0f));
+            int labelY = (int) (fSin - (9.0f / 2.0f));
             String str = this.currentProperties.getValueAt(iIntValue);
             boolean zStartsWith = this.currentProperties.getKeyAt(iIntValue).startsWith(SUBMENU_PREFIX);
             if (str.startsWith(SUBMENU_PREFIX)) {
                 String strSubstring = str.substring(SUBMENU_PREFIX.length());
                 if (this.renderGroups.containsKey(strSubstring)) {
                     str = this.renderGroups.get(strSubstring).getName();
-                    int iCos2 = (int) (this.centerX + (35 * Mth.cos(f)));
-                    float fSin2 = this.centerY + (35 * Mth.sin(f));
+                    int iCos2 = (int) (this.centerX + (35 * Mth.cos(angle)));
+                    float fSin2 = this.centerY + (35 * Mth.sin(angle));
                     Objects.requireNonNull(this.font);
                     guiGraphics.drawCenteredString(this.font, Component.literal("⚙").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), iCos2, (int) (fSin2 - (9.0f / 2.0f)), 16777215);
                 }
             }
             if (StringUtils.isNoneBlank(str)) {
-                renderWrappedLabel(guiGraphics, Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, "properties.extra_animation.%s".formatted(this.currentProperties.getKeyAt(iIntValue)), str)), iCos, i2, zStartsWith);
+                renderWrappedLabel(guiGraphics, Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, "properties.extra_animation.%s".formatted(this.currentProperties.getKeyAt(iIntValue)), str)), iCos, labelY, zStartsWith);
             } else {
-                guiGraphics.drawCenteredString(this.font, Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, "properties.extra_animation.%s".formatted(this.currentProperties.getKeyAt(iIntValue)), String.valueOf(iIntValue))), iCos, i2 - 8, 15986656);
+                guiGraphics.drawCenteredString(this.font, Component.literal(ModelMetadataPresenter.getLocalizedModelString(this.renderContext, "properties.extra_animation.%s".formatted(this.currentProperties.getKeyAt(iIntValue)), String.valueOf(iIntValue))), iCos, labelY - 8, 15986656);
             }
             if (this.currentNavEntry.getRight().intValue() == 0 && navigationStack.size() == 1) {
-                renderKeyBindings(guiGraphics, iIntValue, iCos, i2);
+                renderKeyBindings(guiGraphics, iIntValue, iCos, labelY);
             }
-            f += 0.7853982f;
+            angle += 0.7853982f;
         }
     }
 
-    private void renderKeyBindings(GuiGraphics guiGraphics, int i, int i2, int i3) {
+    private void renderKeyBindings(GuiGraphics guiGraphics, int slotIndex, int x, int y) {
         MutableComponent mutableComponentWithStyle = Component.literal("[ ").withStyle(ChatFormatting.YELLOW);
-        KeyMapping keyMapping = ExtraAnimationKey.KEY_MAPPINGS.get(i);
+        KeyMapping keyMapping = ExtraAnimationKey.KEY_MAPPINGS.get(slotIndex);
         if (keyMapping.getKey() == InputConstants.UNKNOWN) {
             mutableComponentWithStyle.append(Component.translatable("key.yes_steve_model.extra_animation.none"));
         } else {
             mutableComponentWithStyle.append(keyMapping.getTranslatedKeyMessage());
         }
         mutableComponentWithStyle.append(" ]");
-        guiGraphics.drawCenteredString(this.font, mutableComponentWithStyle, i2, i3 + 4, 15986656);
+        guiGraphics.drawCenteredString(this.font, mutableComponentWithStyle, x, y + 4, 15986656);
     }
 
-    private void renderWrappedLabel(GuiGraphics guiGraphics, MutableComponent mutableComponent, int i, int i2, boolean z) {
+    private void renderWrappedLabel(GuiGraphics guiGraphics, MutableComponent mutableComponent, int x, int y, boolean isSubmenu) {
         Objects.requireNonNull(this.font);
-        if (z) {
+        if (isSubmenu) {
             mutableComponent = mutableComponent.withStyle(ChatFormatting.RED);
         }
         List listSplit = this.font.split(mutableComponent, 50);
-        int size = (i2 - (listSplit.size() * 9)) + 2;
+        int lineY = (y - (listSplit.size() * 9)) + 2;
         if (this.currentNavEntry.getRight().intValue() != 0 || navigationStack.size() > 1) {
-            size += 9;
+            lineY += 9;
         }
         Iterator it = listSplit.iterator();
         while (it.hasNext()) {
-            guiGraphics.drawCenteredString(this.font, (FormattedCharSequence) it.next(), i, size, 15986656);
-            size += 9;
+            guiGraphics.drawCenteredString(this.font, (FormattedCharSequence) it.next(), x, lineY, 15986656);
+            lineY += 9;
         }
     }
 
-    private void renderRadialBackground(PoseStack poseStack, int i, int i2) {
+    private void renderRadialBackground(PoseStack poseStack, int mouseX, int mouseY) {
         if (this.currentProperties.isEmpty()) {
             return;
         }
@@ -638,67 +638,67 @@ public class AnimationRouletteScreen extends Screen {
         BufferBuilder builder = tesselator.getBuilder();
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         Matrix4f matrix4fPose = poseStack.last().pose();
-        float fAtan2 = (float) Mth.atan2(i2 - this.centerY, i - this.centerX);
-        if (fAtan2 < 0.0f) {
-            fAtan2 = 6.2831855f + fAtan2;
+        float pointerAngle = (float) Mth.atan2(mouseY - this.centerY, mouseX - this.centerX);
+        if (pointerAngle < 0.0f) {
+            pointerAngle = 6.2831855f + pointerAngle;
         }
-        float fSqrt = Mth.sqrt(Mth.square(i2 - this.centerY) + Mth.square(i - this.centerX));
-        boolean flag = false;
-        boolean z = false;
-        for (int i3 = 0; i3 < Math.min(8, this.currentProperties.size() - (this.currentNavEntry.getRight().intValue() * 8)); i3++) {
-            float f = ((6.2831855f / 8) * i3) + 0.034906585f;
-            float f2 = ((6.2831855f / 8) * (i3 + 1)) - 0.034906585f;
-            int iIntValue = i3 + (this.currentNavEntry.getRight().intValue() * 8);
+        float pointerRadius = Mth.sqrt(Mth.square(mouseY - this.centerY) + Mth.square(mouseX - this.centerX));
+        boolean hoveredAny = false;
+        boolean hoveredConfig = false;
+        for (int i = 0; i < Math.min(8, this.currentProperties.size() - (this.currentNavEntry.getRight().intValue() * 8)); i++) {
+            float startAngle = ((6.2831855f / 8) * i) + 0.034906585f;
+            float endAngle = ((6.2831855f / 8) * (i + 1)) - 0.034906585f;
+            int iIntValue = i + (this.currentNavEntry.getRight().intValue() * 8);
             boolean zStartsWith = this.currentProperties.getValueAt(iIntValue).startsWith(SUBMENU_PREFIX);
-            flag = checkRadialHover(f, fAtan2, f2, fSqrt, flag, zStartsWith, i3, builder, matrix4fPose);
-            boolean z2 = f < fAtan2 && fAtan2 < f2 && 20.0f < fSqrt && fSqrt < 50.0f;
+            hoveredAny = checkRadialHover(startAngle, pointerAngle, endAngle, pointerRadius, hoveredAny, zStartsWith, i, builder, matrix4fPose);
+            boolean isConfigSliceHovered = startAngle < pointerAngle && pointerAngle < endAngle && 20.0f < pointerRadius && pointerRadius < 50.0f;
             if (zStartsWith) {
-                if (z2) {
-                    drawRadialSegment(builder, matrix4fPose, 15.0f, 50.0f, f, f2, -268382465);
-                    z = true;
+                if (isConfigSliceHovered) {
+                    drawRadialSegment(builder, matrix4fPose, 15.0f, 50.0f, startAngle, endAngle, -268382465);
+                    hoveredConfig = true;
                     this.hoveredConfigIndex = iIntValue;
                 } else {
-                    drawRadialSegment(builder, matrix4fPose, 25.0f, 50.0f, f, f2, 1879101183);
+                    drawRadialSegment(builder, matrix4fPose, 25.0f, 50.0f, startAngle, endAngle, 1879101183);
                 }
             }
         }
-        if (!flag) {
+        if (!hoveredAny) {
             this.hoveredIndex = -1;
         }
-        if (!z) {
+        if (!hoveredConfig) {
             this.hoveredConfigIndex = -1;
         }
         tesselator.end();
         RenderSystem.disableBlend();
     }
 
-    private boolean checkRadialHover(float f, float f2, float f3, float f4, boolean z, boolean z2, int i, BufferBuilder bufferBuilder, Matrix4f matrix4f) {
-        boolean z3 = f < f2 && f2 < f3 && 50.0f < f4 && f4 < 100.0f;
-        if (z3) {
-            z = true;
-            this.hoveredIndex = i + (this.currentNavEntry.getRight().intValue() * 8);
+    private boolean checkRadialHover(float startAngle, float pointerAngle, float endAngle, float pointerRadius, boolean alreadyHovered, boolean isSubmenu, int index, BufferBuilder bufferBuilder, Matrix4f matrix4f) {
+        boolean isHovered = startAngle < pointerAngle && pointerAngle < endAngle && 50.0f < pointerRadius && pointerRadius < 100.0f;
+        if (isHovered) {
+            alreadyHovered = true;
+            this.hoveredIndex = index + (this.currentNavEntry.getRight().intValue() * 8);
         }
-        if (z3 && i < this.currentProperties.size()) {
-            if (z2) {
-                drawRadialSegment(bufferBuilder, matrix4f, 50.0f, 115.0f, f, f3, -251678464);
-                drawRadialSegment(bufferBuilder, matrix4f, 25.0f, 50.0f, f, f3, -1879048192);
+        if (isHovered && index < this.currentProperties.size()) {
+            if (isSubmenu) {
+                drawRadialSegment(bufferBuilder, matrix4f, 50.0f, 115.0f, startAngle, endAngle, -251678464);
+                drawRadialSegment(bufferBuilder, matrix4f, 25.0f, 50.0f, startAngle, endAngle, -1879048192);
             } else {
-                drawRadialSegment(bufferBuilder, matrix4f, 25.0f, 115.0f, f, f3, -251678464);
+                drawRadialSegment(bufferBuilder, matrix4f, 25.0f, 115.0f, startAngle, endAngle, -251678464);
             }
         } else {
-            drawRadialSegment(bufferBuilder, matrix4f, 25.0f, 105.0f, f, f3, -1879048192);
+            drawRadialSegment(bufferBuilder, matrix4f, 25.0f, 105.0f, startAngle, endAngle, -1879048192);
         }
-        return z;
+        return alreadyHovered;
     }
 
-    private void drawRadialSegment(BufferBuilder bufferBuilder, Matrix4f matrix4f, float f, float f2, float f3, float f4, int i) {
-        float f5 = ((i >> 24) & 255) / 255.0f;
-        float f6 = ((i >> 16) & 255) / 255.0f;
-        float f7 = ((i >> 8) & 255) / 255.0f;
-        float f8 = (i & 255) / 255.0f;
-        bufferBuilder.vertex(matrix4f, this.centerX + (f2 * Mth.cos(f3)), this.centerY + (f2 * Mth.sin(f3)), 0.0f).color(f6, f7, f8, f5).endVertex();
-        bufferBuilder.vertex(matrix4f, this.centerX + (f * Mth.cos(f3)), this.centerY + (f * Mth.sin(f3)), 0.0f).color(f6, f7, f8, f5).endVertex();
-        bufferBuilder.vertex(matrix4f, this.centerX + (f * Mth.cos(f4)), this.centerY + (f * Mth.sin(f4)), 0.0f).color(f6, f7, f8, f5).endVertex();
-        bufferBuilder.vertex(matrix4f, this.centerX + (f2 * Mth.cos(f4)), this.centerY + (f2 * Mth.sin(f4)), 0.0f).color(f6, f7, f8, f5).endVertex();
+    private void drawRadialSegment(BufferBuilder bufferBuilder, Matrix4f matrix4f, float innerRadius, float outerRadius, float startAngle, float endAngle, int color) {
+        float alpha = ((color >> 24) & 255) / 255.0f;
+        float red = ((color >> 16) & 255) / 255.0f;
+        float green = ((color >> 8) & 255) / 255.0f;
+        float blue = (color & 255) / 255.0f;
+        bufferBuilder.vertex(matrix4f, this.centerX + (outerRadius * Mth.cos(startAngle)), this.centerY + (outerRadius * Mth.sin(startAngle)), 0.0f).color(red, green, blue, alpha).endVertex();
+        bufferBuilder.vertex(matrix4f, this.centerX + (innerRadius * Mth.cos(startAngle)), this.centerY + (innerRadius * Mth.sin(startAngle)), 0.0f).color(red, green, blue, alpha).endVertex();
+        bufferBuilder.vertex(matrix4f, this.centerX + (innerRadius * Mth.cos(endAngle)), this.centerY + (innerRadius * Mth.sin(endAngle)), 0.0f).color(red, green, blue, alpha).endVertex();
+        bufferBuilder.vertex(matrix4f, this.centerX + (outerRadius * Mth.cos(endAngle)), this.centerY + (outerRadius * Mth.sin(endAngle)), 0.0f).color(red, green, blue, alpha).endVertex();
     }
 }

@@ -65,11 +65,11 @@ public class ExtraPlayerRenderScreen extends Screen {
         });
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
-        int i3 = this.mouseStartX;
-        int i4 = this.mouseStartY;
-        int i5 = (int) (i3 + (this.rotationX));
-        int i6 = (int) (i4 + (this.rotationX * 2.0f));
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        int boxLeft = this.mouseStartX;
+        int boxTop = this.mouseStartY;
+        int boxRight = (int) (boxLeft + (this.rotationX));
+        int boxBottom = (int) (boxTop + (this.rotationX * 2.0f));
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0.0f, 0.0f, (-500.0f) - ((50.0f * this.rotationX) / 40.0f));
         guiGraphics.vLine((this.width / 2) - 1, -2, this.height + 2, -1610612737);
@@ -78,69 +78,69 @@ public class ExtraPlayerRenderScreen extends Screen {
         guiGraphics.vLine(this.width - 10, -2, this.height + 2, -1610612737);
         guiGraphics.hLine(-2, this.width + 2, 10, -1610612737);
         guiGraphics.hLine(-2, this.width + 2, this.height - 10, -1610612737);
-        guiGraphics.vLine(i3, i4, i6, -65536);
-        guiGraphics.vLine(i5, i4, i6, -65536);
-        guiGraphics.hLine(i3, i5, i4, -65536);
-        guiGraphics.hLine(i3, i5, i6, -65536);
-        guiGraphics.fillGradient(i3, i4, i5, i6, 1342177279, 1342177279);
-        guiGraphics.fillGradient(i3 - this.offsetX, i4 - this.offsetX, i3 + this.offsetX, i4 + this.offsetX, -16711777, -16711777);
-        guiGraphics.fillGradient(i5 - this.offsetX, i6 - this.offsetX, i5 + this.offsetX, i6 + this.offsetX, -16777057, -16777057);
-        int i7 = 15;
+        guiGraphics.vLine(boxLeft, boxTop, boxBottom, -65536);
+        guiGraphics.vLine(boxRight, boxTop, boxBottom, -65536);
+        guiGraphics.hLine(boxLeft, boxRight, boxTop, -65536);
+        guiGraphics.hLine(boxLeft, boxRight, boxBottom, -65536);
+        guiGraphics.fillGradient(boxLeft, boxTop, boxRight, boxBottom, 1342177279, 1342177279);
+        guiGraphics.fillGradient(boxLeft - this.offsetX, boxTop - this.offsetX, boxLeft + this.offsetX, boxTop + this.offsetX, -16711777, -16711777);
+        guiGraphics.fillGradient(boxRight - this.offsetX, boxBottom - this.offsetX, boxRight + this.offsetX, boxBottom + this.offsetX, -16777057, -16777057);
+        int tipY = 15;
         for (FormattedCharSequence formattedCharSequence : this.font.split(Component.translatable("gui.yes_steve_model.extra_player_render.tips"), 500)) {
-            guiGraphics.drawString(this.font, formattedCharSequence, (this.width - 15) - this.font.width(formattedCharSequence), i7, 16777215);
-            i7 += 10;
+            guiGraphics.drawString(this.font, formattedCharSequence, (this.width - 15) - this.font.width(formattedCharSequence), tipY, 16777215);
+            tipY += 10;
         }
         guiGraphics.pose().popPose();
         if (getMinecraft().player != null && !ExtraPlayerRenderConfig.DISABLE_PLAYER_RENDER.get().booleanValue()) {
             ModelPreviewRenderer.renderPlayerOverlay(guiGraphics, getMinecraft().player, this.mouseStartX, this.mouseStartY, this.rotationX, this.rotationY, -500, this.minecraft.getFrameTime());
         }
-        super.render(guiGraphics, i, i2, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
-    public boolean mouseClicked(double d, double d2, int i) {
-        boolean z = ((double) (this.mouseStartX - this.offsetX)) < d && d < ((double) (this.mouseStartX + this.offsetX));
-        boolean z2 = ((double) (this.mouseStartY - this.offsetX)) < d2 && d2 < ((double) (this.mouseStartY + this.offsetX));
-        if (i == 0 && z && z2) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        boolean inLeftHandleX = ((double) (this.mouseStartX - this.offsetX)) < mouseX && mouseX < ((double) (this.mouseStartX + this.offsetX));
+        boolean inLeftHandleY = ((double) (this.mouseStartY - this.offsetX)) < mouseY && mouseY < ((double) (this.mouseStartY + this.offsetX));
+        if (button == 0 && inLeftHandleX && inLeftHandleY) {
             this.isDragging = true;
         }
-        int i2 = (int) (this.mouseStartX + (this.rotationX));
-        int i3 = (int) (this.mouseStartY + (this.rotationX * 2.0f));
-        boolean z3 = ((double) (i2 - this.offsetX)) < d && d < ((double) (i2 + this.offsetX));
-        boolean z4 = ((double) (i3 - this.offsetX)) < d2 && d2 < ((double) (i3 + this.offsetX));
-        if (i == 0 && z3 && z4) {
+        int rightHandleX = (int) (this.mouseStartX + (this.rotationX));
+        int rightHandleY = (int) (this.mouseStartY + (this.rotationX * 2.0f));
+        boolean inRightHandleX = ((double) (rightHandleX - this.offsetX)) < mouseX && mouseX < ((double) (rightHandleX + this.offsetX));
+        boolean inRightHandleY = ((double) (rightHandleY - this.offsetX)) < mouseY && mouseY < ((double) (rightHandleY + this.offsetX));
+        if (button == 0 && inRightHandleX && inRightHandleY) {
             this.isRightDragging = true;
         }
-        return super.mouseClicked(d, d2, i);
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
-    public boolean mouseReleased(double d, double d2, int i) {
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
         this.isDragging = false;
         this.isRightDragging = false;
-        return super.mouseReleased(d, d2, i);
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 
-    public boolean mouseDragged(double d, double d2, int i, double d3, double d4) {
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if (this.isRightDragging) {
-            this.rotationX = (float) Math.min(d - this.mouseStartX, (d2 - this.mouseStartY) / 2.0d);
+            this.rotationX = (float) Math.min(mouseX - this.mouseStartX, (mouseY - this.mouseStartY) / 2.0d);
             return true;
         }
         if (this.isDragging) {
-            this.mouseStartX = (int) d;
-            this.mouseStartY = (int) d2;
+            this.mouseStartX = (int) mouseX;
+            this.mouseStartY = (int) mouseY;
             return true;
         }
-        if (i == this.offsetY) {
-            this.rotationY += (float) (d3 * 2.0d);
+        if (button == this.offsetY) {
+            this.rotationY += (float) (dragX * 2.0d);
             return true;
         }
         return false;
     }
 
-    public boolean charTyped(char c, int i) {
-        if (Character.toLowerCase(c) == RESET_KEY && hasAltDown()) {
+    public boolean charTyped(char codePoint, int modifiers) {
+        if (Character.toLowerCase(codePoint) == RESET_KEY && hasAltDown()) {
             resetTransform();
         }
-        return super.charTyped(c, i);
+        return super.charTyped(codePoint, modifiers);
     }
 
     private void resetTransform() {

@@ -31,17 +31,17 @@ public class UploadManager {
 
     private static final Queue<ResourceLocation> pendingReleases = Queues.newArrayDeque();
 
-    public static IResourceLocatable getOrCreateLocatable(AbstractTexture texture, boolean z) {
-        return getOrCreateLocatableWithSize(texture, z, 200);
+    public static IResourceLocatable getOrCreateLocatable(AbstractTexture texture, boolean register) {
+        return getOrCreateLocatableWithSize(texture, register, 200);
     }
 
-    public static IResourceLocatable getOrCreateLocatableWithSize(AbstractTexture texture, boolean z, int i) {
+    public static IResourceLocatable getOrCreateLocatableWithSize(AbstractTexture texture, boolean register, int sizeHint) {
         RenderSystem.assertOnRenderThread();
         WeakReference<TextureLocatable> weakReference = textureCache.get(texture);
         if (weakReference != null) {
             TextureLocatable locatable = weakReference.get();
             if (locatable != null) {
-                if (z && !locatable.registered) {
+                if (register && !locatable.registered) {
                     registerTexture(texture, locatable);
                 }
                 return locatable;
@@ -51,20 +51,20 @@ public class UploadManager {
         ReferenceIntMutablePair<ResourceLocation> removed = expiredTextures.remove(texture);
         TextureLocatable locatable;
         if (removed != null) {
-            locatable = new TextureLocatable(removed.first(), i);
+            locatable = new TextureLocatable(removed.first(), sizeHint);
         } else {
-            locatable = new TextureLocatable(i);
+            locatable = new TextureLocatable(sizeHint);
         }
         if (texture instanceof ITextureMap) {
             for (AbstractTexture suffixTexture : ((ITextureMap) texture).getSuffixTextures().values()) {
                 if (locatable.suffixTextures == null)
                     locatable.suffixTextures = new ArrayList<>(2);
 
-                locatable.suffixTextures.add(getOrCreateLocatableWithSize(suffixTexture, z, i));
+                locatable.suffixTextures.add(getOrCreateLocatableWithSize(suffixTexture, register, sizeHint));
             }
         }
         textureCache.put(texture, new WeakReference<>(locatable));
-        if (z) {
+        if (register) {
             registerTexture(texture, locatable);
         } else {
             pendingUploads.add(Pair.of(locatable, texture));

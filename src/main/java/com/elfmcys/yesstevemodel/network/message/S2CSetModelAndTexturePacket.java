@@ -22,12 +22,12 @@ public class S2CSetModelAndTexturePacket {
 
     private final S2CSyncPlayerStatePacket entityModelSync;
 
-    public S2CSetModelAndTexturePacket(int i, String str, String str2, boolean z, S2CSyncPlayerStatePacket playerState) {
-        this.entityId = i;
-        this.modelId = str;
-        this.textureId = str2;
+    public S2CSetModelAndTexturePacket(int entityId, String modelId, String textureId, boolean disabled, S2CSyncPlayerStatePacket playerState) {
+        this.entityId = entityId;
+        this.modelId = modelId;
+        this.textureId = textureId;
         this.entityModelSync = playerState;
-        this.disabled = z;
+        this.disabled = disabled;
     }
 
     public static void encode(S2CSetModelAndTexturePacket other, FriendlyByteBuf friendlyByteBuf) {

@@ -340,8 +340,8 @@ public class YSMBinding extends ContextBinding {
     }
 
     private static boolean isCloseEyes(AnimationEvent<?> event, LivingEntity livingEntity) {
-        float f = (event.getCurrentTick() + (Math.abs(livingEntity.getUUID().getLeastSignificantBits()) % 10)) % 90.0f;
-        return livingEntity.isSleeping() || ((85.0f > f ? 1 : (85.0f == f ? 0 : -1)) < 0 && (f > 90.0f ? 1 : (f == 90.0f ? 0 : -1)) < 0);
+        float blinkPhase = (event.getCurrentTick() + (Math.abs(livingEntity.getUUID().getLeastSignificantBits()) % 10)) % 90.0f;
+        return livingEntity.isSleeping() || ((85.0f > blinkPhase ? 1 : (85.0f == blinkPhase ? 0 : -1)) < 0 && (blinkPhase > 90.0f ? 1 : (blinkPhase == 90.0f ? 0 : -1)) < 0);
     }
 
     private static boolean hasEquipment(LivingEntity livingEntity, EquipmentSlot equipmentSlot) {
@@ -412,8 +412,8 @@ public class YSMBinding extends ContextBinding {
         return entity.level().canSeeSky(blockPosBlockPosition) && entity.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, blockPosBlockPosition).getY() <= blockPosBlockPosition.getY();
     }
 
-    public static String getShoulderParrotVariant(Player player, boolean z) {
-        CompoundTag shoulderEntityLeft = z ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
+    public static String getShoulderParrotVariant(Player player, boolean leftShoulder) {
+        CompoundTag shoulderEntityLeft = leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
         return EntityType.byString(shoulderEntityLeft.getString("id")).filter(entityType -> {
             return entityType == EntityType.PARROT;
         }).map(entityType2 -> {
@@ -421,7 +421,7 @@ public class YSMBinding extends ContextBinding {
         }).orElse("empty");
     }
 
-    private static boolean hasShoulderParrot(Player player, boolean z) {
-        return !(z ? player.getShoulderEntityLeft() : player.getShoulderEntityRight()).isEmpty();
+    private static boolean hasShoulderParrot(Player player, boolean leftShoulder) {
+        return !(leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight()).isEmpty();
     }
 }

@@ -44,10 +44,10 @@ public class GeckoVehicleEntity extends GeoEntity<Entity> {
 
     @Override
     @Nullable
-    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z) {
+    public GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isDefault) {
         VehicleModelBundle modelBundle = modelAssembly.getVehicleModels().get(this.entity.getType().builtInRegistryHolder().key().location());
         if (modelBundle != null) {
-            return new EntityModelWrapper(modelAssembly, z, modelBundle);
+            return new EntityModelWrapper(modelAssembly, isDefault, modelBundle);
         }
         return null;
     }
@@ -106,8 +106,8 @@ public class GeckoVehicleEntity extends GeoEntity<Entity> {
 
         private final IResourceLocatable textureLocatable;
 
-        public EntityModelWrapper(ModelAssembly modelAssembly, boolean z, VehicleModelBundle modelBundle) {
-            super(modelAssembly, z);
+        public EntityModelWrapper(ModelAssembly modelAssembly, boolean isDefault, VehicleModelBundle modelBundle) {
+            super(modelAssembly, isDefault);
             this.textureLocatable = UploadManager.getOrCreateLocatable(modelBundle.getTexture(), true);
         }
 

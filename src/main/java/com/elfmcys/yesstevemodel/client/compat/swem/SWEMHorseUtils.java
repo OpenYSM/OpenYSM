@@ -19,9 +19,9 @@ public class SWEMHorseUtils {
         Entity vehicle = livingEntity.getVehicle();
         if (vehicle instanceof SWEMHorseEntityBase sWEMHorseEntityBase) {
             SWEMHorseEntityBase.Gait gait = sWEMHorseEntityBase.getGait();
-            double d = sWEMHorseEntityBase.jumpHeight;
-            if (d > 0.0d) {
-                return "swem:jump_lv" + ((Math.min(Mth.ceil(d), 5) - 1) + 1);
+            double jumpHeight = sWEMHorseEntityBase.jumpHeight;
+            if (jumpHeight > 0.0d) {
+                return "swem:jump_lv" + ((Math.min(Mth.ceil(jumpHeight), 5) - 1) + 1);
             }
             if (isRiding(sWEMHorseEntityBase)) {
                 return "swem:idle";

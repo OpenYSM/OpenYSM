@@ -63,26 +63,26 @@ public class CustomPlayerRenderer extends GeoReplacedEntityRenderer<Player, Cust
         if (dDistanceToSqr >= nameRenderDistance * nameRenderDistance || (localPlayer = (minecraft = Minecraft.getInstance()).player) == null) {
             return false;
         }
-        boolean z = !entity.isInvisibleTo(localPlayer);
+        boolean isVisible = !entity.isInvisibleTo(localPlayer);
         if (entity != localPlayer) {
             Team team = entity.getTeam();
             Team team2 = localPlayer.getTeam();
             if (team != null) {
                 switch (team.getNameTagVisibility()) {
                     case ALWAYS:
-                        return z;
+                        return isVisible;
                     case NEVER:
                         return false;
                     case HIDE_FOR_OTHER_TEAMS:
-                        return team2 == null ? z : team.isAlliedTo(team2) && (team.canSeeFriendlyInvisibles() || z);
+                        return team2 == null ? isVisible : team.isAlliedTo(team2) && (team.canSeeFriendlyInvisibles() || isVisible);
                     case HIDE_FOR_OWN_TEAM:
-                        return team2 == null ? z : !team.isAlliedTo(team2) && z;
+                        return team2 == null ? isVisible : !team.isAlliedTo(team2) && isVisible;
                     default:
                         throw new IncompatibleClassChangeError();
                 }
             }
         }
-        return Minecraft.renderNames() && entity != minecraft.getCameraEntity() && z && !entity.isVehicle();
+        return Minecraft.renderNames() && entity != minecraft.getCameraEntity() && isVisible && !entity.isVehicle();
     }
 
     @NotNull

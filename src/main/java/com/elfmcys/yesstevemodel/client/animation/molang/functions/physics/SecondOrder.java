@@ -12,24 +12,24 @@ public class SecondOrder implements IPhysics {
     private float inputFunction = 0.0f;
     private float lastSimulation = 0.0f;
     private float lastSimulationDot = 0.0f;
-    private float arg0;
-    private float arg1;
-    private float arg2;
-    private float arg3;
+    private float input;
+    private float frequency;
+    private float coefficient;
+    private float response;
 
     public SecondOrder(float input, float frequency, float coefficient, float response) {
-        this.arg0 = input;
-        this.arg1 = Mth.clamp(frequency, 0, 5);
-        this.arg2 = Mth.clamp(coefficient, 0, 1);
-        this.arg3 = response;
+        this.input = input;
+        this.frequency = Mth.clamp(frequency, 0, 5);
+        this.coefficient = Mth.clamp(coefficient, 0, 1);
+        this.response = response;
     }
 
     @Override
     public void update(float timeStep) {
-        float input = arg0;
-        float frequency = Mth.clamp(arg1, 0, 5);
-        float coefficient = Mth.clamp(arg2, 0, 1);
-        float response = arg3;
+        float input = this.input;
+        float frequency = Mth.clamp(this.frequency, 0, 5);
+        float coefficient = Mth.clamp(this.coefficient, 0, 1);
+        float response = this.response;
 
         float k1 = coefficient / Mth.PI / frequency;
         float k2 = 1 / (2 * Mth.PI * frequency) / (2 * Mth.PI * frequency);
@@ -53,11 +53,11 @@ public class SecondOrder implements IPhysics {
     }
 
     @Override
-    public void setArgs(float arg0, float arg1, float arg2, float arg3) {
-        this.arg0 = arg0;
-        this.arg1 = arg1;
-        this.arg2 = arg2;
-        this.arg3 = arg3;
+    public void setArgs(float input, float frequency, float coefficient, float response) {
+        this.input = input;
+        this.frequency = frequency;
+        this.coefficient = coefficient;
+        this.response = response;
     }
 
     @Override

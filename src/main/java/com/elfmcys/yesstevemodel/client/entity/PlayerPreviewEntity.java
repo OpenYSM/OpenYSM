@@ -49,8 +49,8 @@ public final class PlayerPreviewEntity extends CustomPlayerEntity implements IPr
     }
 
     @Override
-    public void setCustomAnimationActive(boolean z) {
-        this.customAnimationActive = z;
+    public void setCustomAnimationActive(boolean active) {
+        this.customAnimationActive = active;
     }
 
     @Override
@@ -74,12 +74,12 @@ public final class PlayerPreviewEntity extends CustomPlayerEntity implements IPr
     }
 
     @Override
-    public AnimationEvent<?> processAnimationImpl(float partialTick, boolean z) {
+    public AnimationEvent<?> processAnimationImpl(float partialTick, boolean isFirstPerson) {
         Entity entity2 = this.entity;
         if ((entity2 instanceof DummyPlayer) && !((DummyPlayer) entity2).ensureLevel()) {
             return null;
         }
-        return super.processAnimationImpl(partialTick, z);
+        return super.processAnimationImpl(partialTick, isFirstPerson);
     }
 
     public static boolean isPreviewPlayer(Player player) {
@@ -98,8 +98,8 @@ public final class PlayerPreviewEntity extends CustomPlayerEntity implements IPr
 
     @Override
     @NotNull
-    public LivingAnimatable<Player>.TexturedModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z) {
-        return new TexturedModelWrapper(modelAssembly, z, false, true, 300);
+    public LivingAnimatable<Player>.TexturedModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isActive) {
+        return new TexturedModelWrapper(modelAssembly, isActive, false, true, 300);
     }
 
     private static class DummyPlayer extends AbstractClientPlayer {

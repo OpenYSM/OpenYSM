@@ -29,9 +29,9 @@ public class S2CSyncAnimationExpressionPacket {
 
     public static S2CSyncAnimationExpressionPacket decode(FriendlyByteBuf buf) {
         int varInt = buf.readVarInt();
-        int i = buf.readByte();
-        FloatArrayList floatArrayList = new FloatArrayList(i);
-        for (int i2 = 0; i2 < i; i2++) {
+        int count = buf.readByte();
+        FloatArrayList floatArrayList = new FloatArrayList(count);
+        for (int i = 0; i < count; i++) {
             floatArrayList.add(buf.readFloat());
         }
         return new S2CSyncAnimationExpressionPacket(varInt, floatArrayList);

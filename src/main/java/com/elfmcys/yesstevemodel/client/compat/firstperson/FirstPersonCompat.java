@@ -41,8 +41,8 @@ public class FirstPersonCompat {
         return isFirstPersonActive();
     }
 
-    public static void setCameraDistance(float f) {
-        cameraDistance = f / 16.0f;
+    public static void setCameraDistance(float distance) {
+        cameraDistance = distance / 16.0f;
     }
 
 }

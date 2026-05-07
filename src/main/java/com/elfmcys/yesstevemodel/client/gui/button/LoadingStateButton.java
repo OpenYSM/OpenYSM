@@ -7,13 +7,13 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
 public class LoadingStateButton extends Button {
-    public LoadingStateButton(int i, int i2) {
-        super(i, i2, 100, 20, Component.empty(), button -> {
+    public LoadingStateButton(int x, int y) {
+        super(x, y, 100, 20, Component.empty(), button -> {
         }, DEFAULT_NARRATION);
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
-        super.renderWidget(guiGraphics, i, i2, f);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("gui.yes_steve_model.config.loading_state_position"), getX() + 105, getY() + 6, 16777215, false);
     }
 

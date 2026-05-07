@@ -16,7 +16,7 @@ public interface IGuiWidget {
     default void onModelsLoaded(Map<String, ModelAssembly> map) {
     }
 
-    default void onSyncProgress(int i, int i2) {
+    default void onSyncProgress(int progress, int total) {
     }
 
     default void onModelsUpdated(Map<String, ModelAssembly> map) {

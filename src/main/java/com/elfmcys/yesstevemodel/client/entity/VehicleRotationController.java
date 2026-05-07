@@ -56,7 +56,7 @@ public class VehicleRotationController implements IAnimationController<GeckoVehi
     }
 
     @Override
-    public void process(AnimationEvent<GeckoVehicleEntity> event, ExpressionEvaluator<AnimationContext<?>> evaluator, boolean z) {
+    public void process(AnimationEvent<GeckoVehicleEntity> event, ExpressionEvaluator<AnimationContext<?>> evaluator, boolean isFirstPerson) {
         ImmersiveAirCraftCompat.getAircraftRotation(event).or(() -> {
             return SimplePlanesCompat.getSimplePlanesRotation(event);
         }).ifPresent(vector3f -> {

@@ -83,11 +83,11 @@ public class RenderFirstPlayerBackground {
         });
     }
 
-    private static void applyHandTransform(PoseStack poseStack, float f, Player player) {
-        float f2 = -(player.walkDist + ((player.walkDist - player.walkDistO) * f));
-        float fLerp = Mth.lerp(f, player.oBob, player.bob);
-        poseStack.translate((-Mth.sin(f2 * 3.1415927f)) * fLerp * 0.5f, Math.abs(Mth.cos(f2 * 3.1415927f) * fLerp), 0.0d);
-        poseStack.mulPose(com.mojang.math.Axis.ZN.rotationDegrees(Mth.sin(f2 * 3.1415927f) * fLerp * 3.0f));
-        poseStack.mulPose(com.mojang.math.Axis.XN.rotationDegrees(Math.abs(Mth.cos((f2 * 3.1415927f) - 0.2f) * fLerp) * 5.0f));
+    private static void applyHandTransform(PoseStack poseStack, float partialTick, Player player) {
+        float walkPhase = -(player.walkDist + ((player.walkDist - player.walkDistO) * partialTick));
+        float fLerp = Mth.lerp(partialTick, player.oBob, player.bob);
+        poseStack.translate((-Mth.sin(walkPhase * 3.1415927f)) * fLerp * 0.5f, Math.abs(Mth.cos(walkPhase * 3.1415927f) * fLerp), 0.0d);
+        poseStack.mulPose(com.mojang.math.Axis.ZN.rotationDegrees(Mth.sin(walkPhase * 3.1415927f) * fLerp * 3.0f));
+        poseStack.mulPose(com.mojang.math.Axis.XN.rotationDegrees(Math.abs(Mth.cos((walkPhase * 3.1415927f) - 0.2f) * fLerp) * 5.0f));
     }
 }

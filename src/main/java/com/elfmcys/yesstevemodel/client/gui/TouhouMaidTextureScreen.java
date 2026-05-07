@@ -21,16 +21,16 @@ public class TouhouMaidTextureScreen extends PlayerTextureScreen {
     }
 
     @Override
-    public TextureButton createTextureButton(int i, int i2, PlayerPreviewEntity previewEntity, int i3) {
-        return new TouhouMaidTextureButton(i, i2, previewEntity, this.maid, i3, this.renderContext);
+    public TextureButton createTextureButton(int x, int y, PlayerPreviewEntity previewEntity, int textureIndex) {
+        return new TouhouMaidTextureButton(x, y, previewEntity, this.maid, textureIndex, this.renderContext);
     }
 
     @Override
-    public void renderTexturePreview(GuiGraphics guiGraphics, int i, int i2, int i3, int i4, float f) {
-        RenderSystem.enableScissor(i, i2, i3, i4);
+    public void renderTexturePreview(GuiGraphics guiGraphics, int scissorX, int scissorY, int scissorWidth, int scissorHeight, float partialTick) {
+        RenderSystem.enableScissor(scissorX, scissorY, scissorWidth, scissorHeight);
         this.maid.getCapability(MaidCapabilityProvider.MAID_CAP).ifPresent(cap -> {
             this.modelHolder.initModelWithTexture(cap.getModelId(), cap.getCurrentTextureName());
-            ModelPreviewRenderer.renderEntityPreview(this.guiLeft + 149.5f + 40.0f + this.offsetX, this.guiTop + 117.5f + 80.0f + this.offsetY, this.zoom, this.pitch, this.yaw, f, this.modelHolder, RendererManager.getPlayerRenderer(), this.showGround);
+            ModelPreviewRenderer.renderEntityPreview(this.guiLeft + 149.5f + 40.0f + this.offsetX, this.guiTop + 117.5f + 80.0f + this.offsetY, this.zoom, this.pitch, this.yaw, partialTick, this.modelHolder, RendererManager.getPlayerRenderer(), this.showGround);
         });
         RenderSystem.disableScissor();
     }

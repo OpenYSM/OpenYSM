@@ -27,9 +27,9 @@ public class DebugAnimationScreen extends Screen {
         }));
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics);
         guiGraphics.drawCenteredString(this.font, "Coming Soooooooooooooooooooooooooon™", this.width / 2, (this.height / 2) - 5, ChatFormatting.DARK_RED.getColor().intValue());
-        super.render(guiGraphics, i, i2, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 }

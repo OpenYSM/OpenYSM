@@ -15,24 +15,24 @@ public class ModIconButton extends FlatColorButton {
 
     private static final ResourceLocation ICON_TEXTURE = ResourceLocation.fromNamespaceAndPath(YesSteveModel.MOD_ID, "texture/icon.png");
 
-    public ModIconButton(int i, int i2) {
-        super(i, i2, 20, 20, Component.empty(), button -> {
+    public ModIconButton(int x, int y) {
+        super(x, y, 20, 20, Component.empty(), button -> {
         });
     }
 
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
-        super.renderWidget(guiGraphics, i, i2, f);
-        int i3 = (this.width - 16) / 2;
-        int i4 = (this.height - 16) / 2;
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
+        int iconOffsetX = (this.width - 16) / 2;
+        int iconOffsetY = (this.height - 16) / 2;
         LocalPlayer localPlayer = Minecraft.getInstance().player;
         if (localPlayer != null) {
             localPlayer.getCapability(PlayerCapabilityProvider.PLAYER_CAP).ifPresent(cap -> {
                 localPlayer.getCapability(StarModelsCapabilityProvider.STAR_MODELS_CAP).ifPresent(cap2 -> {
                     if (cap2.containsModel(cap.getModelId())) {
-                        guiGraphics.blit(ICON_TEXTURE, getX() + i3, getY() + i4, 16, 16, 16.0f, 0.0f, 16, 16, 256, 256);
+                        guiGraphics.blit(ICON_TEXTURE, getX() + iconOffsetX, getY() + iconOffsetY, 16, 16, 16.0f, 0.0f, 16, 16, 256, 256);
                     } else {
-                        guiGraphics.blit(ICON_TEXTURE, getX() + i3, getY() + i4, 16, 16, 0.0f, 0.0f, 16, 16, 256, 256);
+                        guiGraphics.blit(ICON_TEXTURE, getX() + iconOffsetX, getY() + iconOffsetY, 16, 16, 0.0f, 0.0f, 16, 16, 256, 256);
                     }
                 });
             });

@@ -14,12 +14,12 @@ public class FlatIconButton extends AbstractWidget implements ISpecialWidget {
 
     private final int iconIndex;
 
-    public FlatIconButton(int i, int i2, int i3, Component component) {
-        super(i, i2, 115, 15, component);
-        this.iconIndex = i3;
+    public FlatIconButton(int x, int y, int iconIndex, Component component) {
+        super(x, y, 115, 15, component);
+        this.iconIndex = iconIndex;
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         guiGraphics.fill(getX(), getY(), getX() + getWidth(), getY() + this.iconIndex, -280804798);
         renderScrollingString(guiGraphics, Minecraft.getInstance().font, 2, 16777215);
     }

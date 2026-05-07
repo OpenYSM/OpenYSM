@@ -96,8 +96,8 @@ public final class PlayerCapability extends CustomPlayerEntity {
     }
 
     @Override
-    public void applyHeadTracking(AnimationEvent<? extends AnimatableEntity<Player>> event, boolean z) {
-        super.applyHeadTracking(event, z);
+    public void applyHeadTracking(AnimationEvent<? extends AnimatableEntity<Player>> event, boolean wasAnimEvaluated) {
+        super.applyHeadTracking(event, wasAnimEvaluated);
         AnimatedGeoModel model2 = getCurrentModel();
         if (model2 != null && isLocalPlayerModel() && !event.isFirstPerson() && FirstPersonCompat.isLoaded()) {
             if (model2.allHeadBone() != null) {
@@ -105,7 +105,7 @@ public final class PlayerCapability extends CustomPlayerEntity {
             }
             if (model2.viewLocatorBone() != null) {
                 FirstPersonCompat.setCameraDistance(model2.viewLocatorBone().getPivotY() * getWidthScale());
-            } else if (z && !model2.headBones().isEmpty()) {
+            } else if (wasAnimEvaluated && !model2.headBones().isEmpty()) {
                 IBone bone = model2.headBones().get(model2.headBones().size() - 1);
                 FirstPersonCompat.setCameraDistance(bone == null ? 24.0f : bone.getPivotY() * getWidthScale());
             }
@@ -212,8 +212,8 @@ public final class PlayerCapability extends CustomPlayerEntity {
 
     @Override
     @NotNull
-    public LivingAnimatable<Player>.TexturedModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z) {
-        return new TexturedModelWrapper(modelAssembly, z, true, true, 600);
+    public LivingAnimatable<Player>.TexturedModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isActive) {
+        return new TexturedModelWrapper(modelAssembly, isActive, true, true, 600);
     }
 
     private static class MolangVarHolder {

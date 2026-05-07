@@ -7,5 +7,5 @@ public interface IPreviewAnimatable {
     @NotNull
     AnimationTracker getAnimationStateMachine();
 
-    void setCustomAnimationActive(boolean z);
+    void setCustomAnimationActive(boolean active);
 }

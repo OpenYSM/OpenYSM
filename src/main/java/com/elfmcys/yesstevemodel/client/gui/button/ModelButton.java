@@ -78,16 +78,16 @@ public class ModelButton extends Button {
 
     private long lastHoverTime;
 
-    public ModelButton(int i, int i2, boolean z, PlayerPreviewEntity playerPreviewEntity, ModelAssembly textureRegistry) {
-        super(i, i2, 52, 90, createDisplayName(playerPreviewEntity, textureRegistry), button -> {
+    public ModelButton(int x, int y, boolean isAuthLocked, PlayerPreviewEntity playerPreviewEntity, ModelAssembly textureRegistry) {
+        super(x, y, 52, 90, createDisplayName(playerPreviewEntity, textureRegistry), button -> {
         }, DEFAULT_NARRATION);
         this.backgroundTexture = null;
         this.foregroundTexture = null;
         this.tooltipLines = null;
         this.detailedTooltipLines = null;
         this.lastHoverTime = -1L;
-        this.isStarred = z;
-        this.backgroundColor = z ? 2130706432 : -12369342;
+        this.isStarred = isAuthLocked;
+        this.backgroundColor = isAuthLocked ? 2130706432 : -12369342;
         this.renderContext = textureRegistry;
         this.modelIdHolder = playerPreviewEntity;
         this.disablePreviewRotation = textureRegistry.getModelData().getModelProperties().isDisablePreviewRotation();
@@ -148,7 +148,7 @@ public class ModelButton extends Button {
         }
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         AnimationTracker c0117x8455a741Mo1262xaffeef43 = this.modelIdHolder.getAnimationStateMachine();
         if (isHovered()) {
             this.lastHoverTime = Util.getMillis();
@@ -178,7 +178,7 @@ public class ModelButton extends Button {
         RenderSystem.enableScissor((int) (x * guiScale), (int) (Minecraft.getInstance().getWindow().getHeight() - (((y + this.height) - 20) * guiScale)), (int) (this.width * guiScale), (int) ((this.height - 20) * guiScale));
         ModelPreviewRenderer.renderLivingEntityPreview(x + (this.width / 2.0f), y + (this.height / 2.0f) + 20.0f, 30.0f, minecraft.getFrameTime(), this.modelIdHolder, RendererManager.getPlayerRenderer(), this.disablePreviewRotation, true);
         RenderSystem.disableScissor();
-        int i3 = 3500;
+        int starZ = 3500;
         if (this.foregroundTexture != null) {
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
@@ -204,13 +204,13 @@ public class ModelButton extends Button {
         if (minecraft.player != null) {
             minecraft.player.getCapability(StarModelsCapabilityProvider.STAR_MODELS_CAP).ifPresent(cap -> {
                 if (cap.containsModel(this.modelIdHolder.getModelId())) {
-                    guiGraphics.blit(ICON_TEXTURE, (x + this.width) - 14, y, i3, 16.0f, 0.0f, 16, 16, 256, 256);
+                    guiGraphics.blit(ICON_TEXTURE, (x + this.width) - 14, y, starZ, 16.0f, 0.0f, 16, 16, 256, 256);
                 }
             });
         }
     }
 
-    public void renderTooltip(GuiGraphics guiGraphics, Screen screen, int i, int i2) {
+    public void renderTooltip(GuiGraphics guiGraphics, Screen screen, int mouseX, int mouseY) {
         if (isHovered()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(0.0f, 0.0f, 4000.0f);
@@ -224,18 +224,18 @@ public class ModelButton extends Button {
                 if (this.detailedTooltipLines == null) {
                     this.detailedTooltipLines = ModelMetadataPresenter.buildModelTooltip(this.renderContext, selected, this.modelIdHolder.getModelId(), true);
                 }
-                guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.detailedTooltipLines, i, i2);
+                guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.detailedTooltipLines, mouseX, mouseY);
             } else {
                 if (this.tooltipLines == null) {
                     this.tooltipLines = ModelMetadataPresenter.buildModelTooltip(this.renderContext, selected, this.modelIdHolder.getModelId(), false);
                 }
-                guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.tooltipLines, i, i2);
+                guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.tooltipLines, mouseX, mouseY);
             }
             guiGraphics.pose().popPose();
         }
     }
 
-    public boolean clicked(double d, double d2) {
-        return !this.isStarred && super.clicked(d, d2);
+    public boolean clicked(double mouseX, double mouseY) {
+        return !this.isStarred && super.clicked(mouseX, mouseY);
     }
 }

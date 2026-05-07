@@ -21,8 +21,8 @@ public class TouhouMaidTextureButton extends TextureButton {
 
     private Component displayComponent;
 
-    public TouhouMaidTextureButton(int i, int i2, PlayerPreviewEntity previewEntity, EntityMaid entityMaid, int i3, ModelAssembly modelAssembly) {
-        super(i, i2, previewEntity, modelAssembly);
+    public TouhouMaidTextureButton(int x, int y, PlayerPreviewEntity previewEntity, EntityMaid entityMaid, int textureIndex, ModelAssembly modelAssembly) {
+        super(x, y, previewEntity, modelAssembly);
         this.maid = new EntityMaid(entityMaid.level());
         this.maid.setIsYsmModel(true);
         this.maid.setOnGround(true);
@@ -31,7 +31,7 @@ public class TouhouMaidTextureButton extends TextureButton {
             this.textureId = cap.getModelId();
             ModelAssembly modelAssembly2 = cap.getModelAssembly();
             this.displayComponent = ComponentUtil.getDisplayName(modelAssembly2, this.textureId);
-            this.textureName = modelAssembly2.getAnimationBundle().getTextures().getKeyAt(i3);
+            this.textureName = modelAssembly2.getAnimationBundle().getTextures().getKeyAt(textureIndex);
             this.maid.setYsmModel(this.textureId, this.textureName, this.displayComponent);
             previewEntity.initModelWithTexture(this.textureId, this.textureName);
         });

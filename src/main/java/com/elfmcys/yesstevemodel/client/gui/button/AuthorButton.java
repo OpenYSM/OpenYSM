@@ -28,34 +28,34 @@ public class AuthorButton extends Button {
 
     private final ResourceLocation resourceLocation;
 
-    private final int i5;
+    private final int authorIndex;
 
     private final List<Component> componentList;
 
-    private int i6;
+    private int selectedContactIndex;
 
-    private final Screen screen2;
+    private final Screen parentScreen;
 
-    public AuthorButton(int x, int y, AuthorInfo authorInfo, ModelAssembly modelAssembly, ResourceLocation resourceLocation, int i3, Screen screen) {
+    public AuthorButton(int x, int y, AuthorInfo authorInfo, ModelAssembly modelAssembly, ResourceLocation resourceLocation, int authorIndex, Screen screen) {
         super(x, y, 70, 130, Component.empty(), button -> {
         }, DEFAULT_NARRATION);
-        this.i6 = -1;
+        this.selectedContactIndex = -1;
         this.authorInfo = authorInfo;
         this.modelAssembly = modelAssembly;
         this.resourceLocation = resourceLocation;
-        this.i5 = i3;
+        this.authorIndex = authorIndex;
         this.componentList = Lists.newArrayList();
         if (this.authorInfo != null) {
             renderTooltip(false);
         }
-        this.screen2 = screen;
+        this.parentScreen = screen;
     }
 
-    public static AuthorButton createAuthorButton(int i, int i2, Screen screen) {
-        return new AuthorButton(i, i2, null, null, null, -1, screen);
+    public static AuthorButton createAuthorButton(int x, int y, Screen screen) {
+        return new AuthorButton(x, y, null, null, null, -1, screen);
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Font font = Minecraft.getInstance().font;
         if (this.authorInfo == null || this.modelAssembly == null || this.resourceLocation == null) {
             guiGraphics.fillGradient(getX(), getY(), getX() + this.width, getY() + this.height, -1891417534, -1891417534);
@@ -68,63 +68,63 @@ public class AuthorButton extends Button {
             guiGraphics.fillGradient(getX(), getY(), getX() + this.width, getY() + this.height, -1891417534, -1891417534);
         }
         guiGraphics.blit(this.resourceLocation, getX() + 3, getY() + 3, 64, 64, 0.0f, 0.0f, 64, 64, 64, 64);
-        String str = ModelMetadataPresenter.getLocalizedModelString(this.modelAssembly, "metadata.authors.%d.name".formatted(this.i5), this.authorInfo.getName());
-        String str2 = ModelMetadataPresenter.getLocalizedModelString(this.modelAssembly, "metadata.authors.%d.role".formatted(this.i5), this.authorInfo.getRole());
-        String str3 = ModelMetadataPresenter.getLocalizedModelString(this.modelAssembly, "metadata.authors.%d.comment".formatted(this.i5), this.authorInfo.getComment());
+        String str = ModelMetadataPresenter.getLocalizedModelString(this.modelAssembly, "metadata.authors.%d.name".formatted(this.authorIndex), this.authorInfo.getName());
+        String str2 = ModelMetadataPresenter.getLocalizedModelString(this.modelAssembly, "metadata.authors.%d.role".formatted(this.authorIndex), this.authorInfo.getRole());
+        String str3 = ModelMetadataPresenter.getLocalizedModelString(this.modelAssembly, "metadata.authors.%d.comment".formatted(this.authorIndex), this.authorInfo.getComment());
         renderScrollingString(guiGraphics, font, Component.literal(str), getX() + 2, getY() + 72, (getX() + this.width) - 2, getY() + 82, ChatFormatting.GOLD.getColor().intValue());
         guiGraphics.drawCenteredString(font, str2, getX() + 35, getY() + 82, ChatFormatting.GREEN.getColor().intValue());
         drawWrappedText(guiGraphics, Component.literal(str3), getX() + 3, getY() + 95, 64, -1);
     }
 
-    public void drawWrappedText(GuiGraphics guiGraphics, FormattedText formattedText, int i, int i2, int i3, int i4) {
+    public void drawWrappedText(GuiGraphics guiGraphics, FormattedText formattedText, int x, int y, int wrapWidth, int color) {
         Font font = Minecraft.getInstance().font;
-        for (FormattedCharSequence formattedCharSequence : font.split(formattedText, i3)) {
-            guiGraphics.drawString(font, formattedCharSequence, i, i2, i4, false);
-            i2 += 9;
-            if (i2 > getY() + this.height) {
+        for (FormattedCharSequence formattedCharSequence : font.split(formattedText, wrapWidth)) {
+            guiGraphics.drawString(font, formattedCharSequence, x, y, color, false);
+            y += 9;
+            if (y > getY() + this.height) {
                 return;
             }
         }
     }
 
-    public void refreshContactComponents(GuiGraphics guiGraphics, Screen screen, int i, int i2) {
+    public void refreshContactComponents(GuiGraphics guiGraphics, Screen screen, int mouseX, int mouseY) {
         if (this.isHovered && !this.componentList.isEmpty()) {
-            guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.componentList, i, i2);
-        } else if (this.i6 != -1) {
-            this.i6 = -1;
+            guiGraphics.renderComponentTooltip(screen.getMinecraft().font, this.componentList, mouseX, mouseY);
+        } else if (this.selectedContactIndex != -1) {
+            this.selectedContactIndex = -1;
             renderTooltip(false);
         }
     }
 
-    public boolean mouseScrolled(double d, double d2, double d3) {
-        if (d3 > 0.0d) {
-            if (this.i6 > 0) {
-                this.i6--;
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (delta > 0.0d) {
+            if (this.selectedContactIndex > 0) {
+                this.selectedContactIndex--;
                 renderTooltip(false);
                 return true;
             }
             return true;
         }
-        if (d3 < 0.0d) {
-            if (this.i6 < this.componentList.size() - 2) {
-                this.i6++;
+        if (delta < 0.0d) {
+            if (this.selectedContactIndex < this.componentList.size() - 2) {
+                this.selectedContactIndex++;
                 renderTooltip(false);
                 return true;
             }
             return true;
         }
-        return super.mouseScrolled(d, d2, d3);
+        return super.mouseScrolled(mouseX, mouseY, delta);
     }
 
-    private void renderTooltip(boolean z) {
+    private void renderTooltip(boolean copied) {
         if (this.authorInfo == null) {
             return;
         }
         this.componentList.clear();
         for (int i = 0; i < this.authorInfo.getContact().size(); i++) {
             MutableComponent componentLiteral = Component.literal(this.authorInfo.getContact().getKeyAt(i) + ": " + this.authorInfo.getContact().getValueAt(i));
-            if (i == this.i6) {
-                componentLiteral.append(Component.literal(z ? " ✓" : " ◀").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD));
+            if (i == this.selectedContactIndex) {
+                componentLiteral.append(Component.literal(copied ? " ✓" : " ◀").withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD));
             }
             this.componentList.add(componentLiteral);
         }
@@ -138,7 +138,7 @@ public class AuthorButton extends Button {
         if (this.authorInfo == null) {
             return;
         }
-        int i = this.i6;
+        int i = this.selectedContactIndex;
         if (i == -1) {
             i = 0;
         }
@@ -146,17 +146,17 @@ public class AuthorButton extends Button {
             return;
         }
         if (link.startsWith("http://") || link.startsWith("https://")) {
-            Minecraft.getInstance().setScreen(new ConfirmLinkScreen(z -> {
-                if (z) {
+            Minecraft.getInstance().setScreen(new ConfirmLinkScreen(confirmed -> {
+                if (confirmed) {
                     Util.getPlatform().openUri(link);
                 }
-                Minecraft.getInstance().setScreen(this.screen2);
+                Minecraft.getInstance().setScreen(this.parentScreen);
             }, link, true));
             return;
         }
         Minecraft.getInstance().keyboardHandler.setClipboard(link);
-        if (this.i6 == -1) {
-            this.i6 = 0;
+        if (this.selectedContactIndex == -1) {
+            this.selectedContactIndex = 0;
         }
         renderTooltip(true);
     }

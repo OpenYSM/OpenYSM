@@ -142,17 +142,17 @@ public class PlayerEntityFrameState extends LivingEntityFrameState<Player> {
     }
 
     @Override
-    public void onTickUpdate(int i, int i2) {
+    public void onTickUpdate(int currentTick, int previousTick) {
         if (this.isLocalPlayer) {
-            updateHeadYaw(this.entity, i, i2);
+            updateHeadYaw(this.entity, currentTick, previousTick);
         }
-        super.onTickUpdate(i, i2);
+        super.onTickUpdate(currentTick, previousTick);
     }
 
-    private static void updateHeadYaw(Player player, int i, int i2) {
+    private static void updateHeadYaw(Player player, int currentTick, int previousTick) {
         float yRot = player.getYRot();
-        if (i2 > 0) {
-            headYawDelta = ((yRot - lastYRot) * 20.0f) / (i - i2);
+        if (previousTick > 0) {
+            headYawDelta = ((yRot - lastYRot) * 20.0f) / (currentTick - previousTick);
         }
         lastYRot = yRot;
     }

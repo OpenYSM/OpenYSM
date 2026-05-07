@@ -44,10 +44,10 @@ public abstract class AbstractProjectileRenderer<TEntity extends Projectile, T e
         Minecraft minecraft = Minecraft.getInstance();
         if (event != null && minecraft.player != null) {
             Projectile projectile = animatable.getEntity();
-            boolean z = !projectile.isInvisibleTo(minecraft.player);
+            boolean isVisible = !projectile.isInvisibleTo(minecraft.player);
             boolean zShouldEntityAppearGlowing = minecraft.shouldEntityAppearGlowing(projectile);
-            RenderType renderType = getRenderType(animatable.getTextureLocation(), z, zShouldEntityAppearGlowing, animatable.getCurrentModel().getGeoModel().isTranslucentTexture(0));
-            if (renderType != null && (z || zShouldEntityAppearGlowing)) {
+            RenderType renderType = getRenderType(animatable.getTextureLocation(), isVisible, zShouldEntityAppearGlowing, animatable.getCurrentModel().getGeoModel().isTranslucentTexture(0));
+            if (renderType != null && (isVisible || zShouldEntityAppearGlowing)) {
                 Color color = getRenderColor(animatable, partialTick, poseStack, bufferSource, null, packedLight);
                 AnimatedGeoModel model = animatable.getCurrentModel();
                 this.modelViewMatrix = new Matrix4f(poseStack.last().pose());

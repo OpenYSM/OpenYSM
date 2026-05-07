@@ -18,8 +18,8 @@ public class LinearKeyframeInterpolator implements IInterpolable {
     //	"0.04": 0.104,
     //	"0.05": 0
     //}
-    // var1=[0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
-    // var2=[1.0, 0.896, 0.648, 0.352, 0.104, 0.0]
+    // keys=[0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+    // values=[1.0, 0.896, 0.648, 0.352, 0.104, 0.0]
     public LinearKeyframeInterpolator(float[] keys, float[] values) {
         ReferenceArrayList<Segment> segmentList = new ReferenceArrayList<>(keys.length - 1);
 

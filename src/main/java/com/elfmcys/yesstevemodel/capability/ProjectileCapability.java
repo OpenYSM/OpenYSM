@@ -32,8 +32,8 @@ public class ProjectileCapability extends GeckoProjectileEntity {
     }
 
     @Override
-    public void setupAnim(float seekTime, boolean z) {
-        super.setupAnim(seekTime, z);
+    public void setupAnim(float seekTime, boolean isFirstPerson) {
+        super.setupAnim(seekTime, isFirstPerson);
         getEvaluationContext().setRoamingProperties(this.floatProperties);
     }
 }

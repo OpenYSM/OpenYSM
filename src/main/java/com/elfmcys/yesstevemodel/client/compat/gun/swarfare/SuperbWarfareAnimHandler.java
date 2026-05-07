@@ -118,11 +118,11 @@ public class SuperbWarfareAnimHandler {
             }
             return playGunAnimLoop(event, stack, "tac:climbing:");
         }
-        double d = ClientEventHandler.zoomTime;
+        double zoomTime = ClientEventHandler.zoomTime;
         if (!Objects.equals(Minecraft.getInstance().player, entity)) {
-            d = 0.0d;
+            zoomTime = 0.0d;
         }
-        if (d > 0.3d) {
+        if (zoomTime > 0.3d) {
             return playGunAnimLoop(event, stack, "tac:aim:");
         }
         if (entity.onGround() && entity.isSprinting()) {
@@ -149,13 +149,13 @@ public class SuperbWarfareAnimHandler {
         if (ClientEventHandler.gunMelee > 5) {
             return playGunAnimByType(event, stack, "tac:melee:", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
         }
-        double d = ClientEventHandler.fireRotTimer;
-        if (0.0d < d && d < 1.0d) {
-            double d2 = ClientEventHandler.zoomTime;
+        double fireRotTimer = ClientEventHandler.fireRotTimer;
+        if (0.0d < fireRotTimer && fireRotTimer < 1.0d) {
+            double zoomTime = ClientEventHandler.zoomTime;
             if (!livingEntity.isSwimming() && livingEntity.getPose() == Pose.SWIMMING && ((double) Math.abs(event.getLimbSwingAmount())) <= 0.05d) {
                 return playGunAnimByType(event, stack, "tac:climbing:fire:", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
             }
-            if (d2 > 0.3d) {
+            if (zoomTime > 0.3d) {
                 return playGunAnimByType(event, stack, "tac:aim:fire:", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
             }
             return playGunAnimByType(event, stack, "tac:hold:fire:", ILoopType.EDefaultLoopTypes.PLAY_ONCE);

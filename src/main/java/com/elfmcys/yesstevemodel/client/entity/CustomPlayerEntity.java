@@ -29,13 +29,13 @@ public abstract class CustomPlayerEntity extends LivingAnimatable<Player> implem
 
     private List<IValue> syncIValues;
 
-    public CustomPlayerEntity(Player player, boolean z, boolean z2) {
-        super(player, z2);
+    public CustomPlayerEntity(Player player, boolean isLocalPlayer, boolean isActive) {
+        super(player, isActive);
         this.isModelSwitching = false;
         this.selectedModelId = "idle";
         this.isDisabled = false;
         this.syncIValues = null;
-        this.isLocalPlayer = z;
+        this.isLocalPlayer = isLocalPlayer;
         if (player instanceof LocalPlayer) {
             markModelInitialized();
         }
@@ -112,15 +112,15 @@ public abstract class CustomPlayerEntity extends LivingAnimatable<Player> implem
     }
 
     @Override
-    public void setupAnim(float seekTime, boolean z) {
-        super.setupAnim(seekTime, z);
+    public void setupAnim(float seekTime, boolean isFirstPerson) {
+        super.setupAnim(seekTime, isFirstPerson);
         getEvaluationContext().setRoamingProperties(getPropertyContainer());
     }
 
     @Override
-    public void afterSetupAnim(float seekTime, boolean z) {
-        super.afterSetupAnim(seekTime, z);
-        if (this.isLocalPlayer && z && isModelSwitching() && getAnimationState(PlayerAnimationController.CAP_CONTROLLER_KEY) == AnimationState.IDLE) {
+    public void afterSetupAnim(float seekTime, boolean isFirstPerson) {
+        super.afterSetupAnim(seekTime, isFirstPerson);
+        if (this.isLocalPlayer && isFirstPerson && isModelSwitching() && getAnimationState(PlayerAnimationController.CAP_CONTROLLER_KEY) == AnimationState.IDLE) {
             clearModelSwitch();
             if (NetworkHandler.isClientConnected()) {
                 NetworkHandler.sendToServer(C2SPlayAnimationPacket.createDefault());

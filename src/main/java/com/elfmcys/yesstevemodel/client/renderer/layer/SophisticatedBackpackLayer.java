@@ -22,10 +22,10 @@ public class SophisticatedBackpackLayer extends GeoLayerRenderer<CustomPlayerEnt
 
     private static EntityModel<Player> createBackpackModel() {
         return new EntityModel<>() {
-            public void setupAnim(Player player, float f, float f2, float f3, float f4, float f5) {
+            public void setupAnim(Player player, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
             }
 
-            public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i2, float f, float f2, float f3, float f4) {
+            public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
             }
         };
     }

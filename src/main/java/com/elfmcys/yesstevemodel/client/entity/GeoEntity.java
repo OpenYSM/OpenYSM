@@ -49,14 +49,14 @@ public abstract class GeoEntity<T extends Entity> extends AnimatableEntity<T> {
     private Future<AnimationEvent<?>> modelFuture;
 
     @Nullable
-    public abstract GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean z);
+    public abstract GeoEntity.ModelWrapper buildRenderShape(ModelAssembly modelAssembly, boolean isDefault);
 
     public abstract GeoModel getAnimationProcessor();
 
-    public GeoEntity(T t, boolean z) {
+    public GeoEntity(T t, boolean registerWithCache) {
         super(t);
         this.modelId = "default";
-        if (z) {
+        if (registerWithCache) {
             EntityRenderCache.register(this);
         }
     }
@@ -82,8 +82,8 @@ public abstract class GeoEntity<T extends Entity> extends AnimatableEntity<T> {
     }
 
     @Override
-    public void setupAnim(float seekTime, boolean z) {
-        super.setupAnim(seekTime, z);
+    public void setupAnim(float seekTime, boolean isFirstPerson) {
+        super.setupAnim(seekTime, isFirstPerson);
         if (this.boneLookup != null) {
             AnimationProcessor<T> processor = getEvaluationContext();
             processor.execute(evaluator -> {
@@ -224,13 +224,13 @@ public abstract class GeoEntity<T extends Entity> extends AnimatableEntity<T> {
 
     @Override
     @Nullable
-    public AnimationEvent<?> processAnimationImpl(float partialTick, boolean z) {
+    public AnimationEvent<?> processAnimationImpl(float partialTick, boolean isFirstPerson) {
         RenderSystem.assertOnRenderThread();
-        if (z && this.modelFuture != null) {
+        if (isFirstPerson && this.modelFuture != null) {
             return awaitAsyncResult();
         }
         awaitAsyncResult();
-        return super.processAnimationImpl(partialTick, z);
+        return super.processAnimationImpl(partialTick, isFirstPerson);
     }
 
     public AnimationEvent<?> awaitAsyncResult() {
@@ -262,9 +262,9 @@ public abstract class GeoEntity<T extends Entity> extends AnimatableEntity<T> {
         @Nullable
         public IAudioStreamProvider audioProvider;
 
-        public ModelWrapper(ModelAssembly modelAssembly, boolean z) {
+        public ModelWrapper(ModelAssembly modelAssembly, boolean isDefault) {
             this.context = modelAssembly;
-            this.isDefault = z;
+            this.isDefault = isDefault;
         }
 
         public boolean isValid() {

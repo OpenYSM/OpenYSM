@@ -87,9 +87,9 @@ public class ModelInfoCapability {
         markDirty();
     }
 
-    public void setDisabled(boolean z) {
-        if (this.disabled != z) {
-            this.disabled = z;
+    public void setDisabled(boolean disabled) {
+        if (this.disabled != disabled) {
+            this.disabled = disabled;
             markDirty();
         }
     }
@@ -102,7 +102,7 @@ public class ModelInfoCapability {
         this.animSync.syncModelSwitch(serverPlayer, !this.dirty, StringPool.EMPTY);
     }
 
-    public Optional<S2CSetModelAndTexturePacket> createSyncMessage(ServerPlayer serverPlayer, boolean z) {
+    public Optional<S2CSetModelAndTexturePacket> createSyncMessage(ServerPlayer serverPlayer, boolean fullSync) {
         return ServerModelManager.getModelDefinition(this.modelId).map(it -> {
             Object2FloatOpenHashMap<String> object2FloatOpenHashMap = this.molangStorage.computeIfAbsent(it.getLoadedModelData().getHashId(), i -> new Object2FloatOpenHashMap<>(0));
             while (true) {
@@ -110,7 +110,7 @@ public class ModelInfoCapability {
                 if (consumerPoll != null) {
                     consumerPoll.accept(object2FloatOpenHashMap);
                 } else {
-                    return new S2CSetModelAndTexturePacket(serverPlayer.getId(), this.modelId, this.selectTexture, this.disabled, this.animSync.buildFullSyncMessage(serverPlayer, z).setMolangVars(it.getLoadedModelData().getHashId(), object2FloatOpenHashMap));
+                    return new S2CSetModelAndTexturePacket(serverPlayer.getId(), this.modelId, this.selectTexture, this.disabled, this.animSync.buildFullSyncMessage(serverPlayer, fullSync).setMolangVars(it.getLoadedModelData().getHashId(), object2FloatOpenHashMap));
                 }
             }
         });
@@ -174,9 +174,9 @@ public class ModelInfoCapability {
         this.dirty = false;
     }
 
-    public void setMandatory(boolean z) {
-        if (this.mandatory != z) {
-            this.mandatory = z;
+    public void setMandatory(boolean mandatory) {
+        if (this.mandatory != mandatory) {
+            this.mandatory = mandatory;
             markDirty();
         }
     }

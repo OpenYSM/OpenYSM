@@ -44,9 +44,9 @@ public class DisclaimerScreen extends Screen {
         }).size(300, 20).pos((this.width - 300) / 2, (this.textHeight + i) - 20).build());
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics);
         guiGraphics.drawWordWrap(this.font, Component.translatable("gui.yes_steve_model.disclaimer.text"), this.textY, this.textHeight, 400, -1);
-        super.render(guiGraphics, i, i2, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 }

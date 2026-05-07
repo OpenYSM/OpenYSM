@@ -26,8 +26,8 @@ public class TextureButton extends Button {
 
     public final ModelAssembly modelAssembly;
 
-    public TextureButton(int i, int i2, PlayerPreviewEntity previewEntity, ModelAssembly modelAssembly) {
-        super(i, i2, 54, 102, Component.empty(), button -> {
+    public TextureButton(int x, int y, PlayerPreviewEntity previewEntity, ModelAssembly modelAssembly) {
+        super(x, y, 54, 102, Component.empty(), button -> {
         }, DEFAULT_NARRATION);
         this.previewEntity = previewEntity;
         this.modelAssembly = modelAssembly;
@@ -43,7 +43,7 @@ public class TextureButton extends Button {
         }
     }
 
-    public void renderWidget(GuiGraphics guiGraphics, int i, int i2, float f) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Minecraft minecraft = Minecraft.getInstance();
         Font font = minecraft.font;
         guiGraphics.fillGradient(getX(), getY(), getX() + this.width, getY() + this.height, -12369342, -12369342);
@@ -65,10 +65,10 @@ public class TextureButton extends Button {
         }
     }
 
-    public void renderPlayerPreview(GuiGraphics guiGraphics, float f) {
+    public void renderPlayerPreview(GuiGraphics guiGraphics, float partialTick) {
         double guiScale = Minecraft.getInstance().getWindow().getGuiScale();
         RenderSystem.enableScissor((int) (getX() * guiScale), (int) (Minecraft.getInstance().getWindow().getHeight() - (((getY() + this.height) - 20) * guiScale)), (int) (this.width * guiScale), (int) ((this.height - 20) * guiScale));
-        ModelPreviewRenderer.renderLivingEntityPreview(getX() + (this.width / 2.0f), getY() + (this.height / 2.0f) + 24.0f, 35.0f, f, this.previewEntity, RendererManager.getPlayerRenderer(), false, true);
+        ModelPreviewRenderer.renderLivingEntityPreview(getX() + (this.width / 2.0f), getY() + (this.height / 2.0f) + 24.0f, 35.0f, partialTick, this.previewEntity, RendererManager.getPlayerRenderer(), false, true);
         RenderSystem.disableScissor();
     }
 }
