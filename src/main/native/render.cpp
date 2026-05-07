@@ -1,5 +1,7 @@
+#if defined(__GNUC__) && (defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86))
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("sse4.1,fma")
+#endif
 
 #include <immintrin.h>
 #include <vector>

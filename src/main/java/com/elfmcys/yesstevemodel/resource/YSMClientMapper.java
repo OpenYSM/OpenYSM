@@ -423,7 +423,8 @@ public class YSMClientMapper {
 
                 states.add(new AnimationState(rs.name, animations.toArray(new Pair[0]), transitions.toArray(new Pair[0]), rs.soundEffects.toArray(new String[0]), onEntry.toArray(new IValue[0]), onExit.toArray(new IValue[0]), blendTransition, rs.blendViaShortestPath));
             }
-            result.put(rac.animationName, new AnimationController("default", states.toArray(new AnimationState[0])));
+            String initialState = rac.initialState != null && !rac.initialState.isEmpty() ? rac.initialState : "default";
+            result.put(rac.animationName, new AnimationController(initialState, states.toArray(new AnimationState[0])));
         }
         return result;
     }
@@ -577,7 +578,7 @@ public class YSMClientMapper {
         }
         AnimationFile combinedAnim = new AnimationFile(allAnimations);
 
-        AnimationControllerFile controllers = new AnimationControllerFile(new LinkedHashMap<>()); // 子模型无单独控制器
+        AnimationControllerFile controllers = new AnimationControllerFile(buildSubEntityControllers(sub, "projectile", mergeMultilineExpr));
 
         OuterFileTexture texture = null;
         if (!sub.textures.isEmpty()) {
@@ -600,7 +601,7 @@ public class YSMClientMapper {
         }
         AnimationFile combinedAnim = new AnimationFile(allAnimations);
 
-        AnimationControllerFile controllers = new AnimationControllerFile(new LinkedHashMap<>());
+        AnimationControllerFile controllers = new AnimationControllerFile(buildSubEntityControllers(sub, "vehicle", mergeMultilineExpr));
 
         OuterFileTexture texture = null;
         if (!sub.textures.isEmpty()) {
@@ -611,6 +612,40 @@ public class YSMClientMapper {
 
         String[] matchIds = sub.matchIds != null ? sub.matchIds : new String[]{sub.identifier};
         return new VehicleModelFiles(matchIds, mesh, combinedAnim, controllers, texture);
+    }
+
+    private static Map<String, AnimationController> buildSubEntityControllers(RawYsmModel.RawSubEntity sub, String prefix, boolean mergeMultilineExpr) {
+        Map<String, AnimationController> controllers = buildControllers(sub.animationControllers, mergeMultilineExpr);
+        if (!controllers.isEmpty() || sub.animationFiles.isEmpty()) {
+            return controllers;
+        }
+
+        String firstAnimation = null;
+        for (RawYsmModel.RawAnimationFile animationFile : sub.animationFiles.values()) {
+            for (Animation animation : buildAnimations(animationFile, mergeMultilineExpr).values()) {
+                if (animation != null && !animation.isEmpty()) {
+                    firstAnimation = animation.animationName;
+                    break;
+                }
+            }
+            if (firstAnimation != null) break;
+        }
+        if (firstAnimation == null) {
+            return controllers;
+        }
+
+        AnimationState defaultState = new AnimationState(
+                "default",
+                new Pair[]{Pair.of(firstAnimation, null)},
+                new Pair[0],
+                new String[0],
+                new IValue[0],
+                new IValue[0],
+                new TicksInterpolator(0.0f),
+                false
+        );
+        controllers.put(prefix + ".main", new AnimationController("default", new AnimationState[]{defaultState}));
+        return controllers;
     }
 
     private static Map<String, OuterFileTexture> buildExtraTextures(RawYsmModel raw) {

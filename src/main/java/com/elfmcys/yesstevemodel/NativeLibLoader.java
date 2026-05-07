@@ -31,21 +31,19 @@ public final class NativeLibLoader {
     private static ErrorState lastError = null;
 
     private enum TargetPlatform {
-        WINDOWS_X64("windows-x64", "ysm-core.dll", Path.of(System.getProperty("java.io.tmpdir"), "ysm")),
-        WINDOWS_X86("windows-x86", "ysm-core.dll", Path.of(System.getProperty("java.io.tmpdir"), "ysm")),
-        LINUX_X64("linux-x64", "libysm-core.so", Path.of(System.getProperty("user.home"), ".ysm")),
-        MACOS_X64("macos-x64", "libysm-core.dylib", Path.of(System.getProperty("user.home"), ".ysm")),
-        MACOS_ARM64("macos-arm64", "libysm-core.dylib", Path.of(System.getProperty("user.home"), ".ysm")),
-        ANDROID_ARM64("android-arm64", "libysm-core.so", null);
+        WINDOWS_X64("windows-x64", "ysm-core.dll"),
+        WINDOWS_X86("windows-x86", "ysm-core.dll"),
+        LINUX_X64("linux-x64", "libysm-core.so"),
+        MACOS_X64("macos-x64", "libysm-core.dylib"),
+        MACOS_ARM64("macos-arm64", "libysm-core.dylib"),
+        ANDROID_ARM64("android-arm64", "libysm-core.so");
 
         final String resDir;
         final String fileName;
-        final Path defaultStorage;
 
-        TargetPlatform(String resDir, String fileName, Path defaultStorage) {
+        TargetPlatform(String resDir, String fileName) {
             this.resDir = resDir;
             this.fileName = fileName;
-            this.defaultStorage = defaultStorage;
         }
 
         String getResourcePath() {
@@ -74,7 +72,7 @@ public final class NativeLibLoader {
         TargetPlatform platform = resolvePlatform();
         if (platform == null) return null;
 
-        Path storageDir = platform.defaultStorage;
+        Path storageDir = getDefaultStorageDir(platform);
         if (platform == TargetPlatform.ANDROID_ARM64) {
             String androidRuntime = System.getenv("MOD_ANDROID_RUNTIME");
             if (androidRuntime == null) {
@@ -95,7 +93,12 @@ public final class NativeLibLoader {
         String finalPath = targetFile.toString();
 
         writeIfChanged(finalPath, data);
+        YesSteveModel.LOGGER.info("[YSM] Native library extracted to {}", finalPath);
         return finalPath;
+    }
+
+    private static Path getDefaultStorageDir(TargetPlatform platform) {
+        return FMLPaths.GAMEDIR.get().resolve("ysm_native").resolve(platform.resDir);
     }
 
     private static @Nullable TargetPlatform resolvePlatform() {

@@ -1,5 +1,6 @@
 package com.elfmcys.yesstevemodel.geckolib3.geo.render.built;
 
+import com.elfmcys.yesstevemodel.YesSteveModel;
 import com.elfmcys.yesstevemodel.geckolib3.core.molang.util.StringPool;
 import com.elfmcys.yesstevemodel.geckolib3.geo.animated.AnimatedGeoModel;
 import com.elfmcys.yesstevemodel.resource.models.GeometryDescription;
@@ -20,6 +21,7 @@ import java.util.*;
  * Bedrock的.geo模型文件
  */
 public class GeoModel {
+    private static final boolean nativeDebug = Boolean.getBoolean("ysm.nativeRenderer.debug");
 
     @NotNull
     public final List<GeoBone> bones;
@@ -111,7 +113,7 @@ public class GeoModel {
     }
 
     public long nativeModelHandle = 0;
-    public final ByteBuffer vertexOutBuffer = /*ByteBuffer.allocateDirect(900000 * 14 * 4).order(ByteOrder.nativeOrder())*/null; //FIXME
+    public ByteBuffer vertexOutBuffer;
 
     public static native long nInitModelCache(ByteBuffer buffer);
 
@@ -123,6 +125,7 @@ public class GeoModel {
         if (bakedBones == null || bakedBones.isEmpty()) return;
 
         ByteBuffer buffer = ByteBuffer.allocateDirect(1024 * 1024 * 20).order(ByteOrder.nativeOrder());
+        int quadCount = 0;
 
         buffer.putInt(bakedBones.size());
         for (BakedBone bone : bakedBones) {
@@ -137,6 +140,7 @@ public class GeoModel {
             for (BakedCube cube : bone.cubes) {
                 buffer.put((byte) (cube.cullable ? 1 : 0));
                 buffer.putInt(cube.quads.size());
+                quadCount += cube.quads.size();
                 for (BakedQuad quad : cube.quads) {
                     for (int v = 0; v < 4; v++) { // 12 floats
                         buffer.putFloat(quad.positions[v].x());
@@ -155,8 +159,22 @@ public class GeoModel {
             }
         }
 
-        buffer.position(0);
-//        this.nativeModelHandle = nInitModelCache(buffer);
+        buffer.flip();
+        int vertexCount = quadCount * 4;
+        int requiredBytes = vertexCount * 14 * Float.BYTES;
+        vertexOutBuffer = ByteBuffer.allocateDirect(Math.max(requiredBytes, vertexCount * 36)).order(ByteOrder.nativeOrder());
+        this.nativeModelHandle = nInitModelCache(buffer);
+        if (nativeDebug) {
+            YesSteveModel.LOGGER.info(
+                    "[YSM native renderer] built cache handle={}, bones={}, quads={}, vertices={}, cacheBytes={}, outBufferBytes={}",
+                    nativeModelHandle,
+                    bakedBones.size(),
+                    quadCount,
+                    vertexCount,
+                    buffer.limit(),
+                    vertexOutBuffer.capacity()
+            );
+        }
     }
 
     public void freeNativeCache() {

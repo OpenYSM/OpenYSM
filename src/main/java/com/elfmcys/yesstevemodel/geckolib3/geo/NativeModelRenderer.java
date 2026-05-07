@@ -1,6 +1,7 @@
 package com.elfmcys.yesstevemodel.geckolib3.geo;
 
 import com.elfmcys.yesstevemodel.NativeLibLoader;
+import com.elfmcys.yesstevemodel.YesSteveModel;
 import com.elfmcys.yesstevemodel.client.compat.oculus.OculusCompat;
 import com.elfmcys.yesstevemodel.client.compat.optifine.OptiFineDetector;
 import com.elfmcys.yesstevemodel.client.renderer.ModelPreviewRenderer;
@@ -18,9 +19,50 @@ import java.lang.Math;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.util.Locale;
 
 public class NativeModelRenderer {
     private static final Matrix4f projectionModelViewMatrix = new Matrix4f();
+    private static boolean nativeRendererDisabled = false;
+    private static final NativeMode nativeMode = NativeMode.parse(System.getProperty("ysm.nativeRenderer", "auto"));
+    private static final boolean nativeStats = Boolean.getBoolean("ysm.nativeRenderer.stats");
+    private static final long nativeStatsIntervalNanos = Long.getLong("ysm.nativeRenderer.statsIntervalSec", 5L) * 1_000_000_000L;
+    private static final boolean nativeDebug = Boolean.getBoolean("ysm.nativeRenderer.debug");
+    private static long nativeCalls;
+    private static long javaCalls;
+    private static long nativeNanos;
+    private static long javaNanos;
+    private static long nativeFallbacks;
+    private static long skippedNoLib;
+    private static long skippedDisabled;
+    private static long skippedNoCache;
+    private static long lastStatsLogNanos = System.nanoTime();
+
+    private enum NativeMode {
+        AUTO,
+        FORCE,
+        OFF;
+
+        private static NativeMode parse(String value) {
+            return switch (value.toLowerCase(Locale.ROOT)) {
+                case "force", "on", "native" -> FORCE;
+                case "off", "java", "false" -> OFF;
+                default -> AUTO;
+            };
+        }
+    }
+
+    static {
+        if (nativeDebug || nativeStats || nativeMode != NativeMode.AUTO) {
+            YesSteveModel.LOGGER.info(
+                    "[YSM native renderer] configured mode={}, stats={}, debug={}, statsIntervalSec={}",
+                    nativeMode,
+                    nativeStats,
+                    nativeDebug,
+                    nativeStatsIntervalNanos / 1_000_000_000L
+            );
+        }
+    }
 
     public static void renderMesh(VertexConsumer buffer, PoseStack.Pose pose, GeoModel model, float[] boneParams, float[] stateBuffer, int textureIndex, int renderPartMask, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         OculusCompat.updatePBRState();
@@ -28,39 +70,113 @@ public class NativeModelRenderer {
         RenderSystem.getProjectionMatrix().mul(RenderSystem.getModelViewMatrix(), projectionModelViewMatrix);
         boolean isPreview = ModelPreviewRenderer.isPreview() || ModelPreviewRenderer.isExtraPlayer();
 
-        if (/*NativeLibLoader.isLoaded()*/false) { // WIP: SIMD MODEL RENDER
-            nativeRenderModel(
-                    buffer,
-                    pose,
-                    projectionModelViewMatrix,
-                    isCompatMode,
-                    model,
-                    boneParams,
-                    stateBuffer,
-                    textureIndex,
-                    renderPartMask,
-                    packedLight,
-                    packedOverlay,
-                    red, green, blue, alpha,
-                    isPreview
-            );
-        } else {
-            renderModel(
-                    buffer,
-                    pose,
-                    projectionModelViewMatrix,
-                    isCompatMode,
-                    model,
-                    boneParams,
-                    stateBuffer,
-                    textureIndex,
-                    renderPartMask,
-                    packedLight,
-                    packedOverlay,
-                    red, green, blue, alpha,
-                    isPreview
-            );
+        boolean hasNativeLib = NativeLibLoader.isLoaded();
+        boolean hasNativeCache = model.nativeModelHandle != 0 && model.vertexOutBuffer != null;
+
+        if (nativeMode != NativeMode.OFF && !nativeRendererDisabled && hasNativeLib && hasNativeCache) {
+            try {
+                long startNanos = nativeStats ? System.nanoTime() : 0L;
+                nativeRenderModel(
+                        buffer,
+                        pose,
+                        projectionModelViewMatrix,
+                        isCompatMode,
+                        model,
+                        boneParams,
+                        stateBuffer,
+                        textureIndex,
+                        renderPartMask,
+                        packedLight,
+                        packedOverlay,
+                        red, green, blue, alpha,
+                        isPreview
+                );
+                recordNativeRender(startNanos);
+                return;
+            } catch (Throwable throwable) {
+                nativeFallbacks++;
+                YesSteveModel.LOGGER.error("Native YSM renderer failed", throwable);
+                if (nativeMode == NativeMode.FORCE) {
+                    throw new RuntimeException("Forced native YSM renderer failed", throwable);
+                }
+                nativeRendererDisabled = true;
+            }
         }
+
+        recordNativeSkip(hasNativeLib, hasNativeCache);
+        if (nativeMode == NativeMode.FORCE) {
+            throw new IllegalStateException("Forced native YSM renderer is unavailable: loaded=" + hasNativeLib
+                    + ", disabled=" + nativeRendererDisabled
+                    + ", handle=" + model.nativeModelHandle
+                    + ", outBuffer=" + (model.vertexOutBuffer != null)
+                    + ", loaderError=" + NativeLibLoader.getErrorMessage());
+        }
+
+        long startNanos = nativeStats ? System.nanoTime() : 0L;
+        renderModel(
+                buffer,
+                pose,
+                projectionModelViewMatrix,
+                isCompatMode,
+                model,
+                boneParams,
+                stateBuffer,
+                textureIndex,
+                renderPartMask,
+                packedLight,
+                packedOverlay,
+                red, green, blue, alpha,
+                isPreview
+        );
+        recordJavaRender(startNanos);
+    }
+
+    private static void recordNativeSkip(boolean hasNativeLib, boolean hasNativeCache) {
+        if (!nativeStats && !nativeDebug) return;
+        if (nativeMode == NativeMode.OFF) {
+            skippedDisabled++;
+        } else if (nativeRendererDisabled) {
+            skippedDisabled++;
+        } else if (!hasNativeLib) {
+            skippedNoLib++;
+        } else if (!hasNativeCache) {
+            skippedNoCache++;
+        }
+        logStatsIfNeeded();
+    }
+
+    private static void recordNativeRender(long startNanos) {
+        if (!nativeStats) return;
+        nativeCalls++;
+        nativeNanos += System.nanoTime() - startNanos;
+        logStatsIfNeeded();
+    }
+
+    private static void recordJavaRender(long startNanos) {
+        if (!nativeStats) return;
+        javaCalls++;
+        javaNanos += System.nanoTime() - startNanos;
+        logStatsIfNeeded();
+    }
+
+    private static void logStatsIfNeeded() {
+        long now = System.nanoTime();
+        if (now - lastStatsLogNanos < nativeStatsIntervalNanos) return;
+        lastStatsLogNanos = now;
+        double nativeAvgUs = nativeCalls == 0 ? 0.0 : nativeNanos / (nativeCalls * 1000.0);
+        double javaAvgUs = javaCalls == 0 ? 0.0 : javaNanos / (javaCalls * 1000.0);
+        YesSteveModel.LOGGER.info(
+                "[YSM native renderer] mode={}, nativeCalls={}, javaCalls={}, fallbacks={}, skippedNoLib={}, skippedDisabled={}, skippedNoCache={}, nativeAvgUs={}, javaAvgUs={}",
+                nativeMode,
+                nativeCalls,
+                javaCalls,
+                nativeFallbacks,
+                skippedNoLib,
+                skippedDisabled,
+                skippedNoCache,
+                String.format(Locale.ROOT, "%.3f", nativeAvgUs),
+                String.format(Locale.ROOT, "%.3f", javaAvgUs)
+        );
     }
 
     public static void renderModel(
@@ -225,7 +341,7 @@ public class NativeModelRenderer {
             float r, float g, float b, float a,
             boolean isPreview) {
 
-        if (mesh.nativeModelHandle == 0) return;
+        if (mesh.nativeModelHandle == 0 || mesh.vertexOutBuffer == null) return;
 
         Matrix4f projMat = RenderSystem.getProjectionMatrix();
         ByteBuffer outBuffer = mesh.vertexOutBuffer;

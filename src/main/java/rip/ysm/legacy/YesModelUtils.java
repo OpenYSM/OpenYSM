@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.bytes.ByteArrays;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +18,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.*;
 import java.util.zip.DataFormatException;
+
+import static rip.ysm.util.HashUtils.md5;
 
 public final class YesModelUtils {
     public static final int HEAD = 0x59_53_47_50;
@@ -54,7 +55,7 @@ public final class YesModelUtils {
 
         byte[] md5 = ByteArrays.copy(data, 8, 16);
         byte[] modelFilesData = ByteArrays.copy(data, 24, data.length - 24);
-        if (!Arrays.equals(md5, DigestUtils.md5(modelFilesData))) {
+        if (!Arrays.equals(md5, md5(modelFilesData))) {
             return Collections.emptyMap();
         }
 
@@ -122,7 +123,7 @@ public final class YesModelUtils {
     }
 
     private static byte[] getKeyFromMd5(byte[] fileData) {
-        byte[] md5 = DigestUtils.md5(fileData);
+        byte[] md5 = md5(fileData);
         Random random = new Random(toLong(md5));
         byte[] keys = new byte[16];
         random.nextBytes(keys);

@@ -103,6 +103,12 @@ public class ModelInfoCapability {
     }
 
     public Optional<S2CSetModelAndTexturePacket> createSyncMessage(ServerPlayer serverPlayer, boolean z) {
+        if ("default".equals(this.modelId)) {
+            while (this.pendingCallbacks.poll() != null) {
+                // The builtin default model has no server-side model definition/hash bucket.
+            }
+            return Optional.of(new S2CSetModelAndTexturePacket(serverPlayer.getId(), this.modelId, this.selectTexture, this.disabled, this.animSync.buildFullSyncMessage(serverPlayer, z)));
+        }
         return ServerModelManager.getModelDefinition(this.modelId).map(it -> {
             Object2FloatOpenHashMap<String> object2FloatOpenHashMap = this.molangStorage.computeIfAbsent(it.getLoadedModelData().getHashId(), i -> new Object2FloatOpenHashMap<>(0));
             while (true) {

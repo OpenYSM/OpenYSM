@@ -2,7 +2,6 @@ package com.elfmcys.yesstevemodel.resource;
 
 import com.elfmcys.yesstevemodel.resource.pojo.RawYsmModel;
 import com.google.gson.*;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -23,6 +22,9 @@ import java.security.MessageDigest;
 import java.util.*;
 import java.util.stream.Stream;
 import javax.imageio.ImageIO;
+
+import static rip.ysm.util.HashUtils.md5Hex;
+import static rip.ysm.util.HashUtils.sha256Hex;
 
 public class YSMFolderDeserializer implements AutoCloseable {
     private final Map<String, String> readFilesMd5Map = new TreeMap<>();
@@ -63,7 +65,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
 
                 String normalizedPath = relativePath.replace('\\', '/');
                 if (!readFilesMd5Map.containsKey(normalizedPath)) {
-                    readFilesMd5Map.put(normalizedPath, DigestUtils.md5Hex(data));
+                    readFilesMd5Map.put(normalizedPath, md5Hex(data));
                 }
 
                 return data;
@@ -285,7 +287,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                 if (texData != null) {
                     ImageMeta meta = parseImageMeta(texData, texPath);
                     RawYsmModel.RawTexture rt = new RawYsmModel.RawTexture();
-                    rt.hash = DigestUtils.sha256Hex(texData); // 计算原始数据的 hash
+                    rt.hash = sha256Hex(texData); // 计算原始数据的 hash
                     rt.width = meta.width();
                     rt.height = meta.height();
                     rt.imageFormat = meta.format();
@@ -303,7 +305,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                                 sub.specularType = 2;
                                 sub.data = spData;
                                 sub.unknownFlag = 1;
-                                sub.hash = DigestUtils.sha256Hex(spData);
+                                sub.hash = sha256Hex(spData);
                                 sub.width = spMeta.width();
                                 sub.height = spMeta.height();
                                 sub.imageFormat = spMeta.format();
@@ -318,7 +320,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                                 sub.specularType = 1;
                                 sub.data = nrData;
                                 sub.unknownFlag = 1;
-                                sub.hash = DigestUtils.sha256Hex(nrData);
+                                sub.hash = sha256Hex(nrData);
                                 sub.width = nrMeta.width();
                                 sub.height = nrMeta.height();
                                 sub.imageFormat = nrMeta.format();
@@ -337,7 +339,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                 byte[] animData = readResource(entry.getValue().getAsString());
                 if (animData != null) {
                     RawYsmModel.RawAnimationFile raf = parseAnimations(animData);
-                    raf.fileHash = DigestUtils.sha256Hex(animData);
+                    raf.fileHash = sha256Hex(animData);
                     raf.animType = getAnimTypeFromKey(entry.getKey());
                     model.mainEntity.animationFiles.put(entry.getKey(), raf);
                 }
@@ -347,7 +349,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
             for (JsonElement acElem : playerObj.getAsJsonArray("animation_controllers")) {
                 byte[] acData = readResource(acElem.getAsString());
                 if (acData != null) {
-                    String acHash = DigestUtils.sha256Hex(acData);
+                    String acHash = sha256Hex(acData);
                     parseAnimationControllers(acData, acHash, model.mainEntity.animationControllers);
                 }
             }
@@ -401,7 +403,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                     ImageMeta meta = parseImageMeta(texData, texPath);
                     RawYsmModel.RawTexture rt = new RawYsmModel.RawTexture();
 
-                    rt.hash = DigestUtils.sha256Hex(texData);
+                    rt.hash = sha256Hex(texData);
                     rt.width = meta.width();
                     rt.height = meta.height();
                     rt.imageFormat = meta.format();
@@ -417,9 +419,25 @@ public class YSMFolderDeserializer implements AutoCloseable {
                 byte[] animData = readResource(item.get("animation").getAsString());
                 if (animData != null) {
                     RawYsmModel.RawAnimationFile raf = parseAnimations(animData);
-                    raf.fileHash = DigestUtils.sha256Hex(animData);
+                    raf.fileHash = sha256Hex(animData);
                     raf.animType = getAnimTypeFromKey("extra");
                     sub.animationFiles.put("sub_anim", raf);
+                }
+            }
+            if (item.has("animation_controllers")) {
+                JsonElement controllers = item.get("animation_controllers");
+                if (controllers.isJsonArray()) {
+                    for (JsonElement acElem : controllers.getAsJsonArray()) {
+                        byte[] acData = readResource(acElem.getAsString());
+                        if (acData != null) {
+                            parseAnimationControllers(acData, sha256Hex(acData), sub.animationControllers);
+                        }
+                    }
+                } else if (controllers.isJsonPrimitive()) {
+                    byte[] acData = readResource(controllers.getAsString());
+                    if (acData != null) {
+                        parseAnimationControllers(acData, sha256Hex(acData), sub.animationControllers);
+                    }
                 }
             }
 
@@ -436,7 +454,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
 
         JsonObject geoObj = geometries.get(0).getAsJsonObject();
         RawYsmModel.RawGeometry geo = new RawYsmModel.RawGeometry();
-        geo.sha256 = DigestUtils.sha256Hex(data);
+        geo.sha256 = sha256Hex(data);
 
         geo.modelType = modelType;
         geo.unkFloat1 = 0.7f;
@@ -850,7 +868,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                     String soundName = extractFileName(relativePath);
                     byte[] data = readResource(relativePath);
                     if (data != null) {
-                        String hash = DigestUtils.sha256Hex(data);
+                        String hash = sha256Hex(data);
                         model.soundFiles.put(soundName, new RawYsmModel.RawDataFile(hash, data));
                     }
                 }
@@ -859,7 +877,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                     byte[] data = readResource(relativePath);
                     if (data != null) {
                         try {
-                            String hash = DigestUtils.sha256Hex(data);
+                            String hash = sha256Hex(data);
                             String langJsonStr = new String(data, StandardCharsets.UTF_8);
                             JsonObject langJson = JsonParser.parseString(langJsonStr).getAsJsonObject();
                             Map<String, String> langMap = new LinkedHashMap<>();
@@ -876,7 +894,7 @@ public class YSMFolderDeserializer implements AutoCloseable {
                     String fnName = extractFileName(relativePath);
                     byte[] data = readResource(relativePath);
                     if (data != null) {
-                        String hash = DigestUtils.sha256Hex(data);
+                        String hash = sha256Hex(data);
                         model.functionFiles.put(fnName, new RawYsmModel.RawDataFile(hash, data));
                     }
                 }

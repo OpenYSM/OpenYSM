@@ -82,6 +82,11 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:1.20.1-47.4.0"
 
@@ -115,10 +120,7 @@ dependencies {
     compileOnly fg.deobf("libs:simplehats-forge:1.20.1-0.4.0a")
     compileOnly fg.deobf("libs:accessories-neoforge:1.0.0-beta.48+1.20.1")
 
-    minecraftLibrary("com.github.OpenYSM:ImageStream:-SNAPSHOT")
-    jarJar("com.github.OpenYSM:ImageStream:-SNAPSHOT") {
-        jarJar.ranged(it, "[-SNAPSHOT,)")
-    }
+    embed("com.github.OpenYSM:ImageStream:-SNAPSHOT")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {
@@ -129,18 +131,24 @@ dependencies {
 }
 
 tasks.register('compileNative') {
-    if(true){ // TODO
-        return false
-    }
     def osName = System.getProperty("os.name").toLowerCase(Locale.ROOT)
     def isWindows = osName.contains("win")
     def isLinux = osName.contains("linux")
     def isMac = osName.contains("mac")
     def isCI = System.getenv("GITHUB_ACTIONS") == "true"
+    def archName = System.getProperty("os.arch").toLowerCase(Locale.ROOT)
+    def isX86_64 = archName in ["amd64", "x86_64"]
 
     def generatedBase = file("src/generated/resources/META-INF/native")
     def cmake = isWindows ? "cmake.exe" : "cmake"
     if (!isCI && isMac) cmake = "/opt/local/bin/cmake"
+    def hasCommand = { String command ->
+        try {
+            return [command, "--version"].execute().waitFor() == 0
+        } catch (ignored) {
+            return false
+        }
+    }
 
     inputs.dir("src/main/native")
     outputs.dir(generatedBase)
@@ -155,13 +163,25 @@ tasks.register('compileNative') {
     }
 
     doLast {
-        def configs
-        if (isWindows) configs = [[arch: "x64", folder: "windows-x64"], [arch: "Win32", folder: "windows-x86"]]
-        else if (isMac) configs = [[arch: "x86_64", folder: "macos-x64"], [arch: "arm64", folder: "macos-arm64"]]
-        else if (isLinux) configs = [[arch: "x64", folder: "linux-x64"]]
-        else configs = []
-
-        def libName = isWindows ? "ysm-core.dll" : (isMac ? "libysm-core.dylib" : "libysm-core.so")
+        def configs = []
+        if (isWindows) {
+            configs += [[arch: "x64", folder: "windows-x64", libName: "ysm-core.dll", windows: true, msvc: true]]
+            configs += [[arch: "Win32", folder: "windows-x86", libName: "ysm-core.dll", windows: true, msvc: true]]
+        } else if (isLinux && isX86_64) {
+            configs += [[folder: "linux-x64", libName: "libysm-core.so"]]
+            if (hasCommand("x86_64-w64-mingw32-gcc") && hasCommand("x86_64-w64-mingw32-g++")) {
+                configs += [[folder: "windows-x64", libName: "ysm-core.dll", windows: true, cCompiler: "x86_64-w64-mingw32-gcc", cxxCompiler: "x86_64-w64-mingw32-g++"]]
+            } else {
+                println "MinGW x86_64 toolchain not found; skipping windows-x64 native build."
+            }
+            if (hasCommand("i686-w64-mingw32-gcc") && hasCommand("i686-w64-mingw32-g++")) {
+                configs += [[folder: "windows-x86", libName: "ysm-core.dll", windows: true, cCompiler: "i686-w64-mingw32-gcc", cxxCompiler: "i686-w64-mingw32-g++"]]
+            } else {
+                println "MinGW i686 toolchain not found; skipping windows-x86 native build."
+            }
+        } else if (isMac && isX86_64) {
+            configs += [[arch: "x86_64", folder: "macos-x64", libName: "libysm-core.dylib", mac: true]]
+        }
 
         configs.each { conf ->
             def buildDir = file("${project.buildDir}/cmake-temp/${conf.folder}")
@@ -169,17 +189,19 @@ tasks.register('compileNative') {
             buildDir.mkdirs()
 
             def configArgs = [cmake, "-S", projectDir.absolutePath, "-B", buildDir.absolutePath, "-DCMAKE_BUILD_TYPE=Release"]
-            if (isWindows) {
+            if (conf.windows && conf.cCompiler) {
+                configArgs += ["-DCMAKE_SYSTEM_NAME=Windows", "-DCMAKE_C_COMPILER=${conf.cCompiler}", "-DCMAKE_CXX_COMPILER=${conf.cxxCompiler}"]
+            } else if (conf.windows && conf.msvc) {
                 if (isCI) configArgs += ["-G", "Visual Studio 17 2022"]
                 configArgs += ["-A", conf.arch]
-            } else if (isMac) {
+            } else if (conf.mac) {
                 configArgs += "-DCMAKE_OSX_ARCHITECTURES=${conf.arch}"
             }
             exec { commandLine configArgs }
 
             exec { commandLine cmake, "--build", buildDir.absolutePath, "--config", "Release" }
 
-            def builtFile = isWindows ? file("${buildDir}/Release/${libName}") : file("${buildDir}/${libName}")
+            def builtFile = conf.msvc ? file("${buildDir}/Release/${conf.libName}") : file("${buildDir}/${conf.libName}")
             if (!builtFile.exists()) throw new GradleException("File not found: ${builtFile}")
 
             targetDir.mkdirs()
@@ -194,6 +216,12 @@ tasks.register('compileNative') {
 processResources.dependsOn compileNative
 
 tasks.named('jar', Jar).configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from {
+        configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
     manifest {
         attributes([
                 "Implementation-Title"  : project.name,
