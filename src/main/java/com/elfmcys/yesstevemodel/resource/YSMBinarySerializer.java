@@ -59,8 +59,8 @@ public class YSMBinarySerializer {
         if (format < 26) {
             throw new UnsupportedOperationException();
         } else {
-            writeSubEntities(buf, model.vehicles, format, "Vehicle");
-            writeSubEntities(buf, model.projectiles, format, "Projectile");
+            writeSubEntities(buf, model.vehicles, format, "Vehicle", model);
+            writeSubEntities(buf, model.projectiles, format, "Projectile", model);
         }
         buf.writeVarInt(1); // unknown
 
@@ -85,13 +85,13 @@ public class YSMBinarySerializer {
         for (RawYsmModel.RawGeometry geo : geoList) {
             buf.writeVarInt(geo.modelType);
             buf.writeString(geo.sha256 != null ? geo.sha256 : "");
-            writeGeometry(buf, geo, format);
+            writeGeometry(buf, geo, format, model);
         }
 
         writeYsmJson(buf, model, format);
     }
 
-    private static void writeSubEntities(YSMByteBuf buf, Map<String, RawYsmModel.RawSubEntity> entities, int format, String category) {
+    private static void writeSubEntities(YSMByteBuf buf, Map<String, RawYsmModel.RawSubEntity> entities, int format, String category, RawYsmModel model) {
         buf.writeVarInt(entities.size());
         int index = 0;
         for (RawYsmModel.RawSubEntity sub : entities.values()) {
@@ -101,35 +101,47 @@ public class YSMBinarySerializer {
                 writeAnimationFileContent(buf, animFile, format);
             }
             buf.writeVarInt(0); // separator
-            RawYsmModel.RawTexture baseTex = sub.textures.values().iterator().next();
-            byte[] baseData = baseTex.data;
-            int baseFormat = baseTex.imageFormat;
-            if (baseFormat == -1) {
-                baseData = convertRgbaToPng(baseData, baseTex.width, baseTex.height);
-                baseFormat = 2;
-            }
-            writeSpecialImage(buf, baseTex.hash, baseData);
-            buf.writeVarInt(baseTex.width);
-            buf.writeVarInt(baseTex.height);
-            buf.writeVarInt(baseFormat);
-            buf.writeVarInt(baseTex.unknownFlag);
-            buf.writeVarInt(baseTex.subTextures.size());
-            for (RawYsmModel.RawTexture.SubTexture subTex : baseTex.subTextures) {
-                buf.writeVarInt(subTex.specularType);
-                byte[] subData = subTex.data;
-                int subFormat = subTex.imageFormat;
-                if (subFormat == -1) {
-                    subData = convertRgbaToPng(subData, subTex.width, subTex.height);
-                    subFormat = 2;
+            // The reader always parses exactly one base texture per sub-entity;
+            // guard against empty texture tables so models without sub-entity
+            // textures no longer crash the server-side packer (NoSuchElement).
+            RawYsmModel.RawTexture baseTex = sub.textures.isEmpty() ? null : sub.textures.values().iterator().next();
+            if (baseTex == null) {
+                writeSpecialImage(buf, "", new byte[0]);
+                buf.writeVarInt(0); // width
+                buf.writeVarInt(0); // height
+                buf.writeVarInt(0); // imageFormat
+                buf.writeVarInt(0); // unknownFlag
+                buf.writeVarInt(0); // subTextures
+            } else {
+                byte[] baseData = baseTex.data;
+                int baseFormat = baseTex.imageFormat;
+                if (baseFormat == -1) {
+                    baseData = convertRgbaToPng(baseData, baseTex.width, baseTex.height);
+                    baseFormat = 2;
                 }
-                writeSpecialImage(buf, subTex.hash, subData);
-                buf.writeVarInt(subTex.width);
-                buf.writeVarInt(subTex.height);
-                buf.writeVarInt(subFormat);
-                buf.writeVarInt(subTex.unknownFlag);
+                writeSpecialImage(buf, baseTex.hash, baseData);
+                buf.writeVarInt(baseTex.width);
+                buf.writeVarInt(baseTex.height);
+                buf.writeVarInt(baseFormat);
+                buf.writeVarInt(baseTex.unknownFlag);
+                buf.writeVarInt(baseTex.subTextures.size());
+                for (RawYsmModel.RawTexture.SubTexture subTex : baseTex.subTextures) {
+                    buf.writeVarInt(subTex.specularType);
+                    byte[] subData = subTex.data;
+                    int subFormat = subTex.imageFormat;
+                    if (subFormat == -1) {
+                        subData = convertRgbaToPng(subData, subTex.width, subTex.height);
+                        subFormat = 2;
+                    }
+                    writeSpecialImage(buf, subTex.hash, subData);
+                    buf.writeVarInt(subTex.width);
+                    buf.writeVarInt(subTex.height);
+                    buf.writeVarInt(subFormat);
+                    buf.writeVarInt(subTex.unknownFlag);
+                }
             }
             buf.writeString(sub.model != null && sub.model.sha256 != null ? sub.model.sha256 : "");
-            writeGeometry(buf, sub.model, format);
+            writeGeometry(buf, sub.model, format, model);
             if (format > 26) {
                 buf.writeVarInt(0x01); // footer
                 buf.writeString(sub.identifier);
@@ -138,7 +150,7 @@ public class YSMBinarySerializer {
         }
     }
 
-    private static void writeGeometry(YSMByteBuf buf, RawYsmModel.RawGeometry geo, int format) {
+    private static void writeGeometry(YSMByteBuf buf, RawYsmModel.RawGeometry geo, int format, RawYsmModel model) {
         buf.writeVarInt(geo.bones.size());
         for (RawYsmModel.RawBone bone : geo.bones) {
             buf.writeString(bone.parentName != null ? bone.parentName : "");
@@ -177,7 +189,26 @@ public class YSMBinarySerializer {
         }
         buf.writeFloat(geo.unkFloat1);
         buf.writeFloat(geo.unkFloat2);
-        buf.writeVarInt(0); // hasInfoJsonFlag
+        if (geo.hasInfoJson && model != null) {
+            // Legacy info json payload, mirroring the reader's
+            // parseLegacyYSMInfo() so the metadata survives the round-trip
+            // (model name/tips/authors/license/isFree were previously dropped
+            // by the hard-coded 0 flag). Each geometry emits its own info
+            // authors - the reader appends them before the ysm.json authors,
+            // so writing the merged author list would duplicate entries.
+            buf.writeVarInt(1);
+            buf.writeString(model.metadata.name != null ? model.metadata.name : "");
+            buf.writeString(model.metadata.tips != null ? model.metadata.tips : "");
+            buf.writeVarInt(0); // extra animation names - discarded by the reader
+            buf.writeVarInt(geo.infoAuthorNames.size());
+            for (String authorName : geo.infoAuthorNames) {
+                buf.writeString(authorName != null ? authorName : "");
+            }
+            buf.writeString(model.metadata.licenseType != null ? model.metadata.licenseType : "");
+            buf.writeVarInt(model.properties.isFree ? 1 : 0);
+        } else {
+            buf.writeVarInt(0); // hasInfoJsonFlag
+        }
         buf.writeVarInt(geo.footerPad1);
         buf.writeVarInt(geo.footerPad2);
         buf.writeVarInt(geo.footerPad3);
@@ -264,60 +295,76 @@ public class YSMBinarySerializer {
             return;
         }
 
-        RawYsmModel.RawAnimationController first = controllers.values().iterator().next();
-        buf.writeVarInt(1); // controllerCount
-        buf.writeString(first.name != null ? first.name : "");
-        buf.writeString(first.hash != null ? first.hash : "");
+        // The reader groups entries under one (name, hash) pair per controller
+        // and stores the controller name on every entry, so group the entries
+        // back by controller name to write the full controller table. Writing
+        // a single hard-coded controller previously scrambled the state
+        // machines of multi-controller models (wrong animation names attached
+        // to the first controller), which broke part visibility / glow-driven
+        // animations on the receiving client.
+        Map<String, List<RawYsmModel.RawAnimationController>> controllersByName = new java.util.LinkedHashMap<>();
+        for (RawYsmModel.RawAnimationController entry : controllers.values()) {
+            String controllerName = entry.name != null ? entry.name : "";
+            controllersByName.computeIfAbsent(controllerName, k -> new java.util.ArrayList<>()).add(entry);
+        }
 
-        buf.writeVarInt(controllers.size()); // animationCount
-        for (RawYsmModel.RawAnimationController ac : controllers.values()) {
-            buf.writeString(ac.animationName);
-            buf.writeString(ac.initialState != null ? ac.initialState : "");
+        buf.writeVarInt(controllersByName.size()); // controllerCount
+        for (Map.Entry<String, List<RawYsmModel.RawAnimationController>> group : controllersByName.entrySet()) {
+            List<RawYsmModel.RawAnimationController> entries = group.getValue();
+            RawYsmModel.RawAnimationController first = entries.get(0);
+            buf.writeString(group.getKey());
+            buf.writeString(first.hash != null ? first.hash : "");
 
-            buf.writeVarInt(ac.states.size());
-            for (RawYsmModel.RawControllerState state : ac.states) {
-                buf.writeString(state.name);
+            buf.writeVarInt(entries.size()); // animationCount
+            for (RawYsmModel.RawAnimationController ac : entries) {
+                buf.writeString(ac.animationName);
+                buf.writeString(ac.initialState != null ? ac.initialState : "");
 
-                // animations
-                buf.writeVarInt(state.animations.size());
-                for (Map.Entry<String, String> e : state.animations.entrySet()) {
-                    buf.writeString(e.getKey());
-                    buf.writeString(e.getValue());
-                }
+                buf.writeVarInt(ac.states.size());
+                for (RawYsmModel.RawControllerState state : ac.states) {
+                    buf.writeString(state.name);
 
-                // transitions
-                buf.writeVarInt(state.transitions.size());
-                for (Map.Entry<String, String> e : state.transitions.entrySet()) {
-                    buf.writeString(e.getKey());
-                    buf.writeString(e.getValue());
-                }
-
-                // on_entry
-                buf.writeVarInt(state.onEntry.size());
-                for (String s : state.onEntry) buf.writeString(s);
-
-                // on_exit
-                buf.writeVarInt(state.onExit.size());
-                for (String s : state.onExit) buf.writeString(s);
-
-                // blend_transition
-                if (!state.blendTransitions.isEmpty()) {
-                    buf.writeVarInt(0);
-                    buf.writeVarInt(state.blendTransitions.size());
-                    for (Map.Entry<Float, Float> e : state.blendTransitions.entrySet()) {
-                        buf.writeFloat(e.getKey());
-                        buf.writeFloat(e.getValue());
+                    // animations
+                    buf.writeVarInt(state.animations.size());
+                    for (Map.Entry<String, String> e : state.animations.entrySet()) {
+                        buf.writeString(e.getKey());
+                        buf.writeString(e.getValue());
                     }
-                } else {
-                    buf.writeVarInt(1);
-                    buf.writeFloat(state.blendTransitionValue);
-                }
 
-                buf.writeVarInt(state.blendViaShortestPath ? 1 : 0);
+                    // transitions
+                    buf.writeVarInt(state.transitions.size());
+                    for (Map.Entry<String, String> e : state.transitions.entrySet()) {
+                        buf.writeString(e.getKey());
+                        buf.writeString(e.getValue());
+                    }
 
-                if (format > 26) {
-                    buf.writeVarInt(state.soundEffects.size());
-                    for (String eff : state.soundEffects) buf.writeString(eff);
+                    // on_entry
+                    buf.writeVarInt(state.onEntry.size());
+                    for (String s : state.onEntry) buf.writeString(s);
+
+                    // on_exit
+                    buf.writeVarInt(state.onExit.size());
+                    for (String s : state.onExit) buf.writeString(s);
+
+                    // blend_transition
+                    if (!state.blendTransitions.isEmpty()) {
+                        buf.writeVarInt(0);
+                        buf.writeVarInt(state.blendTransitions.size());
+                        for (Map.Entry<Float, Float> e : state.blendTransitions.entrySet()) {
+                            buf.writeFloat(e.getKey());
+                            buf.writeFloat(e.getValue());
+                        }
+                    } else {
+                        buf.writeVarInt(1);
+                        buf.writeFloat(state.blendTransitionValue);
+                    }
+
+                    buf.writeVarInt(state.blendViaShortestPath ? 1 : 0);
+
+                    if (format > 26) {
+                        buf.writeVarInt(state.soundEffects.size());
+                        for (String eff : state.soundEffects) buf.writeString(eff);
+                    }
                 }
             }
         }
@@ -415,8 +462,24 @@ public class YSMBinarySerializer {
         buf.writeString(meta.licenseType != null ? meta.licenseType : "");
         buf.writeString(meta.licenseDescription != null ? meta.licenseDescription : "");
 
-        buf.writeVarInt(meta.authors.size());
-        for (RawYsmModel.RawMetadata.Author author : meta.authors) {
+        // Authors from the legacy info json blocks are appended to the same
+        // list before the ysm.json authors (and re-appended on the client when
+        // the info block is parsed again), so only the trailing slice belongs
+        // to the ysm.json payload. Writing the merged list would duplicate the
+        // info-block authors on the receiving side.
+        int totalInfoAuthors = 0;
+        if (model.mainEntity.mainModel != null) totalInfoAuthors += model.mainEntity.mainModel.infoAuthorNames.size();
+        if (model.mainEntity.armModel != null) totalInfoAuthors += model.mainEntity.armModel.infoAuthorNames.size();
+        for (RawYsmModel.RawSubEntity sub : model.vehicles.values()) {
+            if (sub.model != null) totalInfoAuthors += sub.model.infoAuthorNames.size();
+        }
+        for (RawYsmModel.RawSubEntity sub : model.projectiles.values()) {
+            if (sub.model != null) totalInfoAuthors += sub.model.infoAuthorNames.size();
+        }
+        int ysmJsonAuthors = Math.max(0, meta.authors.size() - totalInfoAuthors);
+        buf.writeVarInt(ysmJsonAuthors);
+        for (int i = meta.authors.size() - ysmJsonAuthors; i < meta.authors.size(); i++) {
+            RawYsmModel.RawMetadata.Author author = meta.authors.get(i);
             buf.writeString(author.name != null ? author.name : "");
             buf.writeString(author.role != null ? author.role : "");
             buf.writeVarInt(author.contacts.size());

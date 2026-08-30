@@ -482,7 +482,8 @@ public class YSMBinaryDeserializer implements AutoCloseable{
 
         int hasInfoJsonFlag = reader.readVarInt();
         if (hasInfoJsonFlag > 0) {
-            parseLegacyYSMInfo();
+            geo.hasInfoJson = true;
+            geo.infoAuthorNames = parseLegacyYSMInfo();
         }
 
         geo.footerPad1 = reader.readVarInt();
@@ -628,7 +629,7 @@ public class YSMBinaryDeserializer implements AutoCloseable{
         }
     }
 
-    private void parseLegacyYSMInfo() {
+    private List<String> parseLegacyYSMInfo() {
         model.metadata.name = reader.readString();
         model.metadata.tips = reader.readString();
         int extraAnimationsCount = reader.readVarInt();
@@ -636,13 +637,16 @@ public class YSMBinaryDeserializer implements AutoCloseable{
             reader.readString(); // extra animation name
         }
         int authorsCount = reader.readVarInt();
+        List<String> authorNames = new ArrayList<>(authorsCount);
         for (int i = 0; i < authorsCount; i++) {
             RawYsmModel.RawMetadata.Author author = new RawYsmModel.RawMetadata.Author();
             author.name = reader.readString();
             model.metadata.authors.add(author);
+            authorNames.add(author.name);
         }
         model.metadata.licenseType = reader.readString();
         model.properties.isFree = reader.readVarInt() != 0;
+        return authorNames;
     }
 
     private RawYsmModel.RawAnimationFile parseAnimations() {

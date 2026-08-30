@@ -47,6 +47,19 @@ public class RawYsmModel {
         // 作用暫時不明確
         public int footerPad1, footerPad2, footerPad3;
 
+        // True when the binary geometry carries a legacy info json block
+        // (name/tips/authors/license/isFree). The reader parses it into the
+        // model-level metadata; the server-side re-serializer must write the
+        // same flag and payload back, otherwise clients lose the metadata.
+        public boolean hasInfoJson;
+
+        // Author names contributed by THIS geometry's legacy info json block.
+        // The reader appends every geometry's info authors to the model-level
+        // list (before the ysm.json authors), so the re-serializer must emit
+        // each geometry's own authors instead of slicing the merged list,
+        // which duplicates earlier geometries' authors.
+        public List<String> infoAuthorNames = new ArrayList<>();
+
         public List<RawBone> bones = new ArrayList<>();
     }
 
