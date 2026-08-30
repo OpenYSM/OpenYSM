@@ -120,6 +120,12 @@ dependencies {
         jarJar.ranged(it, "[-SNAPSHOT,)")
     }
 
+    // DigestUtils/SHA-256 are used by the folder deserializer on both sides;
+    // a dedicated server does not ship commons-codec, so bundle it via jarJar.
+    implementation(jarJar("commons-codec:commons-codec:1.15")) {
+        jarJar.ranged(it, "[1.15,)")
+    }
+
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {
         jarJar.ranged(it, "[0.3.6,)")

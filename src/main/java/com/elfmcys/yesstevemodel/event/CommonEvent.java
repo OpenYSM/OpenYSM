@@ -20,7 +20,11 @@ import java.io.IOException;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class CommonEvent {
     public static Object nativeInit() {
-        ClientModelManager.loadDefaultModel();
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            // ClientModelManager pulls in client-only classes (AbstractTexture
+            // etc.); a dedicated server must not load it.
+            ClientModelManager.loadDefaultModel();
+        }
         try {
             ServerModelManager.reloadPacks();
         } catch (IOException e) {
